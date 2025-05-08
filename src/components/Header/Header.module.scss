@@ -1,0 +1,47 @@
+.header {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .nav {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  
+    li {
+      a {
+        font-weight: 500;
+        transition: opacity 0.2s;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+  
+  .switch {
+    display: flex;
+    align-items: center;
+  }
+  
