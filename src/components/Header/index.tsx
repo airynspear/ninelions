@@ -28,17 +28,29 @@ export default function Header() {
   const [hoveredRect, setHoveredRect] = useState<DOMRect | null>(null);
   const [activeRect, setActiveRect] = useState<DOMRect | null>(null);
 
+  // Single mount effect
   useEffect(() => {
     setMounted(true);
+
     const handleResize = () => {
       const isWide = window.innerWidth > 754;
       setIsDesktop(isWide);
-      if (isWide) setMobileMenuOpen(false);
+      if (isWide) {
+        setMobileMenuOpen(false);
+
+        const activeLink = document.querySelector(`a[href="${pathname}"]`);
+        if (activeLink) {
+          const rect = (activeLink as HTMLElement).getBoundingClientRect();
+          setActiveRect(rect);
+        }
+      }
     };
+
     window.addEventListener("resize", handleResize);
     handleResize();
+
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -47,7 +59,7 @@ export default function Header() {
       const rect = (activeLink as HTMLElement).getBoundingClientRect();
       setActiveRect(rect);
     }
-  }, [pathname, mounted]);
+  }, [pathname]); // ← remove `mounted` dependency
 
   useEffect(() => {
     const target = hoveredRect || activeRect;
@@ -148,8 +160,10 @@ export default function Header() {
               <Link
                 key={href}
                 href={href}
-                className={styles.mobileNavItem}
                 onClick={() => setMobileMenuOpen(false)}
+                className={`${styles.mobileNavItem} ${
+                  pathname === href ? styles.activeMobile : ""
+                }`}
               >
                 {label}
               </Link>
