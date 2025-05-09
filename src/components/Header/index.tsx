@@ -19,7 +19,7 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navRef = useRef<HTMLDivElement>(null);
@@ -27,7 +27,6 @@ export default function Header() {
   const [hoveredRect, setHoveredRect] = useState<DOMRect | null>(null);
   const [activeRect, setActiveRect] = useState<DOMRect | null>(null);
 
-  // Single mount effect
   useEffect(() => {
     const handleResize = () => {
       const isWide = window.innerWidth > 754;
@@ -44,7 +43,7 @@ export default function Header() {
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize();
+    handleResize(); // initial check
 
     return () => window.removeEventListener("resize", handleResize);
   }, [pathname]);
@@ -56,7 +55,7 @@ export default function Header() {
       const rect = (activeLink as HTMLElement).getBoundingClientRect();
       setActiveRect(rect);
     }
-  }, [pathname]); // ← remove `mounted` dependency
+  }, [pathname]);
 
   useEffect(() => {
     const target = hoveredRect || activeRect;
@@ -85,7 +84,7 @@ export default function Header() {
           }`}
         />
         <Image
-          src="/logos/logo-heat.png"
+          src="/logos/logo-heat-fill.png"
           alt="Nine Lions Logo Light"
           width={900}
           height={324}
@@ -97,7 +96,7 @@ export default function Header() {
       </div>
 
       {/* Desktop navigation */}
-      {isDesktop && (
+      {isDesktop === true && (
         <nav
           className={styles.nav}
           ref={navRef}
@@ -134,7 +133,7 @@ export default function Header() {
       )}
 
       {/* Hamburger icon */}
-      {!isDesktop && (
+      {isDesktop === false && (
         <button
           className={`${styles.hamburger} ${mobileMenuOpen ? styles.open : ""}`}
           onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -147,7 +146,7 @@ export default function Header() {
       )}
 
       {/* Mobile dropdown menu */}
-      {!isDesktop && mobileMenuOpen && (
+      {isDesktop === false && mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuSwitch}>
             <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
@@ -170,7 +169,7 @@ export default function Header() {
       )}
 
       {/* Desktop-only theme toggle */}
-      {isDesktop && (
+      {isDesktop === true && (
         <div className={styles.switch}>
           <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
         </div>
