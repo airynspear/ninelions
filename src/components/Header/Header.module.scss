@@ -231,9 +231,15 @@
   border-radius: 6px;
   font-weight: 500;
   transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 
   &:focus {
     color: var(--mobile-nav-active);
+  }
+
+  &:first-child {
+    max-width: calc(100% - 3rem);
   }
 }
 
