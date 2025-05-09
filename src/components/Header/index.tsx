@@ -19,7 +19,6 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
-  const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -30,8 +29,6 @@ export default function Header() {
 
   // Single mount effect
   useEffect(() => {
-    setMounted(true);
-
     const handleResize = () => {
       const isWide = window.innerWidth > 754;
       setIsDesktop(isWide);
