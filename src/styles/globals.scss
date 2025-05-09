@@ -2,13 +2,23 @@
   --font-body: var(--font-outfit);
   --font-alt: var(--font-syne);
 
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
-.light {
   --background: #ffffff;
   --foreground: #171717;
+
+  --switch-track: #f3532e;
+  --switch-thumb: #fff;
+
+  --underline-gradient: linear-gradient(190deg, #f34424, #fdbe44);
+}
+
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --switch-track: #006573;
+  --switch-thumb: #9afff4;
+
+  --underline-gradient: linear-gradient(190deg, #56e0dc, #328c96);
 }
 
 html {
@@ -17,11 +27,12 @@ html {
 
 html,
 body {
+  height: 100%;
   max-width: 100vw;
   overflow-x: hidden;
   font-size: 16px;
   line-height: 1.6;
-  font-family: var(--font-outfit), sans-serif;
+  font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--background);
@@ -41,7 +52,10 @@ a {
 }
 
 // Headings
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-body), sans-serif;
   font-weight: 600;
   margin: 0 0 1rem;
@@ -63,7 +77,6 @@ h3 {
 h4 {
   font-size: clamp(1.25rem, 3vw, 1.5rem); // ~20–24px
 }
-
 
 // Paragraphs
 p {

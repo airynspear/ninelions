@@ -1,47 +1,121 @@
 .header {
-    width: 100%;
-    padding: 1.5rem 2rem;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
+  width: 100%;
+  min-height: 100px;
+  padding: 0 2rem;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav {
+  position: relative;
+  width: 100%;
+  max-width: 690px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.8rem;
+  .underline {
+    position: absolute;
+    bottom: 1.2rem;
+    height: 4px;
+    background: var(--underline-gradient);
+    transition: transform 0.3s ease, width 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+    width: 0;
+    transform: translateX(0);
   }
-  
-  .nav {
-    width: 100%;
-    max-width: 1200px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+}
+
+.navLeft,
+.navRight {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-width: 165px;
+  justify-content: flex-start;
+  &.navLeft {
+    justify-content: flex-end;
   }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  .links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-  
-    li {
-      a {
-        font-weight: 500;
-        transition: opacity 0.2s;
-        &:hover {
-          opacity: 0.7;
-        }
-      }
+
+  li {
+    a {
+      text-transform: lowercase;
+      font-weight: 400;
+      font-size: 18px;
+      transition: opacity 0.2s;
+      position: relative;
+      display: inline-block;
     }
   }
-  
-  .switch {
-    display: flex;
-    align-items: center;
+}
+
+.logoWrapper {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 270px;
+  height: 97px;
+
+  @media (max-width: 600px) {
+    width: 160px;
+    height: 58px;
   }
-  
+
+  .logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .visible {
+    opacity: 1;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  .hidden {
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+.switch {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.themeSwitch {
+  .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+    background-color: var(--switch-track);
+  }
+
+  .MuiSwitch-switchBase.Mui-checked .MuiSwitch-thumb {
+    background-color: var(--switch-thumb);
+  }
+
+  .MuiSwitch-thumb {
+    background-color: var(--foreground);
+  }
+
+  .MuiSwitch-track {
+    background-color: var(--gray);
+    opacity: 1;
+  }
+}
