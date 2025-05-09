@@ -18,6 +18,9 @@
 
 .subtitle {
   padding: 0 6rem;
+  @media (max-width: 600px) {
+    padding: 0;
+  }
 }
 
 .description {

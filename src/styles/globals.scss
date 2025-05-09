@@ -8,15 +8,23 @@
   --switch-track: #f3532e;
   --switch-thumb: #fff;
 
+  --mobile-nav-bg: #ededed;
+
+  --button-muted: #747474;
+
   --underline-gradient: linear-gradient(190deg, #f34424, #fdbe44);
 }
 
 [data-theme="dark"] {
-  --background: #0a0a0a;
+  --background: #161a1e;
   --foreground: #ededed;
 
   --switch-track: #006573;
   --switch-thumb: #9afff4;
+
+  --mobile-nav-bg: #0f1317;
+
+  --button-muted: #747474;
 
   --underline-gradient: linear-gradient(190deg, #56e0dc, #328c96);
 }
@@ -78,7 +86,6 @@ h4 {
   font-size: clamp(1.25rem, 3vw, 1.5rem); // ~20–24px
 }
 
-// Paragraphs
 p {
   font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: 300;
@@ -91,7 +98,6 @@ p.small {
   opacity: 0.8;
 }
 
-// Optional accent class
 .syne {
   font-family: var(--font-alt), sans-serif;
   font-weight: 600;

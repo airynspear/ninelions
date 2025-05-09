@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext({
-  theme: "dark",
+  theme: "light",
   toggleTheme: () => {},
 });
 
@@ -24,7 +24,7 @@ export default function ThemeProvider({
       | "light"
       | "dark"
       | null;
-    const preferredTheme = storedTheme || "dark";
+    const preferredTheme = storedTheme || "light"; // ✅ fixed
 
     setTheme(preferredTheme);
     document.documentElement.setAttribute("data-theme", preferredTheme);

@@ -17,18 +17,31 @@ const NAV_LINKS = [
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  const [mounted, setMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const navRef = useRef<HTMLDivElement>(null);
+  const underlineRef = useRef<HTMLSpanElement>(null);
   const [hoveredRect, setHoveredRect] = useState<DOMRect | null>(null);
   const [activeRect, setActiveRect] = useState<DOMRect | null>(null);
-  const underlineRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     setMounted(true);
+    const handleResize = () => {
+      const isWide = window.innerWidth > 754;
+      setIsDesktop(isWide);
+      if (isWide) setMobileMenuOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
+    setMobileMenuOpen(false);
     const activeLink = document.querySelector(`a[href="${pathname}"]`);
     if (activeLink) {
       const rect = (activeLink as HTMLElement).getBoundingClientRect();
@@ -50,66 +63,107 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <nav
-        className={styles.nav}
-        ref={navRef}
-        onMouseLeave={() => setHoveredRect(null)}
-      >
-        <ul className={styles.navLeft}>
-          {NAV_LINKS.slice(0, 2).map((link) => (
-            <li
-              key={link.href}
-              onMouseEnter={(e) =>
-                setHoveredRect(e.currentTarget.getBoundingClientRect())
-              }
-              className={pathname === link.href ? styles.active : ""}
-            >
-              <Link href={link.href}>{link.label}</Link>
-            </li>
-          ))}
-        </ul>
-        <ul className={styles.navRight}>
-          {NAV_LINKS.slice(2).map((link) => (
-            <li
-              key={link.href}
-              onMouseEnter={(e) =>
-                setHoveredRect(e.currentTarget.getBoundingClientRect())
-              }
-              className={pathname === link.href ? styles.active : ""}
-            >
-              <Link href={link.href}>{link.label}</Link>
-            </li>
-          ))}
-        </ul>
-        <span className={styles.underline} ref={underlineRef} />
-
-        <Link href="/" className={styles.logoWrapper}>
-          <Image
-            src="/logos/logo-cool.png"
-            alt="Nine Lions Logo Dark"
-            width={900}
-            height={324}
-            priority
-            className={`${styles.logo} ${
-              theme === "dark" ? styles.visible : styles.hidden
-            }`}
-          />
-          <Image
-            src="/logos/logo-heat.png"
-            alt="Nine Lions Logo Light"
-            width={900}
-            height={324}
-            priority
-            className={`${styles.logo} ${
-              theme === "light" ? styles.visible : styles.hidden
-            }`}
-          />
-        </Link>
-      </nav>
-
-      <div className={styles.switch}>
-        <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
+      {/* Always visible logo */}
+      <div className={styles.logoWrapper}>
+        <Image
+          src="/logos/logo-cool.png"
+          alt="Nine Lions Logo Dark"
+          width={900}
+          height={324}
+          priority
+          className={`${styles.logo} ${
+            theme === "dark" ? styles.visible : styles.hidden
+          }`}
+        />
+        <Image
+          src="/logos/logo-heat.png"
+          alt="Nine Lions Logo Light"
+          width={900}
+          height={324}
+          priority
+          className={`${styles.logo} ${
+            theme === "light" ? styles.visible : styles.hidden
+          }`}
+        />
       </div>
+
+      {/* Desktop navigation */}
+      {isDesktop && (
+        <nav
+          className={styles.nav}
+          ref={navRef}
+          onMouseLeave={() => setHoveredRect(null)}
+        >
+          <ul className={styles.navLeft}>
+            {NAV_LINKS.slice(0, 2).map(({ href, label }) => (
+              <li
+                key={href}
+                onMouseEnter={(e) =>
+                  setHoveredRect(e.currentTarget.getBoundingClientRect())
+                }
+                className={pathname === href ? styles.active : ""}
+              >
+                <Link href={href}>{label}</Link>
+              </li>
+            ))}
+          </ul>
+          <ul className={styles.navRight}>
+            {NAV_LINKS.slice(2).map(({ href, label }) => (
+              <li
+                key={href}
+                onMouseEnter={(e) =>
+                  setHoveredRect(e.currentTarget.getBoundingClientRect())
+                }
+                className={pathname === href ? styles.active : ""}
+              >
+                <Link href={href}>{label}</Link>
+              </li>
+            ))}
+          </ul>
+          <span className={styles.underline} ref={underlineRef} />
+        </nav>
+      )}
+
+      {/* Hamburger icon */}
+      {!isDesktop && (
+        <button
+          className={`${styles.hamburger} ${mobileMenuOpen ? styles.open : ""}`}
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          aria-label="Toggle mobile menu"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      )}
+
+      {/* Mobile dropdown menu */}
+      {!isDesktop && mobileMenuOpen && (
+        <div className={styles.mobileMenu}>
+          <div className={styles.mobileMenuSwitch}>
+            <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
+          </div>
+          <nav className={styles.mobileNav}>
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={styles.mobileNavItem}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
+
+      {/* Desktop-only theme toggle */}
+      {isDesktop && (
+        <div className={styles.switch}>
+          <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
+        </div>
+      )}
     </header>
   );
 }
