@@ -5,6 +5,8 @@
   --background: #ffffff;
   --foreground: #171717;
 
+  --accent: #ca1a2e;
+
   --switch-track: #f3532e;
   --switch-thumb: #fff;
 
@@ -12,6 +14,8 @@
   --mobile-nav-active: #ca1a2e;
 
   --button-muted: #636363;
+
+  --transparent-bg: rgba(255, 255, 255, 0.5);
 
   --underline-gradient: linear-gradient(190deg, #f34424, #fdbe44);
 }
@@ -28,11 +32,9 @@
 
   --button-muted: #747474;
 
-  --underline-gradient: linear-gradient(190deg, #56e0dc, #328c96);
-}
+  --transparent-bg: rgba(255, 255, 255, 0.5);
 
-html {
-  font-size: clamp(15px, 1.25vw, 17px);
+  --underline-gradient: linear-gradient(190deg, #56e0dc, #328c96);
 }
 
 html,
@@ -48,6 +50,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html {
+  font-size: clamp(15px, 1.25vw, 17px);
 }
 
 * {

@@ -43,18 +43,21 @@ export default function Header() {
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // initial check
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, [pathname]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
-    const activeLink = document.querySelector(`a[href="${pathname}"]`);
-    if (activeLink) {
-      const rect = (activeLink as HTMLElement).getBoundingClientRect();
-      setActiveRect(rect);
-    }
+
+    requestAnimationFrame(() => {
+      const activeLink = document.querySelector(`a[href="${pathname}"]`);
+      if (activeLink) {
+        const rect = (activeLink as HTMLElement).getBoundingClientRect();
+        setActiveRect(rect);
+      }
+    });
   }, [pathname]);
 
   useEffect(() => {
@@ -94,6 +97,7 @@ export default function Header() {
           }`}
         />
       </div>
+      <div className={styles.divider}></div>
 
       {/* Desktop navigation */}
       {isDesktop === true && (

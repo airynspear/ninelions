@@ -1,28 +1,207 @@
 .hero {
+  padding-top: 12rem;
+  position: relative;
+  z-index: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 0 2rem;
-  background: var(--background);
-  color: var(--foreground);
-  text-align: center;
-}
 
-.container {
-  max-width: 800px;
-}
-
-.title {
-}
-
-.subtitle {
-  padding: 0 6rem;
   @media (max-width: 600px) {
-    padding: 0;
+    padding: 12rem 2rem 0;
   }
 }
 
-.description {
-  opacity: 0.8;
+.content {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: #d6d6d6 1px solid;
+  border-radius: 8px;
+  height: 500px;
+  max-width: 802px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  left: -1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+  .description {
+    opacity: 0.8;
+  }
+}
+
+.hexGrid {
+  width: 1040px;
+  height: 540px;
+  position: relative;
+}
+
+.hexCard {
+  min-width: 100px;
+  height: 300px;
+  background-image: url(/images/hex.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  position: absolute;
+  z-index: 1;
+  transition: transform 0.4s ease, background-image 0.3s ease;
+
+  // Scale on hover
+  &:hover {
+    transform: scale(1.2);
+    z-index: 11; // optional: prevents overlap issues
+  }
+}
+
+.hexCardOne {
+  min-width: 180px;
+  height: 166px;
+  top: 38%;
+  left: -3%;
+  z-index: 2;
+}
+
+.hexCardTwo,
+.hexCardThree,
+.hexCardSeven,
+.hexCardEight {
+  min-width: 220px;
+  height: 203px;
+}
+
+.hexCardTwo {
+  top: 18%;
+  left: 5%;
+}
+
+.hexCardThree {
+  top: 44%;
+  left: 17%;
+  z-index: 2;
+}
+
+.hexCardFour {
+  min-width: 250px;
+  height: 231px;
+  top: 6%;
+  left: 18%;
+}
+
+.hexCardFive {
+  min-width: 330px;
+  height: 305px;
+  top: calc(50% - 165px);
+  left: calc(50% - 165px);
+  z-index: 5;
+}
+
+.hexCardSix {
+  min-width: 250px;
+  height: 231px;
+  top: 46%;
+  left: 58%;
+  z-index: 4;
+}
+
+.hexCardSeven {
+  top: 12%;
+  left: 59%;
+  z-index: 5;
+}
+
+.hexCardEight {
+  top: 24%;
+  left: 73.2%;
+  z-index: 2;
+}
+
+.hexCardNine {
+  min-width: 180px;
+  height: 166px;
+  top: 20%;
+  left: 88%;
+}
+
+[data-theme="dark"] .hexCard {
+  background-image: url("/images/hex-dark.svg");
+}
+
+.cardContent {
+  color: var(--foreground);
+  font-size: 1.2rem;
+  font-weight: 500;
+  z-index: 1;
+}
+
+.hexagonWrapper {
+  position: relative;
+  width: 272px;
+  height: 272px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hexagonBorder {
+  width: 272px;
+  height: 272px;
+  background: var(--accent);
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.hexagon {
+  width: 270px;
+  height: 270px;
+  background: var(--background);
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  position: relative;
+  z-index: 1;
+}
+
+.background::after,
+.heroBackground::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.background::after {
+  bottom: 0;
+  right: 0;
+  width: 1440px;
+  height: 721px;
+  background-image: url("/images/landing-bg-light.png");
+  background-position: bottom right;
+}
+
+[data-theme="dark"] .background::after {
+  opacity: 0.3;
+  background-image: url("/images/landing-bg-dark.png");
+}
+
+.heroBackground::after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 900px;
+  background-image: url("/images/area-bg-light.png");
+  background-position: left 81px;
+}
+
+[data-theme="dark"] .heroBackground::after {
+  opacity: 0.3;
+  background-image: url("/images/area-bg-dark.png");
 }

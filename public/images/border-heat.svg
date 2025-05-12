@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_3" data-name="Layer 3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 785.77">
+  <defs>
+    <linearGradient id="New_Gradient_Swatch_1" data-name="New Gradient Swatch 1" x1="457.696" y1="820.22" x2="440.636" y2="-22.86" gradientTransform="translate(0 788) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset=".014" stop-color="#fba01d"/>
+      <stop offset=".791" stop-color="#ed2437"/>
+    </linearGradient>
+  </defs>
+  <path d="M408.71,721.5C195.82,700.72,29.64,521.51,29.64,303.18c0-116.61,47.46-222.1,124.09-298.28C62.59,86.37,5.23,204.87,5.23,336.74c0,245.83,199.21,445.04,444.96,445.04h0c245.83,0,445.04-199.21,445.04-445.04,0-131.87-57.36-250.37-148.57-331.83,76.63,76.18,124.09,181.67,124.09,298.28,0,219.31-167.67,401.38-382.09,418.74-28.48,2.37-54.91,1.92-79.96-.42l.01-.01Z" fill="url(#New_Gradient_Swatch_1)" fill-rule="evenodd"/>
+</svg>
