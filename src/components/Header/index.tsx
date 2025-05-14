@@ -48,16 +48,17 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, [pathname]);
 
+  // Active underline delayed fix (due to hex animations)
   useEffect(() => {
-    setMobileMenuOpen(false);
-
-    requestAnimationFrame(() => {
+    const timeout = setTimeout(() => {
       const activeLink = document.querySelector(`a[href="${pathname}"]`);
       if (activeLink) {
         const rect = (activeLink as HTMLElement).getBoundingClientRect();
         setActiveRect(rect);
       }
-    });
+    }, 1500); // Wait for hex animation to finish
+
+    return () => clearTimeout(timeout);
   }, [pathname]);
 
   useEffect(() => {
@@ -74,7 +75,6 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      {/* Always visible logo */}
       <div className={styles.logoWrapper}>
         <Image
           src="/logos/logo-cool.png"
@@ -99,7 +99,6 @@ export default function Header() {
       </div>
       <div className={styles.divider}></div>
 
-      {/* Desktop navigation */}
       {isDesktop === true && (
         <nav
           className={styles.nav}
@@ -136,7 +135,6 @@ export default function Header() {
         </nav>
       )}
 
-      {/* Hamburger icon */}
       {isDesktop === false && (
         <button
           className={`${styles.hamburger} ${mobileMenuOpen ? styles.open : ""}`}
@@ -149,7 +147,6 @@ export default function Header() {
         </button>
       )}
 
-      {/* Mobile dropdown menu */}
       {isDesktop === false && mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuSwitch}>
@@ -172,7 +169,6 @@ export default function Header() {
         </div>
       )}
 
-      {/* Desktop-only theme toggle */}
       {isDesktop === true && (
         <div className={styles.switch}>
           <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
