@@ -8,8 +8,8 @@
       <feComposite in2="blur" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <filter id="drop-shadow-2" x="-3.5" y="7" width="655" height="574" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="-5"/>
+    <filter id="drop-shadow-2" x="-3.5" y="3" width="655" height="574" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="-9"/>
       <feGaussianBlur result="blur-2" stdDeviation="9"/>
       <feFlood flood-color="#000" flood-opacity=".18"/>
       <feComposite in2="blur-2" operator="in"/>

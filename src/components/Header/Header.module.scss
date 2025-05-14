@@ -8,6 +8,19 @@
   position: fixed;
   top: 0;
   z-index: 1000;
+
+  @media (max-width: 600px) {
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 78px;
+      width: 100%;
+      background: var(--background);
+    }
+  }
 }
 
 .nav {

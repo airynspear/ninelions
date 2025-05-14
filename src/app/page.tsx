@@ -107,6 +107,7 @@ export default function Home() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [hideDescriptions, setHideDescriptions] = useState(true);
   const [rotation, setRotation] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     HEX_CARDS.forEach((_, i) => {
@@ -114,39 +115,37 @@ export default function Home() {
       if (!card) return;
 
       let enterDelay = i * 150;
-      let exitDelay = enterDelay + 300;
 
-      if (i === 3) {
-        enterDelay = 2 * 150 + 75;
-        exitDelay = enterDelay + 300;
-      }
-
-      if (i === 6) {
-        enterDelay = 5 * 150 + 50;
-        exitDelay = enterDelay + 300;
-      }
+      if (i === 3) enterDelay = 2 * 150 + 75;
+      if (i === 6) enterDelay = 5 * 150 + 50;
 
       setTimeout(() => {
         card.classList.add(styles.flipInit);
       }, enterDelay);
-
-      setTimeout(() => {
-        card.classList.remove(styles.flipInit);
-      }, exitDelay);
     });
 
-    const finalRevealTime = 8 * 150 + 300 + 300;
-    const t = setTimeout(() => setHideDescriptions(false), finalRevealTime);
+    const t = setTimeout(() => setHideDescriptions(false), 8 * 150 + 600);
     return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation((prev) => prev + 30);
-    }, 9000);
+    const checkIsMobile = () => {
+      const mobile = window.innerWidth < 945;
+      setIsMobile(mobile);
+      setRotation(mobile ? 30 : 0);
+    };
 
-    return () => clearInterval(interval);
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotation((prev) => prev + (isMobile ? 60 : 30));
+    }, 9000);
+    return () => clearInterval(interval);
+  }, [isMobile]);
 
   return (
     <div
