@@ -116,6 +116,7 @@ export default function Home() {
 
       let enterDelay = i * 150;
 
+      // Custom timing overrides
       if (i === 3) enterDelay = 2 * 150 + 75;
       if (i === 6) enterDelay = 5 * 150 + 50;
 
@@ -163,15 +164,17 @@ export default function Home() {
               className={`${styles.hexCard} ${styles[HEX_CARD_CLASSES[i]]}`}
             >
               <div className={styles.cardInner}>
-                <div className={styles.front}>
-                  <div className={styles.icon}>{card.icon}</div>
-                  <span className={styles.keyword}>{card.keyword}</span>
-                </div>
-                <div className={styles.back}>
-                  <span className={hideDescriptions ? styles.hiddenText : ""}>
+                <div className={styles.cardFlipWrapper}>
+                  <div className={styles.front}>
                     <div className={styles.icon}>{card.icon}</div>
-                    {card.description}
-                  </span>
+                    <span className={styles.keyword}>{card.keyword}</span>
+                  </div>
+                  <div className={styles.back}>
+                    <span className={hideDescriptions ? styles.hiddenText : ""}>
+                      <div className={styles.icon}>{card.icon}</div>
+                      {card.description}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
