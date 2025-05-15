@@ -1,23 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/components/Theme/ThemeProvider";
 import { useEffect, useState, useRef } from "react";
-import { usePathname } from "next/navigation";
 import AndroidSwitch from "@/components/UI/Switch/AndroidSwitch";
+import { useView } from "@/views/ViewContext";
+import { NAV_LINKS } from "@/views/navLinks";
 import styles from "./Header.module.scss";
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Connect", href: "/connect" },
-];
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
-  const pathname = usePathname();
+  const { view, setView } = useView();
 
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,35 +24,36 @@ export default function Header() {
     const handleResize = () => {
       const isWide = window.innerWidth > 754;
       setIsDesktop(isWide);
-      if (isWide) {
-        setMobileMenuOpen(false);
-
-        const activeLink = document.querySelector(`a[href="${pathname}"]`);
-        if (activeLink) {
-          const rect = (activeLink as HTMLElement).getBoundingClientRect();
-          setActiveRect(rect);
-        }
-      }
+      if (isWide) setMobileMenuOpen(false);
     };
 
     window.addEventListener("resize", handleResize);
     handleResize();
-
     return () => window.removeEventListener("resize", handleResize);
-  }, [pathname]);
+  }, []);
 
-  // Active underline delayed fix (due to hex animations)
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      const activeLink = document.querySelector(`a[href="${pathname}"]`);
-      if (activeLink) {
-        const rect = (activeLink as HTMLElement).getBoundingClientRect();
+    let timeout: NodeJS.Timeout | null = null;
+
+    const updateUnderline = () => {
+      const activeBtn = document.querySelector(`[data-view="${view}"]`);
+      if (activeBtn) {
+        const rect = (activeBtn as HTMLElement).getBoundingClientRect();
         setActiveRect(rect);
       }
-    }, 1500); // Wait for hex animation to finish
+    };
 
-    return () => clearTimeout(timeout);
-  }, [pathname]);
+    if (view === "home") {
+      // Delay only on first load of home view
+      timeout = setTimeout(updateUnderline, 600); // adjust if needed
+    } else {
+      updateUnderline();
+    }
+
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [view]);
 
   useEffect(() => {
     const target = hoveredRect || activeRect;
@@ -106,28 +100,30 @@ export default function Header() {
           onMouseLeave={() => setHoveredRect(null)}
         >
           <ul className={styles.navLeft}>
-            {NAV_LINKS.slice(0, 2).map(({ href, label }) => (
+            {NAV_LINKS.slice(0, 2).map(({ id, label }) => (
               <li
-                key={href}
+                key={id}
+                data-view={id}
                 onMouseEnter={(e) =>
                   setHoveredRect(e.currentTarget.getBoundingClientRect())
                 }
-                className={pathname === href ? styles.active : ""}
+                className={view === id ? styles.active : ""}
               >
-                <Link href={href}>{label}</Link>
+                <button onClick={() => setView(id)}>{label}</button>
               </li>
             ))}
           </ul>
           <ul className={styles.navRight}>
-            {NAV_LINKS.slice(2).map(({ href, label }) => (
+            {NAV_LINKS.slice(2).map(({ id, label }) => (
               <li
-                key={href}
+                key={id}
+                data-view={id}
                 onMouseEnter={(e) =>
                   setHoveredRect(e.currentTarget.getBoundingClientRect())
                 }
-                className={pathname === href ? styles.active : ""}
+                className={view === id ? styles.active : ""}
               >
-                <Link href={href}>{label}</Link>
+                <button onClick={() => setView(id)}>{label}</button>
               </li>
             ))}
           </ul>
@@ -153,17 +149,19 @@ export default function Header() {
             <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
           </div>
           <nav className={styles.mobileNav}>
-            {NAV_LINKS.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                onClick={() => setMobileMenuOpen(false)}
+            {NAV_LINKS.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => {
+                  setView(id);
+                  setMobileMenuOpen(false);
+                }}
                 className={`${styles.mobileNavItem} ${
-                  pathname === href ? styles.activeMobile : ""
+                  view === id ? styles.activeMobile : ""
                 }`}
               >
                 {label}
-              </Link>
+              </button>
             ))}
           </nav>
         </div>

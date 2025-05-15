@@ -1,0 +1,18 @@
+.content {
+  position: relative;
+  min-height: 100vh;
+}
+
+.about .hexGrid {
+  transform: scale(0.85) rotate(8deg); // 👈 just an example
+  transition: transform 0.8s ease;
+}
+
+.overlay {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--foreground);
+  text-align: center;
+}

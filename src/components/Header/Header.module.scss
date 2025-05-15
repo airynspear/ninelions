@@ -8,19 +8,6 @@
   position: fixed;
   top: 0;
   z-index: 1000;
-
-  @media (max-width: 600px) {
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 78px;
-      width: 100%;
-      background: var(--background);
-    }
-  }
 }
 
 .nav {
@@ -89,6 +76,20 @@
       display: inline-block;
     }
   }
+}
+
+/* Reset nav buttons to look like links */
+.navLeft li > button,
+.navRight li > button,
+.mobileNavItem {
+  all: unset;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-transform: lowercase;
+  font-size: 18px;
+  font-weight: 400;
+  transition: opacity 0.2s ease;
 }
 
 .logoWrapper {
@@ -274,4 +275,22 @@
 
 .activeMobile {
   color: var(--mobile-nav-active);
+}
+
+/* ======== responsive ======== */
+
+@media (max-width: 945px) {
+  .header {
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      height: 78px;
+      width: 100%;
+      background: var(--background);
+    }
+  }
 }

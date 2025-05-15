@@ -3,6 +3,7 @@ import { Outfit, Syne } from "next/font/google";
 import "@/styles/globals.scss";
 import ThemeProvider from "@/components/Theme/ThemeProvider";
 import Header from "@/components/Header";
+import { ViewProvider } from "@/views/ViewContext"; // ✅ NEW
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -52,8 +53,10 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
-          <Header />
-          {children}
+          <ViewProvider>
+            <Header />
+            {children}
+          </ViewProvider>
         </ThemeProvider>
       </body>
     </html>

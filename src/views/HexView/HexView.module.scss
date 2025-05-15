@@ -1,0 +1,462 @@
+.hero {
+  position: relative;
+  z-index: 1;
+  top: 13rem;
+  left: -0.05rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: top 0.4s ease;
+}
+
+.content {
+  padding: 0 2rem;
+  text-align: center;
+
+  .description {
+    opacity: 0.8;
+    margin-bottom: 0;
+  }
+}
+
+.hexGrid {
+  width: 1040px;
+  height: 540px;
+  position: relative;
+}
+
+.hexCard {
+  min-width: 100px;
+  height: 300px;
+  position: absolute;
+  z-index: 1;
+  perspective: 1000px;
+  transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .cardInner {
+    transform: rotateY(90deg);
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+  }
+
+  &:hover {
+    z-index: 11;
+
+    .cardFlipWrapper {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &.flipInit {
+    .cardInner {
+      animation: flipOnce 0.8s ease forwards;
+    }
+  }
+}
+
+@keyframes flipOnce {
+  from {
+    transform: rotateY(90deg) scale(1);
+  }
+  to {
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+.cardFlipWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.hiddenText {
+  visibility: hidden;
+}
+
+.cardInner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  transform-origin: center center;
+}
+
+.front,
+.back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--foreground);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transition: transform 0.5s ease;
+    background-image: url("/images/hex-light.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    transform: rotate(var(--hex-rotation, 0deg));
+    transition: transform 0.5s ease-in-out;
+  }
+}
+
+[data-theme="dark"] .front,
+[data-theme="dark"] .back {
+  &::before {
+    background-image: url("/images/hex-dark.svg");
+  }
+}
+
+.front {
+  z-index: 2;
+  padding: 1.5rem 2.5rem 2rem;
+
+  .icon {
+    display: flex;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+  }
+
+  .keyword {
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+    font-weight: 500;
+    span {
+      display: block;
+    }
+  }
+}
+
+.back {
+  transform: rotateY(180deg);
+  font-size: 0.95rem;
+  line-height: 1.4rem;
+  padding: 0 2.4rem;
+  span {
+    display: block;
+  }
+  .icon {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--foreground);
+  }
+}
+
+// === Positioning overrides ===
+
+.hexCardOne,
+.hexCardNine {
+  top: 28.7%;
+  left: 5.5%;
+  min-width: 220px;
+  height: 203px;
+  .cardInner {
+    .front {
+      .icon {
+        font-size: 1.7rem;
+      }
+    }
+  }
+}
+
+.hexCardNine {
+  left: 74.2%;
+}
+
+.hexCardTwo,
+.hexCardThree,
+.hexCardSeven,
+.hexCardEight {
+  min-width: 250px;
+  height: 231px;
+  .cardInner {
+    .front {
+      .keyword {
+        font-size: 1.15rem;
+        min-height: 24px;
+      }
+    }
+  }
+}
+
+.hexCardTwo {
+  top: 7.6%;
+  left: 17.6%;
+  z-index: 4;
+  .cardInner {
+    .front {
+      .icon {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+.hexCardThree {
+  top: 45%;
+  left: 17.5%;
+  z-index: 2;
+}
+
+.hexCardSeven {
+  top: 7.6%;
+  left: 58.3%;
+  z-index: 3;
+}
+
+.hexCardEight {
+  top: 45%;
+  left: 58.3%;
+  z-index: 3;
+}
+
+.hexCardFour,
+.hexCardSix {
+  min-width: 180px;
+  height: 166px;
+  z-index: 2;
+  top: -10%;
+  left: 41.2%;
+  .cardInner {
+    .front {
+      .icon {
+        font-size: 1.5rem;
+      }
+      .keyword {
+        font-size: 1rem;
+      }
+    }
+    .back {
+      font-size: 0.8rem;
+      line-height: 1.1rem;
+      .icon {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+
+.hexCardSix {
+  top: 74.5%;
+}
+
+.hexCardFive {
+  min-width: 330px;
+  height: 305px;
+  top: calc(50% - 165px);
+  left: calc(50% - 165px);
+  z-index: 5;
+
+  .cardInner {
+    .front {
+      padding: 1rem 2rem 2rem;
+      .icon {
+        font-size: 2.4rem;
+      }
+      .keyword {
+        font-size: 1.4em;
+        line-height: 2rem;
+        span {
+          display: block;
+        }
+      }
+    }
+    .back {
+      font-size: 1.1rem;
+      padding: 1rem 3rem 2rem;
+      line-height: 1.6rem;
+      .icon {
+        font-size: 1.7rem;
+      }
+    }
+  }
+}
+
+// === Decorative hex wrappers ===
+
+.hexagonWrapper {
+  position: relative;
+  width: 272px;
+  height: 272px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hexagonBorder {
+  width: 272px;
+  height: 272px;
+  background: var(--accent);
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.hexagon {
+  width: 270px;
+  height: 270px;
+  background: var(--background);
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  position: relative;
+  z-index: 1;
+}
+
+.background::after,
+.heroBackground::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.background::after {
+  bottom: 0;
+  right: 0;
+  width: 1440px;
+  height: 721px;
+  background-image: url("/images/landing-bg-light.png");
+  background-position: bottom right;
+}
+
+[data-theme="dark"] .background::after {
+  opacity: 0.3;
+  background-image: url("/images/landing-bg-dark.png");
+}
+
+.heroBackground::after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 900px;
+  background-image: url("/images/area-bg-light.png");
+  background-position: left 81px;
+}
+
+[data-theme="dark"] .heroBackground::after {
+  opacity: 0.3;
+  background-image: url("/images/area-bg-dark.png");
+}
+
+@media (max-width: 945px) {
+  .hexCardOne {
+    top: 10.4rem;
+    left: 17.5%;
+  }
+  .hexCardTwo {
+    top: -5.4%;
+    left: 25%;
+  }
+  .hexCardThree {
+    top: 58%;
+    left: 25%;
+  }
+  .hexCardFour {
+    top: -12%;
+    left: 41.4%;
+    z-index: 6;
+  }
+  .hexCardSix {
+    top: 76.6%;
+    left: 41.4%;
+    z-index: 6;
+  }
+  .hexCardSeven {
+    top: -5.4%;
+    left: 51%;
+  }
+  .hexCardEight {
+    top: 57.5%;
+    left: 51%;
+  }
+  .hexCardNine {
+    left: 61.35%;
+  }
+}
+
+@media (max-width: 670px) {
+  .hero {
+    top: 12rem;
+  }
+  .hexGrid {
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    top: 15rem;
+  }
+  .hexGrid {
+    transform: scale(0.75);
+  }
+
+  .hexCardOne {
+    top: 35.4rem;
+    left: 39.5%;
+  }
+  .hexCardTwo {
+    top: -13%;
+    left: 28.2%;
+  }
+  .hexCardThree {
+    top: 65.6%;
+    left: 28.2%;
+    z-index: 4;
+  }
+  .hexCardFour {
+    top: 32%;
+    left: 60%;
+    z-index: 2;
+  }
+  .hexCardSix {
+    top: 32%;
+    left: 23%;
+    z-index: 2;
+  }
+  .hexCardSeven {
+    top: -13%;
+    left: 47.6%;
+  }
+  .hexCardEight {
+    top: 65.5%;
+    left: 47.6%;
+  }
+  .hexCardNine {
+    left: 39.5%;
+    top: -14.5rem;
+  }
+}
+
+// === Shared styles here ===
+
+.home {
+}
+
+.about {
+}
+
+.portfolio {
+}
