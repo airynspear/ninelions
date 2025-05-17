@@ -98,11 +98,10 @@
   }
 }
 
-[data-theme="dark"] .front,
-[data-theme="dark"] .back {
-  &::before {
-    background-image: url("/images/hex-dark.svg");
-  }
+[data-theme="dark"] .front::before,
+[data-theme="dark"] .back::before {
+  background-image: url("/images/hex-dark-new.svg");
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 1));
 }
 
 .front {
@@ -183,7 +182,7 @@
 // === hex overrides ===
 
 .hexCardOne {
-  --x: 57px;
+  --x: 51px;
   --y: 156px;
 }
 
