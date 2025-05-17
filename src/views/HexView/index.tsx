@@ -81,48 +81,50 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     >
       <section className={styles.hero}>
         <div className={styles.hexGrid}>
-          {cards.map((card, i) => {
-            const hexClass = HEX_CARD_CLASSES[i];
-            const classNames = [styles.hexCard];
+          <div className={styles.hexContainer}>
+            {cards.map((card, i) => {
+              const hexClass = HEX_CARD_CLASSES[i];
+              const classNames = [styles.hexCard];
 
-            if (styles[hexClass]) classNames.push(styles[hexClass]);
-            if (viewStyles[hexClass]) classNames.push(viewStyles[hexClass]);
+              if (styles[hexClass]) classNames.push(styles[hexClass]);
+              if (viewStyles[hexClass]) classNames.push(viewStyles[hexClass]);
 
-            return (
-              <div
-                key={i}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
-                className={classNames.join(" ")}
-              >
-                <div className={`${styles.cardInner} cardInner`}>
-                  <div className={styles.cardFlipWrapper}>
-                    <div className={styles.front}>
-                      {card.image ? (
-                        <div className={styles.image}>
-                          <div className={styles.hexMask}>
-                            <img src={card.image} alt="Hex Image" />
+              return (
+                <div
+                  key={i}
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
+                  className={classNames.join(" ")}
+                >
+                  <div className={`${styles.cardInner} cardInner`}>
+                    <div className={styles.cardFlipWrapper}>
+                      <div className={styles.front}>
+                        {card.image ? (
+                          <div className={styles.image}>
+                            <div className={styles.hexMask}>
+                              <img src={card.image} alt="Hex Image" />
+                            </div>
                           </div>
-                        </div>
-                      ) : card.icon ? (
-                        <div className={styles.icon}>{card.icon}</div>
-                      ) : null}
-                      {card.keyword && (
-                        <span className={styles.keyword}>{card.keyword}</span>
-                      )}
-                    </div>
-                    <div className={styles.back}>
-                      {card.icon && (
-                        <div className={styles.icon}>{card.icon}</div>
-                      )}
-                      {card.description}
+                        ) : card.icon ? (
+                          <div className={styles.icon}>{card.icon}</div>
+                        ) : null}
+                        {card.keyword && (
+                          <span className={styles.keyword}>{card.keyword}</span>
+                        )}
+                      </div>
+                      <div className={styles.back}>
+                        {card.icon && (
+                          <div className={styles.icon}>{card.icon}</div>
+                        )}
+                        {card.description}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
     </div>

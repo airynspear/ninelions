@@ -25,6 +25,10 @@
     transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.hexContainer {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .hexCard {
   min-width: 100px;
   height: 300px;
@@ -323,6 +327,16 @@
 
 // === global page styles ===
 
+:global(.about) .hexContainer {
+  transform: translate(-200px, -80px);
+  @media (max-width: 754px) {
+    transform: translate(0px, -180px);
+  }
+  @media (max-width: 500px) {
+    transform: translate(0px, -120px);
+  }
+}
+
 .hexCard {
   &:hover {
     .cardFlipWrapper {
@@ -330,18 +344,6 @@
         transform: none;
       }
     }
-  }
-}
-
-.hero {
-  :global(.about) & {
-    left: -2rem;
-  }
-}
-
-.hexGrid {
-  :global(.about) & {
-    transform: scale(1.25);
   }
 }
 
@@ -372,21 +374,7 @@
   }
 }
 
-@media (max-width: 900px) {
-  .hexGrid {
-    :global(.about) & {
-      transform: scale(1);
-    }
-  }
-}
-
 @media (max-width: 754px) {
-  .hero {
-    :global(.about) & {
-      top: 1rem;
-      left: 10.4rem;
-    }
-  }
   .front::before {
     :global(.about) & {
       transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
@@ -410,11 +398,6 @@
 }
 
 @media (max-width: 500px) {
-  .hero {
-    :global(.about) & {
-      top: 3.3rem;
-    }
-  }
   .front::before {
     :global(.about) & {
       transform: rotate(var(--hex-rotation, 0deg));
@@ -605,9 +588,15 @@
   }
 }
 
+@media (max-width: 754px) {
+  :global(.about) .hexGrid {
+    transform: scale(0.85);
+  }
+}
+
 @media (max-width: 670px) {
   .hero {
-    top: 9rem;
+    top: 8rem;
   }
   .hexGrid {
     transform: scale(0.85);
@@ -618,6 +607,13 @@
   .hero {
     top: 13rem;
   }
+
+  :global(.about) .hero {
+    top: 8rem;
+  }
+  // :global(.about) .hexGrid {
+  //   transform: scale(1);
+  // }
 
   .hexGrid {
     transform: scale(0.75);
