@@ -31,7 +31,7 @@ const HEX_CARD_CLASSES = [
   "hexCardNine",
 ];
 
-const viewStylesMap: Record<string, any> = {
+const viewStylesMap: Record<string, Record<string, string>> = {
   home: homeStyles,
   about: aboutStyles,
   portfolio: portfolioStyles,
