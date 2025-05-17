@@ -21,7 +21,7 @@
 
   .underline {
     position: absolute;
-    bottom: 1.1rem;
+    bottom: 18px;
     height: 4px;
     background: var(--underline-gradient);
     transition: transform 0.3s ease, width 0.3s ease;
@@ -94,15 +94,15 @@
 
 .logoWrapper {
   position: absolute;
-  z-index: 20;
   top: 0.5rem;
   left: 50%;
   transform: translateX(-50%);
   width: 270px;
   height: 97px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 754px) {
     left: 50.5%;
+    z-index: 11;
   }
 
   .logo {
@@ -275,22 +275,4 @@
 
 .activeMobile {
   color: var(--mobile-nav-active);
-}
-
-/* ======== responsive ======== */
-
-@media (max-width: 945px) {
-  .header {
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      height: 78px;
-      width: 100%;
-      background: var(--background);
-    }
-  }
 }

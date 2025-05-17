@@ -44,8 +44,7 @@ export default function Header() {
     };
 
     if (view === "home") {
-      // Delay only on first load of home view
-      timeout = setTimeout(updateUnderline, 600); // adjust if needed
+      timeout = setTimeout(updateUnderline, 600);
     } else {
       updateUnderline();
     }
@@ -66,6 +65,30 @@ export default function Header() {
       underline.style.width = `${target.width}px`;
     }
   }, [hoveredRect, activeRect]);
+
+  useEffect(() => {
+    if (isDesktop) {
+      const activeBtn = document.querySelector(`[data-view="${view}"]`);
+      if (activeBtn) {
+        requestAnimationFrame(() => {
+          const rect = (activeBtn as HTMLElement).getBoundingClientRect();
+          setActiveRect(rect);
+        });
+      }
+    }
+  }, [isDesktop, view]);
+
+  useEffect(() => {
+    if (isDesktop) {
+      setTimeout(() => {
+        const activeBtn = document.querySelector(`[data-view="${view}"]`);
+        if (activeBtn) {
+          const rect = (activeBtn as HTMLElement).getBoundingClientRect();
+          setActiveRect(rect);
+        }
+      }, 50);
+    }
+  }, [isDesktop]);
 
   return (
     <header className={styles.header}>

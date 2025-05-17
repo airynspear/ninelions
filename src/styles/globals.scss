@@ -53,7 +53,15 @@ body {
 }
 
 html {
-  font-size: clamp(15px, 1.25vw, 17px);
+  font-size: clamp(15px, 1.25vw, 18px);
+}
+
+.scroll-container {
+  height: calc(100vh - 79px);
+  margin-top: 79px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 * {
@@ -79,23 +87,23 @@ h4 {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 6vw, 3.5rem); // ~40–56px
+  font-size: clamp(36px, 5vw, 48px);
 }
 
 h2 {
-  font-size: clamp(2rem, 5vw, 2.25rem); // ~32–36px
+  font-size: clamp(32px, 5vw, 36px);
 }
 
 h3 {
-  font-size: clamp(1.5rem, 4vw, 1.75rem); // ~24–28px
+  font-size: clamp(24px, 4vw, 28px);
 }
 
 h4 {
-  font-size: clamp(1.25rem, 3vw, 1.5rem); // ~20–24px
+  font-size: clamp(20px, 3vw, 24px);
 }
 
 p {
-  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-size: clamp(16px, 2vw, 18px);
   font-weight: 300;
   margin: 0 0 1rem;
 }

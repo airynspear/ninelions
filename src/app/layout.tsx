@@ -55,7 +55,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ViewProvider>
             <Header />
-            {children}
+            <div className="scroll-container">{children}</div>
           </ViewProvider>
         </ThemeProvider>
       </body>

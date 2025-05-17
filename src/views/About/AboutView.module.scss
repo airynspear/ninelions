@@ -1,18 +1,226 @@
-.content {
-  position: relative;
-  min-height: 100vh;
-}
-
-.about .hexGrid {
-  transform: scale(0.85) rotate(8deg); // 👈 just an example
-  transition: transform 0.8s ease;
-}
-
-.overlay {
+.contentContainer {
+  width: 100%;
+  padding: 0 6rem 0 52%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--foreground);
-  text-align: center;
+  top: 220px;
+
+  opacity: 0;
+  animation: fadeInContent 0.8s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content {
+  max-width: 440px;
+}
+
+:global(.about) {
+  .hexCardOne {
+    --x: 256px;
+    --y: 194px;
+    z-index: 1;
+  }
+  .hexCardTwo {
+    --x: 240px;
+    --y: 24px;
+    z-index: 5;
+  }
+
+  .hexCardThree {
+    --x: 240px;
+    --y: 140px;
+    z-index: 3;
+  }
+
+  .hexCardFour {
+    --x: 275px;
+    --y: -15px;
+    z-index: 4;
+  }
+
+  .hexCardFive {
+    --x: 200px;
+    --y: 45px;
+    z-index: 6;
+    transform: scale(1) translate(var(--x), var(--y));
+  }
+
+  .hexCardSix {
+    --x: 275px;
+    --y: 245px;
+    z-index: 2;
+  }
+
+  .hexCardSeven {
+    --x: 191px;
+    --y: 81px;
+    z-index: 3;
+  }
+
+  .hexCardEight {
+    --x: 289px;
+    --y: 81px;
+    z-index: 3;
+  }
+
+  .hexCardNine {
+    --x: 255px;
+    --y: 0;
+    z-index: 3;
+  }
+}
+
+@media (max-width: 900px) {
+  .contentContainer {
+    top: 180px;
+  }
+}
+
+@media (max-width: 754px) {
+  .contentContainer {
+    padding: 0 4rem 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 480px;
+  }
+
+  .content {
+    max-width: 450px;
+  }
+
+  :global(.about) {
+    .hexCardOne {
+      --x: 164px;
+      --y: 96px;
+      z-index: 1;
+    }
+    .hexCardTwo {
+      --x: 300px;
+      --y: 82px;
+      z-index: 5;
+    }
+
+    .hexCardThree {
+      --x: 181px;
+      --y: 82px;
+      z-index: 3;
+    }
+
+    .hexCardFour {
+      --x: 408px;
+      --y: 116px;
+      z-index: 4;
+    }
+
+    .hexCardFive {
+      --x: 200px;
+      --y: 45px;
+      z-index: 6;
+      transform: scale(1) translate(var(--x), var(--y));
+    }
+
+    .hexCardSix {
+      --x: 144px;
+      --y: 115px;
+      z-index: 2;
+    }
+
+    .hexCardSeven {
+      --x: 241px;
+      --y: 129px;
+      z-index: 3;
+    }
+
+    .hexCardEight {
+      --x: 240px;
+      --y: 35px;
+      z-index: 3;
+    }
+
+    .hexCardNine {
+      --x: 349px;
+      --y: 98px;
+      z-index: 3;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .contentContainer {
+    padding: 0rem 2.2rem 0;
+    position: relative;
+    top: -60px;
+    z-index: 2;
+  }
+
+  :global(.about) {
+    .hexCardOne {
+      --x: 256px;
+      --y: 194px;
+      z-index: 1;
+    }
+    .hexCardTwo {
+      --x: 240px;
+      --y: 24px;
+      z-index: 5;
+    }
+
+    .hexCardThree {
+      --x: 240px;
+      --y: 140px;
+      z-index: 3;
+    }
+
+    .hexCardFour {
+      --x: 275px;
+      --y: -15px;
+      z-index: 4;
+    }
+
+    .hexCardFive {
+      --x: 200px;
+      --y: 45px;
+      z-index: 6;
+      transform: scale(1) translate(var(--x), var(--y));
+    }
+
+    .hexCardSix {
+      --x: 275px;
+      --y: 245px;
+      z-index: 2;
+    }
+
+    .hexCardSeven {
+      --x: 191px;
+      --y: 81px;
+      z-index: 3;
+    }
+
+    .hexCardEight {
+      --x: 289px;
+      --y: 81px;
+      z-index: 3;
+    }
+
+    .hexCardNine {
+      --x: 255px;
+      --y: 0;
+      z-index: 3;
+    }
+  }
 }

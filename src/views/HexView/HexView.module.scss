@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   z-index: 1;
-  top: 13rem;
+  top: 150px;
   left: -0.05rem;
   display: flex;
   flex-direction: column;
@@ -24,6 +24,8 @@
   width: 1040px;
   height: 540px;
   position: relative;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hexCard {
@@ -31,12 +33,11 @@
   height: 300px;
   position: absolute;
   z-index: 1;
+  transform: translate(var(--x), var(--y));
   perspective: 1000px;
-  transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 
   .cardInner {
-    transform: rotateY(90deg);
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
   }
@@ -48,21 +49,6 @@
       transform: rotateY(180deg);
     }
   }
-
-  &.flipInit {
-    .cardInner {
-      animation: flipOnce 0.8s ease forwards;
-    }
-  }
-}
-
-@keyframes flipOnce {
-  from {
-    transform: rotateY(90deg) scale(1);
-  }
-  to {
-    transform: rotateY(0deg) scale(1);
-  }
 }
 
 .cardFlipWrapper {
@@ -71,10 +57,6 @@
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.5s ease;
-}
-
-.hiddenText {
-  visibility: hidden;
 }
 
 .cardInner {
@@ -110,6 +92,7 @@
     background-position: center;
     z-index: -1;
     transform: rotate(var(--hex-rotation, 0deg));
+    //transform: rotate(30deg);
     transition: transform 0.5s ease-in-out;
   }
 }
@@ -128,7 +111,7 @@
   .icon {
     display: flex;
     font-size: 1.8rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     color: var(--foreground);
   }
 
@@ -138,6 +121,43 @@
     font-weight: 500;
     span {
       display: block;
+    }
+  }
+
+  .image {
+    opacity: 0;
+    width: 88.5%;
+    height: 95%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .hexMask {
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      -webkit-clip-path: polygon(
+        50% 0%,
+        93% 25%,
+        93% 75%,
+        50% 100%,
+        7% 75%,
+        7% 25%
+      );
+      transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+      transition: transform 0.5s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: rotate(calc(-30deg - var(--hex-rotation, 0deg)));
+      transition: transform 0.5s ease-in-out;
     }
   }
 }
@@ -159,12 +179,58 @@
   }
 }
 
-// === Positioning overrides ===
+// === hex overrides ===
+
+.hexCardOne {
+  --x: 57px;
+  --y: 156px;
+}
+
+.hexCardTwo {
+  --x: 183px;
+  --y: 41px;
+}
+
+.hexCardThree {
+  --x: 183px;
+  --y: 243px;
+  z-index: 2;
+}
+
+.hexCardFour {
+  --x: 430px;
+  --y: -54px;
+}
+
+.hexCardFive {
+  --x: 355px;
+  --y: 105px;
+}
+
+.hexCardSix {
+  --x: 430px;
+  --y: 402px;
+}
+
+.hexCardSeven {
+  --x: 607px;
+  --y: 41px;
+  z-index: 3;
+}
+
+.hexCardEight {
+  --x: 607px;
+  --y: 243px;
+  z-index: 3;
+}
+
+.hexCardNine {
+  --x: 770px;
+  --y: 156px;
+}
 
 .hexCardOne,
 .hexCardNine {
-  top: 28.7%;
-  left: 5.5%;
   min-width: 220px;
   height: 203px;
   .cardInner {
@@ -174,10 +240,6 @@
       }
     }
   }
-}
-
-.hexCardNine {
-  left: 74.2%;
 }
 
 .hexCardTwo,
@@ -197,8 +259,6 @@
 }
 
 .hexCardTwo {
-  top: 7.6%;
-  left: 17.6%;
   z-index: 4;
   .cardInner {
     .front {
@@ -209,31 +269,11 @@
   }
 }
 
-.hexCardThree {
-  top: 45%;
-  left: 17.5%;
-  z-index: 2;
-}
-
-.hexCardSeven {
-  top: 7.6%;
-  left: 58.3%;
-  z-index: 3;
-}
-
-.hexCardEight {
-  top: 45%;
-  left: 58.3%;
-  z-index: 3;
-}
-
 .hexCardFour,
 .hexCardSix {
   min-width: 180px;
   height: 166px;
   z-index: 2;
-  top: -10%;
-  left: 41.2%;
   .cardInner {
     .front {
       .icon {
@@ -254,15 +294,9 @@
   }
 }
 
-.hexCardSix {
-  top: 74.5%;
-}
-
 .hexCardFive {
   min-width: 330px;
   height: 305px;
-  top: calc(50% - 165px);
-  left: calc(50% - 165px);
   z-index: 5;
 
   .cardInner {
@@ -289,6 +323,173 @@
     }
   }
 }
+
+// === global page styles ===
+
+.hexCard {
+  &:hover {
+    .cardFlipWrapper {
+      :global(.about) & {
+        transform: none;
+      }
+    }
+  }
+}
+
+.hexGrid {
+  :global(.about) & {
+    width: 1080px;
+    transform: scale(1.25);
+  }
+}
+
+.hexCardFive {
+  .cardInner {
+    .front {
+      :global(.about) & {
+        padding: 0;
+      }
+    }
+  }
+}
+
+.image {
+  opacity: 0;
+
+  :global(.about) & {
+    animation: fadeIn 1.8s ease forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    :global(.about) & {
+      top: 80px;
+    }
+  }
+  .hexGrid {
+    :global(.about) & {
+      transform: scale(1);
+    }
+  }
+}
+
+@media (max-width: 754px) {
+  .hero {
+    :global(.about) & {
+      top: 1rem;
+    }
+  }
+  .hexGrid {
+    :global(.about) & {
+      width: 734px;
+    }
+  }
+  .front::before {
+    :global(.about) & {
+      transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+    }
+  }
+  .front {
+    .image {
+      .hexMask {
+        :global(.about) & {
+          transform: rotate(var(--hex-rotation, 0deg));
+        }
+      }
+
+      img {
+        :global(.about) & {
+          transform: rotate(calc(-1 * var(--hex-rotation, 0deg)));
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .hero {
+    :global(.about) & {
+      top: 3.3rem;
+    }
+  }
+  .front::before {
+    :global(.about) & {
+      transform: rotate(var(--hex-rotation, 0deg));
+    }
+  }
+  .front {
+    .image {
+      .hexMask {
+        :global(.about) & {
+          transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+        }
+      }
+
+      img {
+        :global(.about) & {
+          transform: rotate(calc(-30deg - var(--hex-rotation, 0deg)));
+        }
+      }
+    }
+  }
+}
+
+// === grid wave flip ===
+
+// .cardInner {
+//   :global(.home) & {
+//     transform: rotateY(90deg);
+//     animation: flipIn 0.8s ease forwards;
+//     animation-fill-mode: forwards;
+//   }
+// }
+
+// :global(.home) .hexCard:nth-child(1) .cardInner {
+//   animation-delay: 0.1s;
+// }
+// :global(.home) .hexCard:nth-child(2) .cardInner {
+//   animation-delay: 0.2s;
+// }
+// :global(.home) .hexCard:nth-child(3) .cardInner {
+//   animation-delay: 0.3s;
+// }
+// :global(.home) .hexCard:nth-child(4) .cardInner {
+//   animation-delay: 0.4s;
+// }
+// :global(.home) .hexCard:nth-child(5) .cardInner {
+//   animation-delay: 0.5s;
+// }
+// :global(.home) .hexCard:nth-child(6) .cardInner {
+//   animation-delay: 0.6s;
+// }
+// :global(.home) .hexCard:nth-child(7) .cardInner {
+//   animation-delay: 0.7s;
+// }
+// :global(.home) .hexCard:nth-child(8) .cardInner {
+//   animation-delay: 0.8s;
+// }
+// :global(.home) .hexCard:nth-child(9) .cardInner {
+//   animation-delay: 0.9s;
+// }
+
+// @keyframes flipIn {
+//   from {
+//     transform: rotateY(90deg);
+//   }
+//   to {
+//     transform: rotateY(0deg);
+//   }
+// }
 
 // === Decorative hex wrappers ===
 
@@ -361,44 +562,59 @@
 }
 
 @media (max-width: 945px) {
+  .front,
+  .back {
+    &::before {
+      transform: rotate(var(--hex-rotation, 30deg));
+      //transform: rotate(30deg);
+    }
+  }
   .hexCardOne {
-    top: 10.4rem;
-    left: 17.5%;
+    --x: 182px;
+    --y: 156px;
   }
+
   .hexCardTwo {
-    top: -5.4%;
-    left: 25%;
+    --x: 260px;
+    --y: -30px;
   }
+
   .hexCardThree {
-    top: 58%;
-    left: 25%;
+    --x: 260px;
+    --y: 314px;
   }
+
   .hexCardFour {
-    top: -12%;
-    left: 41.4%;
+    --x: 430px;
+    --y: -65px;
     z-index: 6;
   }
+
   .hexCardSix {
-    top: 76.6%;
-    left: 41.4%;
+    --x: 430px;
+    --y: 414px;
     z-index: 6;
   }
+
   .hexCardSeven {
-    top: -5.4%;
-    left: 51%;
+    --x: 530px;
+    --y: -30px;
   }
+
   .hexCardEight {
-    top: 57.5%;
-    left: 51%;
+    --x: 530px;
+    --y: 314px;
   }
+
   .hexCardNine {
-    left: 61.35%;
+    --x: 638px;
+    --y: 156px;
   }
 }
 
 @media (max-width: 670px) {
   .hero {
-    top: 12rem;
+    top: 7rem;
   }
   .hexGrid {
     transform: scale(0.85);
@@ -407,56 +623,53 @@
 
 @media (max-width: 600px) {
   .hero {
-    top: 15rem;
+    top: 10rem;
   }
+
   .hexGrid {
     transform: scale(0.75);
   }
 
   .hexCardOne {
-    top: 35.4rem;
-    left: 39.5%;
+    --x: 409px;
+    --y: 520px;
   }
+
   .hexCardTwo {
-    top: -13%;
-    left: 28.2%;
+    --x: 293px;
+    --y: -70px;
   }
+
   .hexCardThree {
-    top: 65.6%;
-    left: 28.2%;
+    --x: 293px;
+    --y: 354px;
     z-index: 4;
   }
+
   .hexCardFour {
-    top: 32%;
-    left: 60%;
+    --x: 624px;
+    --y: 173px;
     z-index: 2;
   }
+
   .hexCardSix {
-    top: 32%;
-    left: 23%;
+    --x: 238px;
+    --y: 173px;
     z-index: 2;
   }
+
   .hexCardSeven {
-    top: -13%;
-    left: 47.6%;
+    --x: 496px;
+    --y: -70px;
   }
+
   .hexCardEight {
-    top: 65.5%;
-    left: 47.6%;
+    --x: 496px;
+    --y: 355px;
   }
+
   .hexCardNine {
-    left: 39.5%;
-    top: -14.5rem;
+    --x: 409px;
+    --y: -208px;
   }
-}
-
-// === Shared styles here ===
-
-.home {
-}
-
-.about {
-}
-
-.portfolio {
 }

@@ -4,7 +4,7 @@
     <filter id="drop-shadow-1" x="-31.5" y="-15" width="709" height="628" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="0"/>
       <feGaussianBlur result="blur" stdDeviation="18"/>
-      <feFlood flood-color="#000" flood-opacity="1"/>
+      <feFlood flood-color="#000" flood-opacity=".75"/>
       <feComposite in2="blur" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>

@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./ConnectView.module.scss";
 
 export default function ConnectPage() {

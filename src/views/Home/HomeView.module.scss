@@ -1,0 +1,14 @@
+.cardInner {
+  :global(.home) & {
+    background-color: red;
+  }
+}
+
+@keyframes flipIn {
+  from {
+    transform: rotateY(90deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}

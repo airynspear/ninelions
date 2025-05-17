@@ -2,10 +2,15 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./HexView.module.scss";
+import homeStyles from "@/views/Home/HomeView.module.scss";
+import aboutStyles from "@/views/About/AboutView.module.scss";
+import portfolioStyles from "@/views/Portfolio/PortfolioView.module.scss";
+import connectStyles from "@/views/Connect/ConnectView.module.scss";
 
 export interface HexCard {
-  icon: React.ReactNode;
-  keyword: string | React.ReactElement;
+  icon?: React.ReactNode;
+  image?: string;
+  keyword?: string | React.ReactElement;
   description: string | React.ReactElement;
 }
 
@@ -26,39 +31,23 @@ const HEX_CARD_CLASSES = [
   "hexCardNine",
 ];
 
+const viewStylesMap: Record<string, any> = {
+  home: homeStyles,
+  about: aboutStyles,
+  portfolio: portfolioStyles,
+  connect: connectStyles,
+};
+
 export default function HexView({ cards, viewMode }: HexViewProps) {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [hideDescriptions, setHideDescriptions] = useState(true);
   const [rotation, setRotation] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    if (viewMode === "home") {
-      cards.forEach((_, i) => {
-        const card = cardRefs.current[i];
-        if (!card) return;
-
-        let enterDelay = i * 150;
-        if (i === 3) enterDelay = 2 * 150 + 75;
-        if (i === 6) enterDelay = 5 * 150 + 50;
-
-        setTimeout(() => {
-          card.classList.add(styles.flipInit);
-        }, enterDelay);
-      });
-
-      const t = setTimeout(() => setHideDescriptions(false), 8 * 150 + 600);
-      return () => clearTimeout(t);
-    } else {
-      setHideDescriptions(false);
-    }
-  }, [cards, viewMode]);
+  const viewStyles = viewStylesMap[viewMode] || {};
 
   useEffect(() => {
     const checkIsMobile = () => {
-      const mobile = window.innerWidth < 945;
-      setIsMobile(mobile);
-      setRotation(mobile ? 30 : 0);
+      setIsMobile(window.innerWidth < 945);
     };
 
     checkIsMobile();
@@ -67,24 +56,37 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
   }, []);
 
   useEffect(() => {
+    const shouldSnap = viewMode === "about" || isMobile;
+    const offset = rotation % 60;
+
+    if (shouldSnap && offset !== 30) {
+      const adjustment = (30 - offset + 60) % 60;
+      setRotation((prev) => prev + adjustment);
+    }
+  }, [isMobile, viewMode]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setRotation((prev) => prev + (isMobile ? 60 : 30));
+      const step = viewMode === "about" ? 60 : isMobile ? 60 : 30;
+      setRotation((prev) => prev + step);
     }, 9000);
+
     return () => clearInterval(interval);
-  }, [isMobile]);
+  }, [isMobile, viewMode]);
 
   return (
     <div
-      className={`${styles.background} ${styles[viewMode]}`}
+      className={`${styles.background} ${styles[viewMode] ?? ""} ${viewMode}`}
       style={{ "--hex-rotation": `${rotation}deg` } as React.CSSProperties}
     >
       <section className={styles.hero}>
         <div className={styles.hexGrid}>
           {cards.map((card, i) => {
-            const className =
-              i < HEX_CARD_CLASSES.length
-                ? `${styles.hexCard} ${styles[HEX_CARD_CLASSES[i]]}`
-                : styles.hexCard;
+            const hexClass = HEX_CARD_CLASSES[i];
+            const classNames = [styles.hexCard];
+
+            if (styles[hexClass]) classNames.push(styles[hexClass]);
+            if (viewStyles[hexClass]) classNames.push(viewStyles[hexClass]);
 
             return (
               <div
@@ -92,27 +94,29 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                 ref={(el) => {
                   cardRefs.current[i] = el;
                 }}
-                className={className}
+                className={classNames.join(" ")}
               >
-                <div className={styles.cardInner}>
-                  <div
-                    className={styles.cardFlipWrapper}
-                    style={{
-                      transform:
-                        viewMode === "home" ? undefined : "rotateY(-90deg)",
-                    }}
-                  >
+                <div className={`${styles.cardInner} cardInner`}>
+                  <div className={styles.cardFlipWrapper}>
                     <div className={styles.front}>
-                      <div className={styles.icon}>{card.icon}</div>
-                      <span className={styles.keyword}>{card.keyword}</span>
+                      {card.image ? (
+                        <div className={styles.image}>
+                          <div className={styles.hexMask}>
+                            <img src={card.image} alt="Hex Image" />
+                          </div>
+                        </div>
+                      ) : card.icon ? (
+                        <div className={styles.icon}>{card.icon}</div>
+                      ) : null}
+                      {card.keyword && (
+                        <span className={styles.keyword}>{card.keyword}</span>
+                      )}
                     </div>
                     <div className={styles.back}>
-                      <span
-                        className={hideDescriptions ? styles.hiddenText : ""}
-                      >
+                      {card.icon && (
                         <div className={styles.icon}>{card.icon}</div>
-                        {card.description}
-                      </span>
+                      )}
+                      {card.description}
                     </div>
                   </div>
                 </div>
