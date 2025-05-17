@@ -8,6 +8,16 @@
   position: fixed;
   top: 0;
   z-index: 1000;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 79px;
+    width: 100%;
+    background-color: var(--background);
+    z-index: -1;
+  }
 }
 
 .nav {
