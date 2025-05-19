@@ -30,13 +30,15 @@
 }
 
 .hexCard {
-  min-width: 100px;
+  width: 100px;
   height: 300px;
   position: absolute;
   z-index: 1;
   transform: translate(var(--x), var(--y));
   perspective: 1000px;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), width 0.6s ease,
+    height 0.6s ease;
 
   .cardInner {
     transform-style: preserve-3d;
@@ -326,6 +328,191 @@
 
 // === global page styles ===
 
+:global(.portfolio) {
+  .hexContainer {
+    transform: translate(-360px, -80px);
+    width: 100vw;
+    height: calc(100vh - 230px);
+
+    .hexScrollWrapper {
+      position: relative;
+      width: 620px;
+      height: 100%;
+
+      .hexScroll {
+        height: 100%;
+        width: 100%;
+        padding-top: 100px;
+        position: relative;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+    }
+  }
+
+  .hexScrollWrapper::before,
+  .hexScrollWrapper::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 240px;
+    height: 60px;
+    z-index: 22;
+    pointer-events: none;
+  }
+
+  .hexScrollWrapper::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--background), transparent);
+  }
+
+  .hexScrollWrapper::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--background), transparent);
+  }
+
+  @keyframes showFade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .hexCard {
+    cursor: pointer;
+    &.selected {
+    }
+    &:hover {
+      transform: translate(var(--x), var(--y)) scale(1.15);
+      z-index: 11;
+      .front {
+        .image {
+          img {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  // === portfolio card rotate off ===
+  .front,
+  .back {
+    &::before {
+      content: "";
+      transform: rotate(30deg); // no background rotation
+    }
+
+    .image .hexMask {
+      transform: rotate(0deg); // no mask rotation
+    }
+
+    .image img {
+      transform: rotate(0deg); // no image counter-rotation
+    }
+  }
+
+  .front {
+    .image {
+      img {
+        opacity: 0.9;
+        transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
+      }
+    }
+  }
+
+  .projectDetails {
+    position: absolute;
+    top: 160px;
+    left: 56%;
+    width: 600px;
+    transform: translate(-50%, 10px);
+    background: transparent;
+    color: var(--foreground);
+    z-index: 100;
+    opacity: 0;
+    animation: fadeInProject 0.6s ease-out forwards;
+
+    @keyframes fadeInProject {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+  }
+
+  @keyframes fadeInProject {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 20px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .projectImage {
+    width: 100%;
+    margin-bottom: 2rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+  }
+
+  .projectTitle {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .projectDescription {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: var(--foreground);
+    cursor: pointer;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+
+    &:hover {
+      color: var(--accent);
+    }
+
+    svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+}
+
+// === about ===
+
 :global(.about) .hexContainer {
   transform: translate(-200px, -80px);
   @media (max-width: 754px) {
@@ -339,19 +526,19 @@
 .hexCard {
   &:hover {
     .cardFlipWrapper {
-      :global(.about) & {
+      :global(.about) &,
+      :global(.portfolio) & {
         transform: none;
       }
     }
   }
 }
 
-.hexCardFive {
-  .cardInner {
-    .front {
-      :global(.about) & {
-        padding: 0;
-      }
+.cardInner {
+  .front {
+    :global(.about) &,
+    :global(.portfolio) & {
+      padding: 0;
     }
   }
 }
@@ -361,6 +548,10 @@
 
   :global(.about) & {
     animation: fadeIn 1.8s ease forwards;
+  }
+
+  :global(.portfolio) & {
+    opacity: 1;
   }
 }
 
