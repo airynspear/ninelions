@@ -7,7 +7,6 @@ import homeStyles from "@/views/Home/HomeView.module.scss";
 import aboutStyles from "@/views/About/AboutView.module.scss";
 import portfolioStyles from "@/views/Portfolio/PortfolioView.module.scss";
 import connectStyles from "@/views/Connect/ConnectView.module.scss";
-import { TfiAngleUp, TfiAngleDown } from "react-icons/tfi";
 import { RiTriangleLine } from "react-icons/ri";
 
 export interface HexCard {

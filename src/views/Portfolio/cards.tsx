@@ -49,7 +49,7 @@ export const PORTFOLIO_CARDS: HexCard[] = [
     keyword: "",
     description: (
       <>
-        A dynamic reimagining of Vail Resorts’ EpicMix app, focusing on
+        A dynamic reimagining of Vail Resorts&apos;s EpicMix app, focusing on
         personalized stats, lift tracking, and seamless resort integration
         across mobile and wearable devices.
       </>
