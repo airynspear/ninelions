@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <main className={styles.contentContainer}>
       <div className={styles.content}>
-        <h1>Airyn Spear</h1>
+        <h2>Airyn Spear</h2>
         <p>
           Innovative and detail-oriented UI Engineer and Design Technologist
           with over 15 years of experience bridging design and engineering.

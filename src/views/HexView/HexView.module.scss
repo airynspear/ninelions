@@ -34,8 +34,9 @@
   height: 300px;
   position: absolute;
   z-index: 1;
-  transform: translate(var(--x), var(--y));
+  transform: translate3d(var(--x), var(--y), 0);
   perspective: 1000px;
+  will-change: transform;
 
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), width 0.6s ease,
     height 0.6s ease;
@@ -51,6 +52,13 @@
     .cardFlipWrapper {
       transform: rotateY(180deg);
     }
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
 }
 
@@ -89,7 +97,7 @@
     position: absolute;
     inset: 0;
     transition: transform 0.5s ease;
-    background-image: url("/images/hex-light.svg");
+    background-image: url("/images/hex-light-new.svg");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -102,7 +110,7 @@
 
 [data-theme="dark"] .front::before,
 [data-theme="dark"] .back::before {
-  background-image: url("/images/hex-dark-new.svg");
+  background-image: url("/images/hex-dark.svg");
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 1));
 }
 
@@ -326,13 +334,87 @@
   }
 }
 
-// === global page styles ===
+// === about ===
+
+:global(.about) {
+  .hexContainer {
+    transform: translate(-240px, -80px);
+    @media (max-width: 754px) {
+      transform: translate(0px, -180px);
+    }
+    @media (max-width: 500px) {
+      transform: translate(0px, -120px);
+    }
+  }
+  .hexCard {
+    .front {
+      .image {
+        .hexMask {
+          :global(.border) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 754px) {
+  .front::before {
+    :global(.about) & {
+      transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+    }
+  }
+  .front {
+    .image {
+      .hexMask {
+        :global(.about) & {
+          transform: rotate(var(--hex-rotation, 0deg));
+        }
+      }
+
+      img {
+        :global(.about) & {
+          transform: rotate(calc(-1 * var(--hex-rotation, 0deg)));
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .front::before {
+    :global(.about) & {
+      transform: rotate(var(--hex-rotation, 0deg));
+    }
+  }
+  .front {
+    .image {
+      .hexMask {
+        :global(.about) & {
+          transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+        }
+      }
+
+      img {
+        :global(.about) & {
+          transform: rotate(calc(-30deg - var(--hex-rotation, 0deg)));
+        }
+      }
+    }
+  }
+}
+
+// === portfolio ===
 
 :global(.portfolio) {
+  .hexGrid {
+    transform: scale(0.85);
+  }
   .hexContainer {
-    transform: translate(-360px, -80px);
+    transform: translate(-540px, -160px);
     width: 100vw;
-    height: calc(100vh - 230px);
+    height: calc(100vh - 250px);
 
     .hexScrollWrapper {
       position: relative;
@@ -387,79 +469,147 @@
 
   .hexCard {
     cursor: pointer;
+
     &.selected {
-    }
-    &:hover {
-      transform: translate(var(--x), var(--y)) scale(1.15);
-      z-index: 11;
+      cursor: default;
+
       .front {
         .image {
-          img {
-            opacity: 1;
+          .hexMask {
+            :global(.border) {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    &:hover {
+      .front {
+        .image {
+          .hexMask {
+            :global(.border) {
+              opacity: 1;
+            }
           }
         }
       }
     }
   }
 
-  // === portfolio card rotate off ===
   .front,
   .back {
     &::before {
       content: "";
-      transform: rotate(30deg); // no background rotation
+      transform: rotate(30deg); // No background rotation
     }
 
     .image .hexMask {
-      transform: rotate(0deg); // no mask rotation
+      transform: rotate(0deg); // No mask rotation
     }
 
-    .image img {
-      transform: rotate(0deg); // no image counter-rotation
+    .image :global(img) {
+      transform: rotate(0deg) translateZ(0); // No image counter-rotation
     }
   }
 
   .front {
     .image {
-      img {
-        opacity: 0.9;
-        transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
+      position: relative;
+
+      .hexMask {
+        position: relative;
+
+        :global(.default) {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          z-index: 1;
+        }
+
+        :global(.border) {
+          position: absolute;
+          left: 1px !important;
+          inset: 0;
+          width: 99%;
+          height: 99%;
+          object-fit: cover;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.4s ease-in-out;
+          z-index: 2;
+        }
+      }
+    }
+  }
+
+  .projectWrapper {
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    width: 700px;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; // aligns chevronNav to the right
+    gap: 1rem;
+  }
+
+  .chevronNav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: -2.5rem;
+    top: 0.5rem;
+
+    .chevronButton {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--foreground);
+      cursor: pointer;
+      transition: color 0.9s ease;
+
+      &:hover {
+        color: var(--accent);
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+
+      svg {
+        width: 1.2rem;
+        height: 1.2rem;
+        transition: transform 0.9s ease;
+      }
+
+      &:last-child svg {
+        transform: rotate(180deg);
       }
     }
   }
 
   .projectDetails {
-    position: absolute;
-    top: 160px;
-    left: 56%;
-    width: 600px;
-    transform: translate(-50%, 10px);
+    width: 100%; // fill parent width
     background: transparent;
     color: var(--foreground);
-    z-index: 100;
     opacity: 0;
     animation: fadeInProject 0.6s ease-out forwards;
 
     @keyframes fadeInProject {
       from {
         opacity: 0;
-        transform: translate(-50%, 20px);
+        transform: translateY(10px);
       }
       to {
         opacity: 1;
-        transform: translate(-50%, 0);
+        transform: translateY(0);
       }
-    }
-  }
-
-  @keyframes fadeInProject {
-    from {
-      opacity: 0;
-      transform: translate(-50%, 20px);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, 0);
     }
   }
 
@@ -488,40 +638,9 @@
     line-height: 1.6;
     opacity: 0.85;
   }
-
-  .closeButton {
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    color: var(--foreground);
-    cursor: pointer;
-    margin-left: auto;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: flex-end;
-
-    &:hover {
-      color: var(--accent);
-    }
-
-    svg {
-      width: 1.2rem;
-      height: 1.2rem;
-    }
-  }
 }
 
-// === about ===
-
-:global(.about) .hexContainer {
-  transform: translate(-200px, -80px);
-  @media (max-width: 754px) {
-    transform: translate(0px, -180px);
-  }
-  @media (max-width: 500px) {
-    transform: translate(0px, -120px);
-  }
-}
+// === about & portfolio ===
 
 .hexCard {
   &:hover {
@@ -539,6 +658,15 @@
     :global(.about) &,
     :global(.portfolio) & {
       padding: 0;
+    }
+    .image {
+      .hexMask {
+        :global(.about) & {
+          .border {
+            display: none;
+          }
+        }
+      }
     }
   }
 }
@@ -561,52 +689,6 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-@media (max-width: 754px) {
-  .front::before {
-    :global(.about) & {
-      transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
-    }
-  }
-  .front {
-    .image {
-      .hexMask {
-        :global(.about) & {
-          transform: rotate(var(--hex-rotation, 0deg));
-        }
-      }
-
-      img {
-        :global(.about) & {
-          transform: rotate(calc(-1 * var(--hex-rotation, 0deg)));
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 500px) {
-  .front::before {
-    :global(.about) & {
-      transform: rotate(var(--hex-rotation, 0deg));
-    }
-  }
-  .front {
-    .image {
-      .hexMask {
-        :global(.about) & {
-          transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
-        }
-      }
-
-      img {
-        :global(.about) & {
-          transform: rotate(calc(-30deg - var(--hex-rotation, 0deg)));
-        }
-      }
-    }
   }
 }
 

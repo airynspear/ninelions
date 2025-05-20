@@ -7,7 +7,8 @@ import homeStyles from "@/views/Home/HomeView.module.scss";
 import aboutStyles from "@/views/About/AboutView.module.scss";
 import portfolioStyles from "@/views/Portfolio/PortfolioView.module.scss";
 import connectStyles from "@/views/Connect/ConnectView.module.scss";
-import { TfiClose } from "react-icons/tfi";
+import { TfiAngleUp, TfiAngleDown } from "react-icons/tfi";
+import { RiTriangleLine } from "react-icons/ri";
 
 export interface HexCard {
   icon?: React.ReactNode;
@@ -15,6 +16,7 @@ export interface HexCard {
   image?: string;
   keyword?: string | React.ReactElement;
   description: string | React.ReactElement;
+  themeImageDark?: string;
   themeThumbnailDark?: string;
 }
 
@@ -44,6 +46,7 @@ const viewStylesMap: Record<string, Record<string, string>> = {
 
 export default function HexView({ cards, viewMode }: HexViewProps) {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollRef = useRef<HTMLDivElement | null>(null); // NEW
   const [rotation, setRotation] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(
@@ -52,6 +55,36 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
 
   const viewStyles = viewStylesMap[viewMode] || {};
   const { theme } = useTheme();
+
+  const scrollAnimationFrame = useRef<number | null>(null);
+
+  const smoothScrollBy = (
+    element: HTMLElement,
+    deltaY: number,
+    duration = 1000
+  ) => {
+    if (scrollAnimationFrame.current) {
+      cancelAnimationFrame(scrollAnimationFrame.current);
+    }
+
+    const start = element.scrollTop;
+    const startTime = performance.now();
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      element.scrollTop = start + deltaY * ease;
+
+      if (progress < 1) {
+        scrollAnimationFrame.current = requestAnimationFrame(step);
+      } else {
+        scrollAnimationFrame.current = null;
+      }
+    };
+
+    scrollAnimationFrame.current = requestAnimationFrame(step);
+  };
 
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth < 945);
@@ -85,9 +118,39 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     }
   }, [viewMode, selectedCardIndex]);
 
+  useEffect(() => {
+    const cancelSmoothScroll = () => {
+      if (scrollAnimationFrame.current) {
+        cancelAnimationFrame(scrollAnimationFrame.current);
+        scrollAnimationFrame.current = null;
+      }
+    };
+
+    const scrollEl = scrollRef.current;
+    if (!scrollEl) return;
+
+    scrollEl.addEventListener("wheel", cancelSmoothScroll, { passive: true });
+    scrollEl.addEventListener("touchmove", cancelSmoothScroll, {
+      passive: true,
+    });
+
+    return () => {
+      scrollEl.removeEventListener("wheel", cancelSmoothScroll);
+      scrollEl.removeEventListener("touchmove", cancelSmoothScroll);
+    };
+  }, []);
+
   const handleCardClick = (index: number) => {
     if (viewMode === "portfolio") {
+      const previousIndex = selectedCardIndex;
       setSelectedCardIndex(index);
+
+      setTimeout(() => {
+        if (scrollRef.current && previousIndex !== null) {
+          const scrollDirection = index > previousIndex ? 110 : -110;
+          smoothScrollBy(scrollRef.current, scrollDirection, 1000);
+        }
+      }, 80);
     }
   };
 
@@ -100,7 +163,7 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
         <div className={styles.hexGrid}>
           <div className={styles.hexContainer}>
             <div className={styles.hexScrollWrapper}>
-              <div className={styles.hexScroll}>
+              <div className={styles.hexScroll} ref={scrollRef}>
                 {cards.map((card, i) => {
                   const hexClass = HEX_CARD_CLASSES[i];
                   const classNames = [styles.hexCard];
@@ -108,14 +171,21 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                   if (styles[hexClass]) classNames.push(styles[hexClass]);
                   if (viewStyles[hexClass])
                     classNames.push(viewStyles[hexClass]);
-                  if (viewMode === "portfolio" && selectedCardIndex === i) {
-                    classNames.push(styles.selected);
-                  }
 
-                  const imageSrc =
-                    theme === "dark" && card.themeThumbnailDark
-                      ? card.themeThumbnailDark
-                      : card.thumbnail || card.image;
+                  const isSelected =
+                    viewMode === "portfolio" && selectedCardIndex === i;
+                  if (isSelected) classNames.push(styles.selected);
+
+                  const baseLight = card.thumbnail || card.image;
+                  const baseDark = card.themeThumbnailDark || card.image;
+                  const imageSrc = theme === "dark" ? baseDark : baseLight;
+
+                  const borderSrc =
+                    viewMode === "portfolio"
+                      ? `/images/portfolio/border-${theme}.png`
+                      : viewMode === "about"
+                      ? `/images/about/border-${theme}.png`
+                      : null;
 
                   return (
                     <div
@@ -132,7 +202,20 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                             {imageSrc && (
                               <div className={styles.image}>
                                 <div className={styles.hexMask}>
-                                  <img src={imageSrc} alt="Project Thumbnail" />
+                                  <img
+                                    className="default"
+                                    src={imageSrc}
+                                    alt="Project Thumbnail"
+                                    loading="eager"
+                                  />
+                                  {borderSrc && (
+                                    <img
+                                      className="border"
+                                      src={borderSrc}
+                                      alt="Selected Overlay"
+                                      loading="eager"
+                                    />
+                                  )}
                                 </div>
                               </div>
                             )}
@@ -162,31 +245,72 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
         </div>
       </section>
       {selectedCardIndex !== null && viewMode === "portfolio" && (
-        <div
-          key={`project-${selectedCardIndex}`}
-          className={styles.projectDetails}
-        >
-          <button
-            className={styles.closeButton}
-            onClick={() => setSelectedCardIndex(null)}
+        <div className={styles.projectWrapper}>
+          <div className={styles.chevronNav}>
+            <button
+              className={styles.chevronButton}
+              onClick={() => {
+                if (selectedCardIndex > 0) {
+                  setSelectedCardIndex((prev) =>
+                    prev !== null ? prev - 1 : 0
+                  );
+                  setTimeout(() => {
+                    if (scrollRef.current) {
+                      smoothScrollBy(scrollRef.current, -110, 1000);
+                    }
+                  }, 80);
+                }
+              }}
+              disabled={selectedCardIndex === 0}
+              aria-label="Previous project"
+            >
+              <RiTriangleLine />
+            </button>
+            <button
+              className={styles.chevronButton}
+              onClick={() => {
+                if (selectedCardIndex < cards.length - 1) {
+                  setSelectedCardIndex((prev) =>
+                    prev !== null ? prev + 1 : cards.length - 1
+                  );
+                  setTimeout(() => {
+                    if (scrollRef.current) {
+                      smoothScrollBy(scrollRef.current, 110, 1000);
+                    }
+                  }, 80);
+                }
+              }}
+              disabled={selectedCardIndex === cards.length - 1}
+              aria-label="Next project"
+            >
+              <RiTriangleLine style={{ transform: "rotate(180deg)" }} />
+            </button>
+          </div>
+
+          <div
+            key={`project-${selectedCardIndex}`}
+            className={styles.projectDetails}
           >
-            <TfiClose />
-          </button>
+            {(cards[selectedCardIndex].image ||
+              cards[selectedCardIndex].themeImageDark) && (
+              <div className={styles.projectImage}>
+                <img
+                  src={
+                    theme === "dark" && cards[selectedCardIndex].themeImageDark
+                      ? cards[selectedCardIndex].themeImageDark
+                      : cards[selectedCardIndex].image
+                  }
+                  alt={`${cards[selectedCardIndex].keyword} full image`}
+                />
+              </div>
+            )}
 
-          {cards[selectedCardIndex].image && (
-            <div className={styles.projectImage}>
-              <img
-                src={cards[selectedCardIndex].image}
-                alt={`${cards[selectedCardIndex].keyword} full image`}
-              />
+            <h3 className={styles.projectTitle}>
+              {cards[selectedCardIndex].keyword}
+            </h3>
+            <div className={styles.projectDescription}>
+              {cards[selectedCardIndex].description}
             </div>
-          )}
-
-          <h3 className={styles.projectTitle}>
-            {cards[selectedCardIndex].keyword}
-          </h3>
-          <div className={styles.projectDescription}>
-            {cards[selectedCardIndex].description}
           </div>
         </div>
       )}
