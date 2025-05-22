@@ -8,14 +8,15 @@
       <feComposite in2="blur" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
+    <linearGradient id="New_Gradient_Swatch_1" data-name="New Gradient Swatch 1" x1="324.197" y1="39.23" x2="324.197" y2="558.845" gradientUnits="userSpaceOnUse">
+      <stop offset=".014" stop-color="#fba01d"/>
+      <stop offset=".791" stop-color="#ed2437"/>
+    </linearGradient>
   </defs>
   <g id="Layer_3" data-name="Layer 3">
     <polygon points="174.064 558.615 474.064 558.615 624.064 298.808 474.064 39 174.064 39 24.064 298.808 174.064 558.615" fill="#fff" filter="url(#drop-shadow-1)"/>
   </g>
   <g id="Layer_1_copy" data-name="Layer 1 copy">
-    <g>
-      <polygon points="175.063 557.345 25.929 299.037 175.063 40.729 473.331 40.729 622.465 299.037 473.331 557.345 175.063 557.345" fill="#fff" opacity=".27"/>
-      <path d="M472.465,42.23l148.268,256.808-148.268,256.808H175.929L27.661,299.037,175.929,42.23h296.536M474.197,39.23H174.197L24.197,299.037l150,259.808h300l150-259.808L474.197,39.23h0Z" fill="#d41f32"/>
-    </g>
+    <path d="M471.888,43.23l147.691,255.808-147.691,255.808H176.507L28.816,299.037,176.507,43.23h295.381M474.197,39.23H174.197L24.197,299.037l150,259.808h300l150-259.808L474.197,39.23h0Z" fill="url(#New_Gradient_Swatch_1)"/>
   </g>
 </svg>

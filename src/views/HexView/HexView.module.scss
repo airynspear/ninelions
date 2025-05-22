@@ -1,3 +1,6 @@
+@import "./_aboutHex";
+@import "./_portfolioHex";
+
 .hero {
   position: relative;
   z-index: 1;
@@ -23,6 +26,7 @@
   position: relative;
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .hexContainer {
@@ -96,7 +100,6 @@
     content: "";
     position: absolute;
     inset: 0;
-    transition: transform 0.5s ease;
     background-image: url("/images/hex-light-new.svg");
     background-repeat: no-repeat;
     background-size: contain;
@@ -111,7 +114,7 @@
 [data-theme="dark"] .front::before,
 [data-theme="dark"] .back::before {
   background-image: url("/images/hex-dark.svg");
-  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 1));
+  filter: drop-shadow(0px 0px 9px rgb(0, 0, 0));
 }
 
 .front {
@@ -122,7 +125,7 @@
     display: flex;
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
-    color: var(--foreground);
+    color: var(--accent);
   }
 
   .keyword {
@@ -159,6 +162,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      img {
+        pointer-events: none;
+        user-select: none;
+      }
     }
 
     img {
@@ -185,14 +192,117 @@
     justify-content: center;
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
-    color: var(--foreground);
+    color: var(--accent);
   }
 }
 
-// === hex overrides ===
+// === Hex Styles ===
+
+.hexagonWrapper {
+  position: relative;
+  width: 272px;
+  height: 272px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hexagonBorder {
+  width: 272px;
+  height: 272px;
+  background: var(--accent);
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.hexagon {
+  width: 270px;
+  height: 270px;
+  background: var(--background);
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  position: relative;
+  z-index: 1;
+}
+
+.background::after,
+.heroBackground::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.background::after {
+  bottom: 0;
+  right: 0;
+  width: 1440px;
+  height: 721px;
+  background-image: url("/images/landing-bg-light.png");
+  background-position: bottom right;
+}
+
+[data-theme="dark"] .background::after {
+  opacity: 0.3;
+  background-image: url("/images/landing-bg-dark.png");
+}
+
+.heroBackground::after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 900px;
+  background-image: url("/images/area-bg-light.png");
+  background-position: left 81px;
+}
+
+[data-theme="dark"] .heroBackground::after {
+  opacity: 0.3;
+  background-image: url("/images/area-bg-dark.png");
+}
+
+// === keyframes ===
+
+:global {
+  @keyframes fadeInAbout {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInPortfolio {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInProject {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// === hex positions ===
 
 .hexCardOne {
-  --x: 51px;
+  --x: 36px;
   --y: 156px;
 }
 
@@ -209,7 +319,7 @@
 
 .hexCardFour {
   --x: 430px;
-  --y: -54px;
+  --y: -60px;
 }
 
 .hexCardFive {
@@ -219,7 +329,7 @@
 
 .hexCardSix {
   --x: 430px;
-  --y: 402px;
+  --y: 410px;
 }
 
 .hexCardSeven {
@@ -235,9 +345,11 @@
 }
 
 .hexCardNine {
-  --x: 770px;
+  --x: 784px;
   --y: 156px;
 }
+
+// === hex specific styles ===
 
 .hexCardOne,
 .hexCardNine {
@@ -328,485 +440,10 @@
       padding: 1rem 3rem 2rem;
       line-height: 1.6rem;
       .icon {
-        font-size: 1.7rem;
+        font-size: 1.8rem;
       }
     }
   }
-}
-
-// === about ===
-
-:global(.about) {
-  .hexContainer {
-    transform: translate(-240px, -80px);
-    @media (max-width: 754px) {
-      transform: translate(0px, -180px);
-    }
-    @media (max-width: 500px) {
-      transform: translate(0px, -120px);
-    }
-  }
-  .hexCard {
-    .front {
-      .image {
-        .hexMask {
-          :global(.border) {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 754px) {
-  .front::before {
-    :global(.about) & {
-      transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
-    }
-  }
-  .front {
-    .image {
-      .hexMask {
-        :global(.about) & {
-          transform: rotate(var(--hex-rotation, 0deg));
-        }
-      }
-
-      img {
-        :global(.about) & {
-          transform: rotate(calc(-1 * var(--hex-rotation, 0deg)));
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 500px) {
-  .front::before {
-    :global(.about) & {
-      transform: rotate(var(--hex-rotation, 0deg));
-    }
-  }
-  .front {
-    .image {
-      .hexMask {
-        :global(.about) & {
-          transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
-        }
-      }
-
-      img {
-        :global(.about) & {
-          transform: rotate(calc(-30deg - var(--hex-rotation, 0deg)));
-        }
-      }
-    }
-  }
-}
-
-// === portfolio ===
-
-:global(.portfolio) {
-  .hexGrid {
-    transform: scale(0.85);
-  }
-  .hexContainer {
-    transform: translate(-540px, -160px);
-    width: 100vw;
-    height: calc(100vh - 250px);
-
-    .hexScrollWrapper {
-      position: relative;
-      width: 620px;
-      height: 100%;
-
-      .hexScroll {
-        height: 100%;
-        width: 100%;
-        padding-top: 100px;
-        position: relative;
-        overflow-y: scroll;
-
-        &::-webkit-scrollbar {
-          display: none;
-        }
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-    }
-  }
-
-  .hexScrollWrapper::before,
-  .hexScrollWrapper::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    width: 240px;
-    height: 60px;
-    z-index: 22;
-    pointer-events: none;
-  }
-
-  .hexScrollWrapper::before {
-    top: 0;
-    background: linear-gradient(to bottom, var(--background), transparent);
-  }
-
-  .hexScrollWrapper::after {
-    bottom: 0;
-    background: linear-gradient(to top, var(--background), transparent);
-  }
-
-  @keyframes showFade {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  .hexCard {
-    cursor: pointer;
-
-    &.selected {
-      cursor: default;
-
-      .front {
-        .image {
-          .hexMask {
-            :global(.border) {
-              opacity: 1;
-            }
-          }
-        }
-      }
-    }
-
-    &:hover {
-      .front {
-        .image {
-          .hexMask {
-            :global(.border) {
-              opacity: 1;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .front,
-  .back {
-    &::before {
-      content: "";
-      transform: rotate(30deg); // No background rotation
-    }
-
-    .image .hexMask {
-      transform: rotate(0deg); // No mask rotation
-    }
-
-    .image :global(img) {
-      transform: rotate(0deg) translateZ(0); // No image counter-rotation
-    }
-  }
-
-  .front {
-    .image {
-      position: relative;
-
-      .hexMask {
-        position: relative;
-
-        :global(.default) {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          z-index: 1;
-        }
-
-        :global(.border) {
-          position: absolute;
-          left: 1px !important;
-          inset: 0;
-          width: 99%;
-          height: 99%;
-          object-fit: cover;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.4s ease-in-out;
-          z-index: 2;
-        }
-      }
-    }
-  }
-
-  .projectWrapper {
-    position: absolute;
-    top: 160px;
-    left: 50%;
-    width: 700px;
-    transform: translateX(-50%);
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; // aligns chevronNav to the right
-    gap: 1rem;
-  }
-
-  .chevronNav {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: -2.5rem;
-    top: 0.5rem;
-
-    .chevronButton {
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--foreground);
-      cursor: pointer;
-      transition: color 0.9s ease;
-
-      &:hover {
-        color: var(--accent);
-      }
-
-      &:disabled {
-        opacity: 0.3;
-        cursor: default;
-      }
-
-      svg {
-        width: 1.2rem;
-        height: 1.2rem;
-        transition: transform 0.9s ease;
-      }
-
-      &:last-child svg {
-        transform: rotate(180deg);
-      }
-    }
-  }
-
-  .projectDetails {
-    width: 100%; // fill parent width
-    background: transparent;
-    color: var(--foreground);
-    opacity: 0;
-    animation: fadeInProject 0.6s ease-out forwards;
-
-    @keyframes fadeInProject {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  }
-
-  .projectImage {
-    width: 100%;
-    margin-bottom: 2rem;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      border-radius: inherit;
-    }
-  }
-
-  .projectTitle {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-  }
-
-  .projectDescription {
-    font-size: 1rem;
-    line-height: 1.6;
-    opacity: 0.85;
-  }
-}
-
-// === about & portfolio ===
-
-.hexCard {
-  &:hover {
-    .cardFlipWrapper {
-      :global(.about) &,
-      :global(.portfolio) & {
-        transform: none;
-      }
-    }
-  }
-}
-
-.cardInner {
-  .front {
-    :global(.about) &,
-    :global(.portfolio) & {
-      padding: 0;
-    }
-    .image {
-      .hexMask {
-        :global(.about) & {
-          .border {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-}
-
-.image {
-  opacity: 0;
-
-  :global(.about) & {
-    animation: fadeIn 1.8s ease forwards;
-  }
-
-  :global(.portfolio) & {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-// === grid wave flip ===
-
-// .cardInner {
-//   :global(.home) & {
-//     transform: rotateY(90deg);
-//     animation: flipIn 0.8s ease forwards;
-//     animation-fill-mode: forwards;
-//   }
-// }
-
-// :global(.home) .hexCard:nth-child(1) .cardInner {
-//   animation-delay: 0.1s;
-// }
-// :global(.home) .hexCard:nth-child(2) .cardInner {
-//   animation-delay: 0.2s;
-// }
-// :global(.home) .hexCard:nth-child(3) .cardInner {
-//   animation-delay: 0.3s;
-// }
-// :global(.home) .hexCard:nth-child(4) .cardInner {
-//   animation-delay: 0.4s;
-// }
-// :global(.home) .hexCard:nth-child(5) .cardInner {
-//   animation-delay: 0.5s;
-// }
-// :global(.home) .hexCard:nth-child(6) .cardInner {
-//   animation-delay: 0.6s;
-// }
-// :global(.home) .hexCard:nth-child(7) .cardInner {
-//   animation-delay: 0.7s;
-// }
-// :global(.home) .hexCard:nth-child(8) .cardInner {
-//   animation-delay: 0.8s;
-// }
-// :global(.home) .hexCard:nth-child(9) .cardInner {
-//   animation-delay: 0.9s;
-// }
-
-// @keyframes flipIn {
-//   from {
-//     transform: rotateY(90deg);
-//   }
-//   to {
-//     transform: rotateY(0deg);
-//   }
-// }
-
-// === Decorative hex wrappers ===
-
-.hexagonWrapper {
-  position: relative;
-  width: 272px;
-  height: 272px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hexagonBorder {
-  width: 272px;
-  height: 272px;
-  background: var(--accent);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.hexagon {
-  width: 270px;
-  height: 270px;
-  background: var(--background);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  position: relative;
-  z-index: 1;
-}
-
-.background::after,
-.heroBackground::after {
-  content: "";
-  position: fixed;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.background::after {
-  bottom: 0;
-  right: 0;
-  width: 1440px;
-  height: 721px;
-  background-image: url("/images/landing-bg-light.png");
-  background-position: bottom right;
-}
-
-[data-theme="dark"] .background::after {
-  opacity: 0.3;
-  background-image: url("/images/landing-bg-dark.png");
-}
-
-.heroBackground::after {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 900px;
-  background-image: url("/images/area-bg-light.png");
-  background-position: left 81px;
-}
-
-[data-theme="dark"] .heroBackground::after {
-  opacity: 0.3;
-  background-image: url("/images/area-bg-dark.png");
 }
 
 @media (max-width: 945px) {
@@ -814,7 +451,6 @@
   .back {
     &::before {
       transform: rotate(var(--hex-rotation, 30deg));
-      //transform: rotate(30deg);
     }
   }
   .hexCardOne {
@@ -883,9 +519,6 @@
   :global(.about) .hero {
     top: 8rem;
   }
-  // :global(.about) .hexGrid {
-  //   transform: scale(1);
-  // }
 
   .hexGrid {
     transform: scale(0.75);
@@ -934,3 +567,50 @@
     --y: -208px;
   }
 }
+
+// === grid wave flip ===
+
+// .cardInner {
+//   :global(.home) & {
+//     transform: rotateY(90deg);
+//     animation: flipIn 0.8s ease forwards;
+//     animation-fill-mode: forwards;
+//   }
+// }
+
+// :global(.home) .hexCard:nth-child(1) .cardInner {
+//   animation-delay: 0.1s;
+// }
+// :global(.home) .hexCard:nth-child(2) .cardInner {
+//   animation-delay: 0.2s;
+// }
+// :global(.home) .hexCard:nth-child(3) .cardInner {
+//   animation-delay: 0.3s;
+// }
+// :global(.home) .hexCard:nth-child(4) .cardInner {
+//   animation-delay: 0.4s;
+// }
+// :global(.home) .hexCard:nth-child(5) .cardInner {
+//   animation-delay: 0.5s;
+// }
+// :global(.home) .hexCard:nth-child(6) .cardInner {
+//   animation-delay: 0.6s;
+// }
+// :global(.home) .hexCard:nth-child(7) .cardInner {
+//   animation-delay: 0.7s;
+// }
+// :global(.home) .hexCard:nth-child(8) .cardInner {
+//   animation-delay: 0.8s;
+// }
+// :global(.home) .hexCard:nth-child(9) .cardInner {
+//   animation-delay: 0.9s;
+// }
+
+// @keyframes flipIn {
+//   from {
+//     transform: rotateY(90deg);
+//   }
+//   to {
+//     transform: rotateY(0deg);
+//   }
+// }

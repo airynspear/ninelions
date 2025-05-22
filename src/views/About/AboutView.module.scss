@@ -83,9 +83,9 @@
   }
 }
 
-@media (max-width: 900px) {
-  .contentContainer {
-    padding: 9rem 5rem 4rem 50%;
+@media (max-width: 1080px) {
+  .content {
+    max-width: 350px;
   }
 }
 

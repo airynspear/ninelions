@@ -7,6 +7,8 @@
 
   --accent: #ca1a2e;
 
+  --icon: #aa0000;
+
   --switch-track: #f3532e;
   --switch-thumb: #fff;
 
@@ -25,6 +27,8 @@
   --foreground: #ededed;
 
   --accent: #08c6b6;
+
+  --icon: #08c6b6;
 
   --switch-track: #006573;
   --switch-thumb: #9afff4;
@@ -67,6 +71,7 @@ html {
 }
 
 * {
+  cursor: inherit;
   box-sizing: border-box;
   padding: 0;
   margin: 0;

@@ -1,0 +1,76 @@
+:global(.about) {
+  .hexContainer {
+    transform: translate(-240px, -80px);
+    @media (max-width: 1080px) {
+      transform: translate(-180px, -80px);
+    }
+    @media (max-width: 754px) {
+      transform: translate(0px, -180px);
+    }
+    @media (max-width: 500px) {
+      transform: translate(0px, -120px);
+    }
+  }
+  .hexCard {
+    .cardInner {
+      .front {
+        padding: 0;
+        .image {
+          animation: fadeInAbout 1.8s ease forwards;
+        }
+      }
+    }
+
+    &:hover {
+      .cardFlipWrapper {
+        transform: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 754px) {
+  .front::before {
+    :global(.about) & {
+      transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+    }
+  }
+  .front {
+    .image {
+      .hexMask {
+        :global(.about) & {
+          transform: rotate(var(--hex-rotation, 0deg));
+        }
+      }
+
+      img {
+        :global(.about) & {
+          transform: rotate(calc(-1 * var(--hex-rotation, 0deg)));
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .front::before {
+    :global(.about) & {
+      transform: rotate(var(--hex-rotation, 0deg));
+    }
+  }
+  .front {
+    .image {
+      .hexMask {
+        :global(.about) & {
+          transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+        }
+      }
+
+      img {
+        :global(.about) & {
+          transform: rotate(calc(-30deg - var(--hex-rotation, 0deg)));
+        }
+      }
+    }
+  }
+}

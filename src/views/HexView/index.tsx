@@ -7,7 +7,7 @@ import homeStyles from "@/views/Home/HomeView.module.scss";
 import aboutStyles from "@/views/About/AboutView.module.scss";
 import portfolioStyles from "@/views/Portfolio/PortfolioView.module.scss";
 import connectStyles from "@/views/Connect/ConnectView.module.scss";
-import { RiTriangleLine } from "react-icons/ri";
+import { RiTriangleLine, RiTriangleFill } from "react-icons/ri";
 
 export interface HexCard {
   icon?: React.ReactNode;
@@ -52,10 +52,10 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     null
   );
 
-  const viewStyles = viewStylesMap[viewMode] || {};
   const { theme } = useTheme();
-
+  const viewStyles = viewStylesMap[viewMode] || {};
   const scrollAnimationFrame = useRef<number | null>(null);
+  const lastScrollTop = useRef<number | null>(null);
 
   const smoothScrollBy = (
     element: HTMLElement,
@@ -85,6 +85,21 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     scrollAnimationFrame.current = requestAnimationFrame(step);
   };
 
+  const handleCardClick = (index: number) => {
+    if (viewMode === "portfolio") {
+      const previousIndex = selectedCardIndex;
+      setSelectedCardIndex(index);
+
+      setTimeout(() => {
+        if (scrollRef.current && previousIndex !== null) {
+          const scrollDirection = index > previousIndex ? 120 : -140;
+          smoothScrollBy(scrollRef.current, scrollDirection, 1000);
+        }
+      }, 80);
+    }
+  };
+
+  // Detect mobile layout and update isMobile state
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth < 945);
     checkIsMobile();
@@ -92,6 +107,7 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  // Snap rotation to align hexes based on viewMode and device type
   useEffect(() => {
     const shouldSnap =
       viewMode === "about" || viewMode === "portfolio" || isMobile;
@@ -100,8 +116,9 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
       const adjustment = (30 - offset + 60) % 60;
       setRotation((prev) => prev + adjustment);
     }
-  }, [isMobile, viewMode]);
+  }, [isMobile, viewMode, rotation]);
 
+  // Animate background hex rotation every 9s
   useEffect(() => {
     const interval = setInterval(() => {
       const step =
@@ -111,12 +128,33 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     return () => clearInterval(interval);
   }, [isMobile, viewMode]);
 
+  // Save scroll position when leaving portfolio view
   useEffect(() => {
-    if (viewMode === "portfolio" && selectedCardIndex === null) {
-      setSelectedCardIndex(0);
-    }
-  }, [viewMode, selectedCardIndex]);
+    const scrollEl = scrollRef.current;
 
+    return () => {
+      if (viewMode === "portfolio" && scrollEl) {
+        lastScrollTop.current = scrollEl.scrollTop;
+      }
+    };
+  }, [viewMode]);
+
+  // Reset selectedCardIndex and scroll to stored position on entering portfolio view
+  useEffect(() => {
+    if (viewMode === "portfolio") {
+      const scrollTo = lastScrollTop.current ?? 0;
+      setSelectedCardIndex(0);
+
+      if (scrollRef.current) {
+        scrollRef.current.scrollTo({
+          top: scrollTo ?? 200,
+          behavior: "instant",
+        });
+      }
+    }
+  }, [viewMode]);
+
+  // Cancel smooth scroll animations on user wheel/touch interactions
   useEffect(() => {
     const cancelSmoothScroll = () => {
       if (scrollAnimationFrame.current) {
@@ -138,20 +176,6 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
       scrollEl.removeEventListener("touchmove", cancelSmoothScroll);
     };
   }, []);
-
-  const handleCardClick = (index: number) => {
-    if (viewMode === "portfolio") {
-      const previousIndex = selectedCardIndex;
-      setSelectedCardIndex(index);
-
-      setTimeout(() => {
-        if (scrollRef.current && previousIndex !== null) {
-          const scrollDirection = index > previousIndex ? 110 : -110;
-          smoothScrollBy(scrollRef.current, scrollDirection, 1000);
-        }
-      }, 80);
-    }
-  };
 
   return (
     <div
@@ -182,8 +206,6 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                   const borderSrc =
                     viewMode === "portfolio"
                       ? `/images/portfolio/border-${theme}.png`
-                      : viewMode === "about"
-                      ? `/images/about/border-${theme}.png`
                       : null;
 
                   return (
@@ -238,6 +260,7 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                     </div>
                   );
                 })}
+                <div className={styles.hexScrollSpace} />
               </div>
             </div>
           </div>
@@ -264,9 +287,10 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
               aria-label="Previous project"
             >
               <RiTriangleLine />
+              <RiTriangleFill className={styles.innerTriangle} />
             </button>
             <button
-              className={styles.chevronButton}
+              className={`${styles.chevronButton} ${styles.downTriangle}`}
               onClick={() => {
                 if (selectedCardIndex < cards.length - 1) {
                   setSelectedCardIndex((prev) =>
@@ -282,7 +306,8 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
               disabled={selectedCardIndex === cards.length - 1}
               aria-label="Next project"
             >
-              <RiTriangleLine style={{ transform: "rotate(180deg)" }} />
+              <RiTriangleLine />
+              <RiTriangleFill className={styles.innerTriangle} />
             </button>
           </div>
 

@@ -20,18 +20,28 @@ export default function Header() {
   const [hoveredRect, setHoveredRect] = useState<DOMRect | null>(null);
   const [activeRect, setActiveRect] = useState<DOMRect | null>(null);
 
+  // Determine if user is on desktop and handle window resize
   useEffect(() => {
     const handleResize = () => {
       const isWide = window.innerWidth > 754;
       setIsDesktop(isWide);
+      setHoveredRect(null);
+
+      const activeBtn = document.querySelector(`[data-view="${view}"]`);
+      if (activeBtn) {
+        const rect = (activeBtn as HTMLElement).getBoundingClientRect();
+        setActiveRect(rect);
+      }
+
       if (isWide) setMobileMenuOpen(false);
     };
 
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [view]);
 
+  // Update underline based on current view (with delay for "home" view)
   useEffect(() => {
     let timeout: NodeJS.Timeout | null = null;
 
@@ -54,6 +64,7 @@ export default function Header() {
     };
   }, [view]);
 
+  // Position the underline visually based on either hover or active button
   useEffect(() => {
     const target = hoveredRect || activeRect;
     const underline = underlineRef.current;
@@ -66,6 +77,7 @@ export default function Header() {
     }
   }, [hoveredRect, activeRect]);
 
+  // Update active underline position when desktop mode is detected
   useEffect(() => {
     if (isDesktop) {
       const activeBtn = document.querySelector(`[data-view="${view}"]`);
@@ -78,6 +90,7 @@ export default function Header() {
     }
   }, [isDesktop, view]);
 
+  // Extra underline position fix on desktop (small delay after mount)
   useEffect(() => {
     if (isDesktop) {
       setTimeout(() => {
@@ -88,7 +101,7 @@ export default function Header() {
         }
       }, 50);
     }
-  }, [isDesktop]);
+  }, [isDesktop, view]);
 
   return (
     <header className={styles.header}>

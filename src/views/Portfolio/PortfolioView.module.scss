@@ -30,50 +30,50 @@
 :global(.portfolio) {
   .hexCardOne {
     --x: 357px;
-    --y: -54px;
+    --y: 46px;
   }
 
   .hexCardTwo {
     --x: 430px;
-    --y: 80px;
+    --y: 180px;
   }
 
   .hexCardThree {
     --x: 357px;
-    --y: 214px;
+    --y: 314px;
     z-index: 2;
   }
 
   .hexCardFour {
     --x: 430px;
-    --y: 348px;
+    --y: 448px;
   }
 
   .hexCardFive {
     --x: 357px;
-    --y: 482px;
+    --y: 582px;
   }
 
   .hexCardSix {
     --x: 430px;
-    --y: 616px;
+    --y: 716px;
   }
 
   .hexCardSeven {
     --x: 357px;
-    --y: 750px;
+    --y: 850px;
     z-index: 3;
   }
 
   .hexCardEight {
     --x: 430px;
-    --y: 884px;
+    --y: 984px;
     z-index: 3;
   }
 
   .hexCardNine {
     --x: 357px;
-    --y: 1018px;
+    --y: 1118px;
   }
 
   .hexCardOne,
@@ -87,6 +87,55 @@
     height: 166px;
   }
 }
+
+// @media (max-width: 1080px) {
+//   :global(.portfolio) {
+//     .hexCardOne {
+//       --x: 30px;
+//       --y: 26px;
+//     }
+
+//     .hexCardTwo {
+//       --x: 184px;
+//       --y: 26px;
+//     }
+
+//     .hexCardThree {
+//       --x: 338px;
+//       --y: 26px;
+//     }
+
+//     .hexCardFour {
+//       --x: 492px;
+//       --y: 26px;
+//     }
+
+//     .hexCardFive {
+//       --x: 646px;
+//       --y: 26px;
+//     }
+
+//     .hexCardSix {
+//       --x: 800px;
+//       --y: 26px;
+//     }
+
+//     .hexCardSeven {
+//       --x: 954px;
+//       --y: 26px;
+//     }
+
+//     .hexCardEight {
+//       --x: 1108px;
+//       --y: 26px;
+//     }
+
+//     .hexCardNine {
+//       --x: 1262px;
+//       --y: 26px;
+//     }
+//   }
+// }
 
 // @media (max-width: 900px) {
 //   .contentContainer {

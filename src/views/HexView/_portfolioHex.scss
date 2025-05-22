@@ -1,0 +1,319 @@
+:global(.portfolio) {
+  .hexGrid {
+    transform: scale(0.75);
+  }
+  .hexContainer {
+    transform: translate(-540px, -180px);
+    width: 100%;
+    height: calc(100vh - 240px);
+
+    .hexScrollWrapper {
+      position: relative;
+      width: 620px;
+      height: 100%;
+
+      .hexScroll {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .hexScrollSpace {
+        min-width: 250px;
+        height: 370px;
+        position: absolute;
+        z-index: -1;
+        transform: translate3d(357px, 1288px, 0);
+        pointer-events: none;
+        opacity: 0;
+      }
+    }
+  }
+
+  .hexScrollWrapper::before,
+  .hexScrollWrapper::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 22;
+    pointer-events: none;
+  }
+
+  .hexScrollWrapper::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--background), transparent);
+  }
+
+  .hexScrollWrapper::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--background), transparent);
+  }
+
+  .hexCard {
+    cursor: pointer;
+
+    &.selected,
+    &:hover {
+      .front {
+        .image {
+          .hexMask {
+            :global(.border) {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    &.selected {
+      cursor: default;
+    }
+
+    &:hover {
+      .cardFlipWrapper {
+        transform: none;
+      }
+    }
+  }
+
+  .front {
+    padding: 0 !important;
+    .image {
+      opacity: 1;
+      animation: fadeInPortfolio 1.8s ease forwards !important;
+      position: relative;
+
+      .hexMask {
+        position: relative;
+
+        :global(.default) {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          z-index: 1;
+        }
+
+        :global(.border) {
+          position: absolute;
+          left: 1px !important;
+          inset: 0;
+          width: 99%;
+          height: 99%;
+          object-fit: cover;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.4s ease-in-out;
+          z-index: 2;
+        }
+      }
+    }
+  }
+
+  // === Project ===
+
+  .projectWrapper {
+    position: absolute;
+    top: 163px;
+    left: 50%;
+    width: 630px;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: left 0.6s ease-in-out, top 0.6s ease-in-out,
+      width 0.6s ease-in-out;
+  }
+
+  .chevronNav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: -48px;
+    top: 12px;
+    transition: right 0.6s ease-in-out, top 0.6s ease-in-out;
+
+    .chevronButton {
+      display: flex;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 3px 0;
+      position: relative;
+      z-index: 200;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--accent);
+      cursor: pointer;
+      transition: font-size 0.6s ease;
+
+      svg {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.9s ease;
+      }
+
+      .innerTriangle {
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        left: 11px;
+        bottom: 2px;
+        opacity: 0;
+        transition: top 0.6s ease, bottom 0.6s ease, opacity 0.6s ease;
+      }
+
+      &.downTriangle {
+        transform: rotate(180deg);
+        .innerTriange {
+          bottom: -1px;
+        }
+      }
+
+      &:hover {
+        .innerTriangle {
+          opacity: 1;
+          bottom: 9px;
+        }
+        .downTriangle {
+          .innerTriangle {
+            bottom: 6.5px;
+          }
+        }
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: default;
+        .innerTriangle {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .projectDetails {
+    width: 100%;
+    background: transparent;
+    color: var(--foreground);
+    opacity: 0;
+    animation: fadeInProject 0.6s ease-out forwards;
+  }
+
+  .projectImage {
+    width: 100%;
+    margin-bottom: 2rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+  }
+
+  .projectTitle {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .projectDescription {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  // === Responsive ===
+
+  @media (max-width: 1080px) {
+    .hexGrid {
+      transform: scale(0.55);
+    }
+    .hexContainer {
+      transform: translate(-440px, -370px);
+      width: 100%;
+      height: calc(100vh - 200px);
+    }
+
+    .projectWrapper {
+      width: 450px;
+      left: 58%;
+    }
+  }
+
+  @media (max-width: 754px) {
+    .hexGrid {
+      opacity: 0;
+    }
+
+    .projectWrapper {
+      width: 450px;
+      left: 50%;
+    }
+    .chevronNav {
+      right: 0.5rem;
+      top: -3rem;
+      flex-direction: row;
+      .chevronButton {
+        top: -9px;
+        left: 4px;
+        .innerTriangle {
+          width: 16px;
+          height: 16px;
+          left: 10px;
+          bottom: -3px;
+        }
+        &:hover {
+          .innerTriangle {
+            bottom: 5px;
+          }
+          &.downTriangle {
+            .innerTriangle {
+              bottom: 5px;
+            }
+          }
+        }
+        svg {
+          width: 36px;
+          height: 36px;
+        }
+        &.downTriangle {
+          top: 0;
+          left: 0;
+          .innerTriangle {
+            bottom: -3px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .projectWrapper {
+      top: 180px;
+      width: 360px;
+    }
+    .chevronNav {
+      right: 0.5rem;
+      top: -3rem;
+      flex-direction: row;
+      .chevronButton {
+        font-size: 2.4rem;
+      }
+    }
+  }
+}
