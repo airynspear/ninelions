@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/Theme/ThemeProvider";
+import Image from "next/image";
 import styles from "./HexView.module.scss";
 import homeStyles from "@/views/Home/HomeView.module.scss";
 import aboutStyles from "@/views/About/AboutView.module.scss";
@@ -318,13 +319,24 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
             {(cards[selectedCardIndex].image ||
               cards[selectedCardIndex].themeImageDark) && (
               <div className={styles.projectImage}>
-                <img
+                <Image
                   src={
                     theme === "dark" && cards[selectedCardIndex].themeImageDark
                       ? cards[selectedCardIndex].themeImageDark
-                      : cards[selectedCardIndex].image
+                      : cards[selectedCardIndex].image!
                   }
-                  alt={`${cards[selectedCardIndex].keyword} full image`}
+                  alt={`${
+                    cards[selectedCardIndex].keyword || "Project"
+                  } full image`}
+                  width={1200}
+                  height={800}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 50vw"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "contain",
+                  }}
+                  priority
                 />
               </div>
             )}

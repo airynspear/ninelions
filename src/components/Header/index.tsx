@@ -239,7 +239,7 @@ export default function Header() {
             checked={theme === "light"}
             onChange={() => {
               toggleTheme();
-              setMobileMenuOpen(false); // 👈 close menu on theme toggle
+              setMobileMenuOpen(false);
             }}
           />
         </div>
