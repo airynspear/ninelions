@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext({
-  theme: "light",
+  theme: "dark",
   toggleTheme: () => {},
 });
 
@@ -16,7 +16,7 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -24,10 +24,14 @@ export default function ThemeProvider({
       | "light"
       | "dark"
       | null;
-    const preferredTheme = storedTheme || "light"; // ✅ fixed
 
+    const preferredTheme = storedTheme || "dark"; // ✅ default is now dark
     setTheme(preferredTheme);
+
     document.documentElement.setAttribute("data-theme", preferredTheme);
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(preferredTheme);
+
     setIsHydrated(true);
   }, []);
 

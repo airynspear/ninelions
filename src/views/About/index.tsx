@@ -8,15 +8,13 @@ export default function AboutPage() {
       <div className={styles.content}>
         <h2>Airyn Spear</h2>
         <p>
-          Innovative and detail-oriented UI Engineer and Design Technologist
-          with over 15 years of experience bridging design and engineering.
-          Adept at building scalable, performant web applications and
-          interactive design systems. Strong collaborator with a deep
-          understanding of responsive design, accessibility, and front-end
-          architecture using React, Next.js, and modern tooling. Passionate
-          about crafting intuitive UIs and scalable design systems — with recent
-          focus on AI-driven apps, complex data visualization, and cutting-edge
-          performance.
+          <strong>UI Engineer</strong> and <strong>Design Technologist</strong>
+          with over 15 years shaping digital experiences. Building elegant
+          systems and interfaces that feel effortless, yet scale with intent.
+          Moving between design and code with fluency, guided by clarity,
+          curiosity, and craft. Recently drawn to the edges where AI, data, and
+          interaction converge. Often explores solutions with React and Next.js,
+          while staying open to tools that best fit the vision.
         </p>
       </div>
     </main>

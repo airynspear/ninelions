@@ -1,10 +1,11 @@
 @import "./_aboutHex";
 @import "./_portfolioHex";
+@import "./_connectHex";
 
 .hero {
   position: relative;
   z-index: 1;
-  top: 8rem;
+  top: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -106,7 +107,7 @@
     background-position: center;
     z-index: -1;
     transform: rotate(var(--hex-rotation, 0deg));
-    //transform: rotate(30deg);
+    //transform: rotate(0deg);
     transition: transform 0.5s ease-in-out;
   }
 }
@@ -243,7 +244,7 @@
   right: 0;
   width: 1440px;
   height: 721px;
-  background-image: url("/images/landing-bg-light.png");
+  background-image: url("/images/landing-bg-light-new.png");
   background-position: bottom right;
 }
 
@@ -302,7 +303,7 @@
 // === hex positions ===
 
 .hexCardOne {
-  --x: 36px;
+  --x: 54px;
   --y: 156px;
 }
 
@@ -345,7 +346,7 @@
 }
 
 .hexCardNine {
-  --x: 784px;
+  --x: 766px;
   --y: 156px;
 }
 

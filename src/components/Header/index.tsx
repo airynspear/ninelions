@@ -103,6 +103,30 @@ export default function Header() {
     }
   }, [isDesktop, view]);
 
+  // Closes mobile menu when clicking outside of the menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const menu = document.querySelector(`.${styles.mobileMenu}`);
+      const hamburger = document.querySelector(`.${styles.hamburger}`);
+      if (
+        mobileMenuOpen &&
+        menu &&
+        !menu.contains(event.target as Node) &&
+        !hamburger?.contains(event.target as Node)
+      ) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (!isDesktop) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileMenuOpen, isDesktop]);
+
   return (
     <header className={styles.header}>
       <div className={styles.logoWrapper}>
@@ -182,7 +206,13 @@ export default function Header() {
       {isDesktop === false && mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuSwitch}>
-            <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
+            <AndroidSwitch
+              checked={theme === "light"}
+              onChange={() => {
+                toggleTheme();
+                setMobileMenuOpen(false);
+              }}
+            />
           </div>
           <nav className={styles.mobileNav}>
             {NAV_LINKS.map(({ id, label }) => (
@@ -205,7 +235,13 @@ export default function Header() {
 
       {isDesktop === true && (
         <div className={styles.switch}>
-          <AndroidSwitch checked={theme === "light"} onChange={toggleTheme} />
+          <AndroidSwitch
+            checked={theme === "light"}
+            onChange={() => {
+              toggleTheme();
+              setMobileMenuOpen(false); // 👈 close menu on theme toggle
+            }}
+          />
         </div>
       )}
     </header>

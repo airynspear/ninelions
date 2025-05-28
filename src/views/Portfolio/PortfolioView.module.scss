@@ -1,15 +1,5 @@
 .contentContainer {
-  width: 100%;
-  padding: 9rem 6rem 4rem 52%;
-  display: flex;
   display: none;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-
-  opacity: 0;
-  animation: fadeInContent 0.8s ease-out forwards;
-  animation-delay: 0.2s;
 }
 
 @keyframes fadeInContent {

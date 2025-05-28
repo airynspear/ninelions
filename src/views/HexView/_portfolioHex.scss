@@ -124,7 +124,7 @@
   .projectWrapper {
     position: absolute;
     top: 163px;
-    left: 50%;
+    left: 51%;
     width: 630px;
     transform: translateX(-50%);
     z-index: 100;
@@ -271,11 +271,22 @@
       .chevronButton {
         top: -9px;
         left: 4px;
+        svg {
+          width: 36px;
+          height: 36px;
+        }
         .innerTriangle {
           width: 16px;
           height: 16px;
           left: 10px;
           bottom: -3px;
+        }
+        &.downTriangle {
+          top: 0;
+          left: 0;
+          .innerTriangle {
+            bottom: -3px;
+          }
         }
         &:hover {
           .innerTriangle {
@@ -285,17 +296,6 @@
             .innerTriangle {
               bottom: 5px;
             }
-          }
-        }
-        svg {
-          width: 36px;
-          height: 36px;
-        }
-        &.downTriangle {
-          top: 0;
-          left: 0;
-          .innerTriangle {
-            bottom: -3px;
           }
         }
       }
