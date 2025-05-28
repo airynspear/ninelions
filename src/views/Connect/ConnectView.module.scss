@@ -5,10 +5,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  position: absolute;
+  padding-top: 175px;
+  margin: 0 auto;
+  position: relative;
   z-index: 33;
-  left: calc(50% - 150px);
-  top: 250px;
   h3 {
     margin: 0;
   }
@@ -103,7 +103,6 @@
   }
 
   .content {
-    top: 260px;
     h3 {
       display: none;
     }
