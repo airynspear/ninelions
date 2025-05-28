@@ -34,6 +34,20 @@
   animation: fadeInForm 0.6s ease-out 0.2s forwards;
 }
 
+.form :global(input:-webkit-autofill),
+.form :global(textarea:-webkit-autofill),
+.form :global(select:-webkit-autofill),
+.form :global(input:-webkit-autofill:focus),
+.form :global(input:-webkit-autofill:hover),
+.form :global(input:-webkit-autofill:active) {
+  box-shadow: 0 0 0 1000px var(--background) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--background) inset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+  caret-color: var(--foreground) !important;
+  transition: background-color 9999s ease-in-out 0s;
+  border-radius: 0 !important;
+}
+
 :global(.connect) {
   .hexCardOne {
     z-index: 1;
