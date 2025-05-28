@@ -100,32 +100,35 @@ export default function ConnectPage() {
     <main className={styles.content}>
       <h3>connect & create</h3>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <TextField
-          label="Name"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          required
-          autoComplete="off"
-          margin="normal"
-          sx={sharedFieldSx}
-        />
-
-        <TextField
-          label="Email"
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          required
-          autoComplete="off"
-          margin="normal"
-          sx={sharedFieldSx}
-        />
+        <div className={styles.inputWrapper}>
+          <TextField
+            label="Name"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            required
+            autoComplete="off"
+            margin="normal"
+            sx={sharedFieldSx}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            required
+            autoComplete="off"
+            margin="normal"
+            sx={sharedFieldSx}
+          />
+        </div>
 
         <TextField
           label="Message"

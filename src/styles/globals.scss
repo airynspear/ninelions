@@ -70,9 +70,9 @@ html {
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-  background-color: var(--background) !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--background) inset !important;
+  box-shadow: 0 0 0 1000px var(--background) inset !important;
+
   -webkit-text-fill-color: var(--foreground) !important;
   caret-color: var(--foreground) !important;
   transition: background-color 9999s ease-in-out 0s;
