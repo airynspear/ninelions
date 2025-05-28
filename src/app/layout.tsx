@@ -67,6 +67,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Nine Lions" />
         <meta name="application-name" content="Nine Lions" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="format-detection" content="email=no" />
 
         <link rel="icon" href="/favicon.ico" />
         <link

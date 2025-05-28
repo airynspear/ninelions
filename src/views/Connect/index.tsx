@@ -47,11 +47,9 @@ export default function ConnectPage() {
         setForm({ name: "", email: "", message: "" });
       } else {
         console.error("Formspree error:", result);
-        // Optional: handle failure state
       }
     } catch (err) {
       console.error("Submission failed:", err);
-      // Optional: handle network failure
     }
   };
 
@@ -110,6 +108,7 @@ export default function ConnectPage() {
           variant="standard"
           fullWidth
           required
+          autoComplete="off"
           margin="normal"
           sx={sharedFieldSx}
         />
@@ -123,6 +122,7 @@ export default function ConnectPage() {
           variant="standard"
           fullWidth
           required
+          autoComplete="off"
           margin="normal"
           sx={sharedFieldSx}
         />
@@ -135,6 +135,7 @@ export default function ConnectPage() {
           variant="standard"
           fullWidth
           required
+          autoComplete="off"
           multiline
           rows={isMobile ? 2 : 5}
           margin="normal"
