@@ -8,7 +8,7 @@ export default function AboutPage() {
       <div className={styles.content}>
         <h2>Airyn Spear</h2>
         <p>
-          <strong>UI Engineer</strong> and <strong>Design Technologist</strong>
+          <strong>UI Engineer</strong> and <strong>Design Technologist </strong>
           with over 15 years shaping digital experiences. Building elegant
           systems and interfaces that feel effortless, yet scale with intent.
           Moving between design and code with fluency, guided by clarity,
