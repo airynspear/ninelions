@@ -167,6 +167,17 @@
         pointer-events: none;
         user-select: none;
       }
+
+      .visible {
+        opacity: 1;
+        z-index: 2;
+      }
+
+      .hidden {
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
     }
 
     img {
@@ -175,9 +186,15 @@
       object-fit: cover;
       display: block;
       transform: rotate(calc(-30deg - var(--hex-rotation, 0deg)));
-      transition: transform 0.5s ease-in-out;
+      transition: opacity 0.6s ease-in-out, transform 0.5s ease-in-out;
     }
   }
+}
+
+.imageBase {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .back {
@@ -195,27 +212,6 @@
     margin-bottom: 0.75rem;
     color: var(--accent);
   }
-}
-
-.imageBase {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
-}
-
-.visible {
-  opacity: 1;
-  z-index: 2;
-}
-
-.hidden {
-  opacity: 0;
-  z-index: 1;
-  pointer-events: none;
 }
 
 // === Hex Styles ===
