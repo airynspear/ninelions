@@ -4,8 +4,8 @@ export const ABOUT_CARDS: HexCard[] = new Array(9).fill(null).map((_, i) => {
   if (i === 4) {
     return {
       icon: null,
-      image: "/images/light-2.jpg",
-      themeImageDark: "/images/dark-2.jpg",
+      image: "/images/light-3.jpg",
+      themeImageDark: "/images/dark-3.jpg",
       keyword: "",
       description: "",
     };
