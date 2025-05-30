@@ -220,26 +220,60 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                       <div className={`${styles.cardInner} cardInner`}>
                         <div className={styles.cardFlipWrapper}>
                           <div className={styles.front}>
-                            {imageSrc && (
+                            {(card.image ||
+                              card.themeImageDark ||
+                              imageSrc) && (
                               <div className={styles.image}>
                                 <div className={styles.hexMask}>
-                                  <img
-                                    className="default"
-                                    src={imageSrc}
-                                    alt="Project Thumbnail"
-                                    loading="eager"
-                                  />
-                                  {borderSrc && (
-                                    <img
-                                      className="border"
-                                      src={borderSrc}
-                                      alt="Selected Overlay"
-                                      loading="eager"
-                                    />
+                                  {viewMode === "about" &&
+                                  card.image &&
+                                  card.themeImageDark ? (
+                                    <>
+                                      <img
+                                        src={card.image}
+                                        className={`${styles.imageBase} ${
+                                          theme === "light"
+                                            ? styles.visible
+                                            : styles.hidden
+                                        }`}
+                                        alt="About image light"
+                                        loading="eager"
+                                      />
+                                      <img
+                                        src={card.themeImageDark}
+                                        className={`${styles.imageBase} ${
+                                          theme === "dark"
+                                            ? styles.visible
+                                            : styles.hidden
+                                        }`}
+                                        alt="About image dark"
+                                        loading="eager"
+                                      />
+                                    </>
+                                  ) : (
+                                    <>
+                                      {imageSrc && (
+                                        <img
+                                          className="default"
+                                          src={imageSrc}
+                                          alt="Project Thumbnail"
+                                          loading="eager"
+                                        />
+                                      )}
+                                      {borderSrc && (
+                                        <img
+                                          className="border"
+                                          src={borderSrc}
+                                          alt="Selected Overlay"
+                                          loading="eager"
+                                        />
+                                      )}
+                                    </>
                                   )}
                                 </div>
                               </div>
                             )}
+
                             {card.icon && (
                               <div className={styles.icon}>{card.icon}</div>
                             )}
