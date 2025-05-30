@@ -197,6 +197,27 @@
   }
 }
 
+.imageBase {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.visible {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hidden {
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
 // === Hex Styles ===
 
 .hexagonWrapper {
