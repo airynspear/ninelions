@@ -2,15 +2,19 @@
   min-height: 540px;
   width: 300px;
   display: flex;
+
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 175px;
+  padding-top: 67px;
   margin: 0 auto;
   position: relative;
   z-index: 33;
   h3 {
     margin: 0;
+  }
+  .hide {
+    display: none;
   }
 }
 
@@ -50,128 +54,130 @@
 
 :global(.connect) {
   .hexCardOne {
-    z-index: 1;
-    --x: 118px;
-    --y: 156px;
+    z-index: 6;
+    --x: 81px;
+    --y: 146px;
   }
   .hexCardTwo {
     z-index: 5;
-    --x: 150px;
-    --y: 42px;
+    --x: 66px;
+    --y: 170px;
+    transform: translate3d(var(--x), var(--y), 0) scale(1.1);
   }
 
   .hexCardThree {
     z-index: 3;
-    --x: 150px;
-    --y: 242px;
+    --x: 66px;
+    --y: 164px;
+    transform: translate3d(var(--x), var(--y), 0) scale(1.3);
   }
 
   .hexCardFour {
     z-index: 4;
     --x: 430px;
-    --y: 20px;
+    --y: 230px;
     transform: translate3d(var(--x), var(--y), 0) scale(2);
   }
 
   .hexCardFive {
-    transform: translate3d(var(--x), var(--y), 0) scale(2);
+    transform: translate3d(var(--x), var(--y), 0) scale(0.85);
     z-index: 6;
+    --x: 355px;
+    --y: 105px;
   }
 
   .hexCardSix {
     z-index: 2;
     --x: 430px;
-    --y: 330px;
-    transform: translate3d(var(--x), var(--y), 0) scale(2);
+    --y: 222px;
+    transform: translate3d(var(--x), var(--y), 0) scale(2.4);
   }
 
   .hexCardSeven {
     z-index: 3;
-    --x: 640px;
-    --y: 42px;
+    --x: 724px;
+    --y: 164px;
+    transform: translate3d(var(--x), var(--y), 0) scale(1.3);
   }
 
   .hexCardEight {
     z-index: 3;
-    --x: 640px;
-    --y: 242px;
+    --x: 724px;
+    --y: 170px;
+    transform: translate3d(var(--x), var(--y), 0) scale(1.1);
   }
 
   .hexCardNine {
-    z-index: 1;
-    --x: 700px;
-    --y: 156px;
+    z-index: 3;
+    --x: 740px;
+    --y: 146px;
   }
 }
 
-@media (max-width: 763px) {
-  @keyframes fadeInForm {
-    from {
-      opacity: 0;
-      transform: translateY(10px) scale(0.8);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(0.8);
-    }
-  }
+// @media (max-width: 763px) {
+//   @keyframes fadeInForm {
+//     from {
+//       opacity: 0;
+//       transform: translateY(10px) scale(0.8);
+//     }
+//     to {
+//       opacity: 1;
+//       transform: translateY(0) scale(0.8);
+//     }
+//   }
 
-  .content {
-    h3 {
-      display: none;
-    }
-  }
+//   .content {
+//     h3 {
+//       display: none;
+//     }
+//   }
 
-  .form {
-    transform: scale(0.8);
-  }
+//   .form {
+//     transform: scale(0.8);
+//   }
 
-  :global(.connect) {
-    .hexGrid {
-      transform: scale(0.75);
-    }
+//   :global(.connect) {
+//     .hexCardOne {
+//       --x: 409px;
+//       --y: 450px;
+//     }
 
-    .hexCardOne {
-      --x: 409px;
-      --y: 450px;
-    }
+//     .hexCardTwo {
+//       --x: 294px;
+//       --y: -105px;
+//     }
 
-    .hexCardTwo {
-      --x: 294px;
-      --y: -105px;
-    }
+//     .hexCardThree {
+//       --x: 294px;
+//       --y: 388px;
+//       z-index: 4;
+//     }
 
-    .hexCardThree {
-      --x: 294px;
-      --y: 388px;
-      z-index: 4;
-    }
+//     .hexCardFour {
+//       z-index: 4;
+//       --x: 574px;
+//       --y: 172px;
+//     }
 
-    .hexCardFour {
-      z-index: 4;
-      --x: 574px;
-      --y: 172px;
-    }
+//     .hexCardSix {
+//       z-index: 2;
+//       --x: 284px;
+//       --y: 172px;
+//     }
 
-    .hexCardSix {
-      z-index: 2;
-      --x: 284px;
-      --y: 172px;
-    }
+//     .hexCardSeven {
+//       --x: 495px;
+//       --y: -105px;
+//     }
 
-    .hexCardSeven {
-      --x: 495px;
-      --y: -105px;
-    }
+//     .hexCardEight {
+//       --x: 495px;
+//       --y: 390px;
+//     }
 
-    .hexCardEight {
-      --x: 495px;
-      --y: 390px;
-    }
-
-    .hexCardNine {
-      --x: 409px;
-      --y: -136px;
-    }
-  }
-}
+//     .hexCardNine {
+//       --x: 409px;
+//       --y: -136px;
+//     }
+//   }
+// }

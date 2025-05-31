@@ -98,69 +98,72 @@ export default function ConnectPage() {
 
   return (
     <main className={styles.content}>
-      <h3>connect & create</h3>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <TextField
-          label="Name"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          required
-          autoComplete="off"
-          margin="normal"
-          sx={sharedFieldSx}
-        />
+      <p className={styles.notice}>under construction</p>
+      <div className={styles.hide}>
+        <h3>connect & create</h3>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <TextField
+            label="Name"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            required
+            autoComplete="off"
+            margin="normal"
+            sx={sharedFieldSx}
+          />
 
-        <TextField
-          label="Email"
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          required
-          autoComplete="off"
-          margin="normal"
-          sx={sharedFieldSx}
-        />
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            required
+            autoComplete="off"
+            margin="normal"
+            sx={sharedFieldSx}
+          />
 
-        <TextField
-          label="Message"
-          name="message"
-          value={form.message}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          required
-          autoComplete="off"
-          multiline
-          rows={isMobile ? 2 : 5}
-          margin="normal"
-          sx={sharedFieldSx}
-        />
+          <TextField
+            label="Message"
+            name="message"
+            value={form.message}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            required
+            autoComplete="off"
+            multiline
+            rows={isMobile ? 2 : 5}
+            margin="normal"
+            sx={sharedFieldSx}
+          />
 
-        <Button
-          variant="outlined"
-          type="submit"
-          sx={{
-            mt: 2,
-            alignSelf: "flex-start",
-            color: "var(--accent)",
-            borderColor: "var(--accent)",
-            fontWeight: 600,
-            padding: "0.6rem 1.5rem",
-            borderRadius: "4px",
-            textTransform: "none",
-            width: "100%",
-            fontSize: "16px",
-          }}
-        >
-          Send Message
-        </Button>
-      </form>
+          <Button
+            variant="outlined"
+            type="submit"
+            sx={{
+              mt: 2,
+              alignSelf: "flex-start",
+              color: "var(--accent)",
+              borderColor: "var(--accent)",
+              fontWeight: 600,
+              padding: "0.6rem 1.5rem",
+              borderRadius: "4px",
+              textTransform: "none",
+              width: "100%",
+              fontSize: "16px",
+            }}
+          >
+            Send Message
+          </Button>
+        </form>
+      </div>
 
       <Snackbar
         open={snackbarOpen}
