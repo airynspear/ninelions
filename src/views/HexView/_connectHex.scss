@@ -238,10 +238,10 @@ html[data-theme="light"] .connect {
   }
 }
 
-// @media (max-width: 674px) {
-//   :global(.connect) {
-//     .hexContainer {
-//       transform: translate(0, 180px);
-//     }
-//   }
-// }
+@media (max-width: 674px) {
+  :global(.connect) {
+    .hexContainer {
+      transform: translate(0, 180px);
+    }
+  }
+}

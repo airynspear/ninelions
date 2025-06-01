@@ -116,71 +116,71 @@
   }
 }
 
-// @media (max-width: 674px) {
-//   :global(.connect) {
-//     .hexCardOne {
-//       z-index: 7;
-//       --x: 268px;
-//       --y: -120px;
-//       transform: translate3d(var(--x), var(--y), 0) scale(1.05);
-//     }
-//     .hexCardTwo {
-//       z-index: 6;
-//       --x: 254px;
-//       --y: -100px;
-//       transform: translate3d(var(--x), var(--y), 0) scale(1.1);
-//     }
+@media (max-width: 674px) {
+  :global(.connect) {
+    .hexCardOne {
+      z-index: 7;
+      --x: 268px;
+      --y: -120px;
+      transform: translate3d(var(--x), var(--y), 0) scale(1.05);
+    }
+    .hexCardTwo {
+      z-index: 6;
+      --x: 254px;
+      --y: -100px;
+      transform: translate3d(var(--x), var(--y), 0) scale(1.1);
+    }
 
-//     .hexCardThree {
-//       z-index: 5;
-//       --x: 254px;
-//       --y: -104px;
-//       transform: translate3d(var(--x), var(--y), 0) scale(1.3);
-//     }
+    .hexCardThree {
+      z-index: 5;
+      --x: 254px;
+      --y: -104px;
+      transform: translate3d(var(--x), var(--y), 0) scale(1.3);
+    }
 
-//     .hexCardFour {
-//       z-index: 4;
-//       --x: 430px;
-//       --y: 230px;
-//       transform: translate3d(var(--x), var(--y), 0) scale(2);
-//     }
+    .hexCardFour {
+      z-index: 4;
+      --x: 430px;
+      --y: 230px;
+      transform: translate3d(var(--x), var(--y), 0) scale(2);
+    }
 
-//     .hexCardFive {
-//       transform: translate3d(var(--x), var(--y), 0) scale(0.9);
-//       z-index: 6;
-//       --x: 355px;
-//       --y: 105px;
-//     }
+    .hexCardFive {
+      transform: translate3d(var(--x), var(--y), 0) scale(0.9);
+      z-index: 6;
+      --x: 355px;
+      --y: 105px;
+    }
 
-//     .hexCardSix {
-//       z-index: 2;
-//       --x: 430px;
-//       --y: 222px;
-//       transform: translate3d(var(--x), var(--y), 0) scale(2.4);
-//     }
+    .hexCardSix {
+      z-index: 2;
+      --x: 430px;
+      --y: 222px;
+      transform: translate3d(var(--x), var(--y), 0) scale(2.4);
+    }
 
-//     .hexCardSeven {
-//       z-index: 5;
-//       --x: 536px;
-//       --y: -104px;
-//       transform: translate3d(var(--x), var(--y), 0) scale(1.3);
-//     }
+    .hexCardSeven {
+      z-index: 5;
+      --x: 536px;
+      --y: -104px;
+      transform: translate3d(var(--x), var(--y), 0) scale(1.3);
+    }
 
-//     .hexCardEight {
-//       z-index: 5;
-//       --x: 536px;
-//       --y: -100px;
-//       transform: translate3d(var(--x), var(--y), 0) scale(1.1);
-//     }
+    .hexCardEight {
+      z-index: 5;
+      --x: 536px;
+      --y: -100px;
+      transform: translate3d(var(--x), var(--y), 0) scale(1.1);
+    }
 
-//     .hexCardNine {
-//       z-index: 6;
-//       transform: translate3d(var(--x), var(--y), 0) scale(1.05);
-//       --x: 551px;
-//       --y: -120px;
-//     }
-//   }
-// }
+    .hexCardNine {
+      z-index: 6;
+      transform: translate3d(var(--x), var(--y), 0) scale(1.05);
+      --x: 551px;
+      --y: -120px;
+    }
+  }
+}
 
 // @media (max-width: 674px) {
 //   @keyframes fadeInForm {
