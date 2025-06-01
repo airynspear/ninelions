@@ -212,15 +212,14 @@ html[data-theme="light"] {
         }
       }
     }
-  }
+    .hexCardOne:hover,
+    .hexCardNine:hover {
+      transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(1.05);
+    }
 
-  .hexCardOne:hover,
-  .hexCardNine:hover {
-    transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(1.05);
-  }
-
-  .hexCardFive:hover {
-    transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(0.9);
+    .hexCardFive:hover {
+      transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(0.9);
+    }
   }
 }
 
