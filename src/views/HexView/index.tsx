@@ -220,72 +220,35 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                       <div className={`${styles.cardInner} cardInner`}>
                         <div className={styles.cardFlipWrapper}>
                           <div className={styles.front}>
-                            {(card.image ||
-                              card.themeImageDark ||
-                              imageSrc) && (
+                            {imageSrc && (
                               <div className={styles.image}>
                                 <div className={styles.hexMask}>
-                                  {(viewMode === "about" ||
-                                    viewMode === "connect") &&
-                                  card.image &&
-                                  card.themeImageDark ? (
-                                    <>
-                                      <img
-                                        src={card.image}
-                                        className={`${styles.imageBase} ${
-                                          theme === "light"
-                                            ? styles.visible
-                                            : styles.hidden
-                                        }`}
-                                        alt={`${viewMode} image light`}
-                                        loading="eager"
-                                      />
-                                      <img
-                                        src={card.themeImageDark}
-                                        className={`${styles.imageBase} ${
-                                          theme === "dark"
-                                            ? styles.visible
-                                            : styles.hidden
-                                        }`}
-                                        alt={`${viewMode} image dark`}
-                                        loading="eager"
-                                      />
-                                    </>
-                                  ) : (
-                                    <>
-                                      {imageSrc && (
-                                        <img
-                                          className="default"
-                                          src={imageSrc}
-                                          alt="Project Thumbnail"
-                                          loading="eager"
-                                        />
-                                      )}
-                                      {borderSrc && (
-                                        <img
-                                          className="border"
-                                          src={borderSrc}
-                                          alt="Selected Overlay"
-                                          loading="eager"
-                                        />
-                                      )}
-                                    </>
+                                  <img
+                                    className="default"
+                                    src={imageSrc}
+                                    alt="Project Thumbnail"
+                                    loading="eager"
+                                  />
+                                  {borderSrc && (
+                                    <img
+                                      className="border"
+                                      src={borderSrc}
+                                      alt="Selected Overlay"
+                                      loading="eager"
+                                    />
                                   )}
                                 </div>
                               </div>
                             )}
-
                             {card.icon && (
                               <div className={styles.icon}>{card.icon}</div>
                             )}
-
                             {card.keyword && (
                               <span className={styles.keyword}>
                                 {card.keyword}
                               </span>
                             )}
                           </div>
-
                           <div className={styles.back}>
                             {card.icon && (
                               <div className={styles.icon}>{card.icon}</div>
