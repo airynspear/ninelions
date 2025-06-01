@@ -73,17 +73,6 @@
   }
 }
 
-@keyframes fadeInConnect {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 html[data-theme="dark"] .connect {
   .hexCardOne,
   .hexCardFive,
@@ -150,76 +139,85 @@ html[data-theme="dark"] .connect {
   }
 }
 
-html[data-theme="light"] {
-  .connect {
-    .hexCardTwo,
-    .hexCardFour,
-    .hexCardEight {
-      .front::before {
-        animation: fadeInHex 0.8s ease forwards;
-        background-image: url("/images/hex-light-fill.svg");
+html[data-theme="light"] .connect {
+  .hexCardTwo,
+  .hexCardFour,
+  .hexCardEight {
+    .front::before {
+      animation: fadeInHex 0.8s ease forwards;
+      background-image: url("/images/hex-light-fill.svg");
+    }
+  }
+  .hexCardOne,
+  .hexCardFive,
+  .hexCardNine {
+    &:hover {
+      .front .image::before {
+        opacity: 1;
+      }
+      .hexMask img {
+        filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.2));
       }
     }
-    .hexCardOne,
-    .hexCardFive,
-    .hexCardNine {
-      &:hover {
-        .front .image::before {
-          opacity: 1;
-        }
-        .hexMask img {
-          filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.2));
-        }
+    .front {
+      &::before {
+        background-image: none;
       }
-      .front {
-        &::before {
-          background-image: none;
-        }
-        .image {
-          .hexMask {
-            top: 2px;
-            transform: scale(1.2) !important;
-            img {
-              transform: scale(0.85) !important;
-              filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
-            }
-          }
-          &::before {
-            content: "";
-            opacity: 0;
-            width: 118px;
-            height: 100%;
-            position: absolute;
-            top: 20px;
-            left: 37px;
-            background-image: url(/images/connect/flame.png);
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center;
-            z-index: 0;
-            transition: top 0.4s ease-in-out, opacity 0.9s ease-in-out;
-          }
-        }
-      }
-    }
-    .hexCardFive .front {
       .image {
+        .hexMask {
+          top: 2px;
+          transform: scale(1.2) !important;
+          img {
+            transform: scale(0.85) !important;
+            filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+          }
+        }
         &::before {
           content: "";
-          width: 163px;
-          top: 8px;
-          left: 63px;
+          opacity: 0;
+          width: 118px;
+          height: 100%;
+          position: absolute;
+          top: 20px;
+          left: 37px;
+          background-image: url(/images/connect/flame.png);
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+          z-index: 0;
+          transition: top 0.4s ease-in-out, opacity 0.9s ease-in-out;
         }
       }
     }
-    .hexCardOne:hover,
-    .hexCardNine:hover {
-      transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(1.05);
+  }
+  .hexCardFive .front {
+    .image {
+      &::before {
+        content: "";
+        width: 163px;
+        top: 8px;
+        left: 63px;
+      }
     }
+  }
+  .hexCardOne:hover,
+  .hexCardNine:hover {
+    transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(1.05);
+  }
 
-    .hexCardFive:hover {
-      transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(0.9);
-    }
+  .hexCardFive:hover {
+    transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(0.9);
+  }
+}
+
+@keyframes fadeInConnect {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -234,16 +232,16 @@ html[data-theme="light"] {
 
 @media (max-width: 763px) {
   :global(.connect) {
-    .hero {
-      top: 160px;
-    }
-
     .hexGrid {
       transform: scale(0.7);
     }
+  }
+}
 
-    .front::before {
-      transform: rotate(30deg);
+@media (max-width: 674px) {
+  :global(.connect) {
+    .hexContainer {
+      transform: translate(0, 180px);
     }
   }
 }
