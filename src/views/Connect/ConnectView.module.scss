@@ -2,7 +2,7 @@
   min-height: 540px;
   width: 300px;
   display: flex;
-
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -56,7 +56,8 @@
   .hexCardOne {
     z-index: 6;
     --x: 81px;
-    --y: 146px;
+    --y: 148px;
+    transform: translate3d(var(--x), var(--y), 0) scale(1.05);
   }
   .hexCardTwo {
     z-index: 5;
@@ -80,7 +81,7 @@
   }
 
   .hexCardFive {
-    transform: translate3d(var(--x), var(--y), 0) scale(0.85);
+    transform: translate3d(var(--x), var(--y), 0) scale(0.9);
     z-index: 6;
     --x: 355px;
     --y: 105px;
@@ -109,8 +110,9 @@
 
   .hexCardNine {
     z-index: 3;
+    transform: translate3d(var(--x), var(--y), 0) scale(1.05);
     --x: 740px;
-    --y: 146px;
+    --y: 148px;
   }
 }
 

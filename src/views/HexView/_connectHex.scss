@@ -1,7 +1,8 @@
 :global(.connect) {
   .hero {
-    top: 40px;
+    top: 20px;
   }
+
   .hexGrid {
     transform: scale(0.8);
   }
@@ -14,31 +15,212 @@
     }
   }
 
+  .hexCardOne,
+  .hexCardFive,
+  .hexCardNine {
+    .hexMask {
+      transform: none !important;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      img {
+        transform: none !important;
+        transition: opacity 0.4s ease-in-out, filter 0.4s ease-in-out;
+        filter: drop-shadow(0 0 0 rgba(0, 255, 255, 0));
+      }
+    }
+  }
+
   .front {
     &::before {
       content: "";
       transform: rotate(30deg);
     }
+
+    padding: 0 !important;
+
+    .image {
+      opacity: 1;
+      animation: fadeInConnect 1.8s ease forwards !important;
+      position: relative;
+
+      .hexMask {
+        position: relative;
+
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: opacity 0.4s ease-in-out, filter 0.4s ease-in-out;
+          filter: drop-shadow(0 0 0 rgba(0, 255, 255, 0));
+        }
+
+        .visible {
+          opacity: 1;
+          z-index: 1;
+        }
+
+        .hidden {
+          opacity: 0;
+          z-index: 0;
+        }
+      }
+    }
   }
 }
 
-html[data-theme="dark"] .connect .hexCardFive,
-html[data-theme="dark"] .connect .hexCardOne,
-html[data-theme="dark"] .connect .hexCardNine {
-  .front::before {
-    animation: fadeInHex 0.8s ease forwards;
-    background-image: url("/images/hex-dark-fill.svg");
-    filter: drop-shadow(0px 0px 9px rgba(0, 0, 0, 0.5));
+@keyframes fadeInConnect {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-html[data-theme="light"] .connect .hexCardFour,
-html[data-theme="light"] .connect .hexCardTwo,
-html[data-theme="light"] .connect .hexCardEight {
-  .front::before {
-    animation: fadeInHex 0.8s ease forwards;
-    background-image: url("/images/hex-light-fill.svg");
-    filter: drop-shadow(0px 0px 9px rgba(0, 0, 0, 0.5));
+html[data-theme="dark"] .connect {
+  .hexCardOne,
+  .hexCardFive,
+  .hexCardNine {
+    cursor: pointer;
+
+    .front {
+      position: relative;
+      overflow: visible;
+
+      &::before {
+        background-image: none;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("/images/hex-light-new.svg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        z-index: -1;
+        transform: rotate(var(--hex-rotation, 0deg));
+        transition: transform 0.5s ease-in-out;
+        opacity: 0;
+        transform: rotate(0) scale(0.92);
+        top: -8px;
+        transition: opacity 0.4s ease-in-out;
+        filter: drop-shadow(0px 0px 9px rgba(0, 0, 0, 0.5));
+      }
+    }
+
+    &.hexCardOne .front::after {
+      background-image: url("/images/connect/linkedin-dark-hover.png");
+    }
+
+    &.hexCardFive .front::after {
+      background-image: url("/images/connect/connect-dark-hover.png");
+    }
+
+    &.hexCardNine .front::after {
+      background-image: url("/images/connect/instagram-dark-hover.png");
+    }
+
+    &:hover .front::after {
+      opacity: 1;
+    }
+  }
+
+  .hexCardOne:hover,
+  .hexCardNine:hover {
+    transform: translate3d(var(--x), calc(var(--y) + 4px), 0) scale(1.05);
+  }
+
+  .hexCardFive:hover {
+    transform: translate3d(var(--x), calc(var(--y) + 4px), 0) scale(0.9);
+  }
+
+  .hexCardOne:hover .hexMask img,
+  .hexCardFive:hover .hexMask img,
+  .hexCardNine:hover .hexMask img {
+    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.2));
+  }
+}
+
+html[data-theme="light"] {
+  .connect {
+    .hexCardTwo,
+    .hexCardFour,
+    .hexCardEight {
+      .front::before {
+        animation: fadeInHex 0.8s ease forwards;
+        background-image: url("/images/hex-light-fill.svg");
+      }
+    }
+    .hexCardOne,
+    .hexCardFive,
+    .hexCardNine {
+      &:hover {
+        .front .image::before {
+          opacity: 1;
+        }
+        .hexMask img {
+          filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.2));
+        }
+      }
+      .front {
+        &::before {
+          background-image: none;
+        }
+        .image {
+          .hexMask {
+            top: 2px;
+            transform: scale(1.2) !important;
+            img {
+              transform: scale(0.85) !important;
+              filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+            }
+          }
+          &::before {
+            content: "";
+            opacity: 0;
+            width: 118px;
+            height: 100%;
+            position: absolute;
+            top: 20px;
+            left: 37px;
+            background-image: url(/images/connect/flame.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            z-index: 0;
+            transition: top 0.4s ease-in-out, opacity 0.9s ease-in-out;
+          }
+        }
+      }
+    }
+    .hexCardFive .front {
+      .image {
+        &::before {
+          content: "";
+          width: 163px;
+          top: 8px;
+          left: 63px;
+        }
+      }
+    }
+  }
+
+  .hexCardOne:hover,
+  .hexCardNine:hover {
+    transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(1.05);
+  }
+
+  .hexCardFive:hover {
+    transform: translate3d(var(--x), calc(var(--y) + 7px), 0) scale(0.9);
   }
 }
 
@@ -56,14 +238,13 @@ html[data-theme="light"] .connect .hexCardEight {
     .hero {
       top: 160px;
     }
+
     .hexGrid {
       transform: scale(0.7);
     }
-    .front {
-      &::before {
-        content: "";
-        transform: rotate(30deg);
-      }
+
+    .front::before {
+      transform: rotate(30deg);
     }
   }
 }
