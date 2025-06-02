@@ -523,23 +523,12 @@
 }
 
 @media (max-width: 670px) {
-  .hero {
-    top: 8rem;
-  }
   .hexGrid {
     transform: scale(0.85);
   }
 }
 
 @media (max-width: 600px) {
-  .hero {
-    top: 13rem;
-  }
-
-  :global(.about) .hero {
-    top: 8rem;
-  }
-
   .hexGrid {
     transform: scale(0.75);
   }
