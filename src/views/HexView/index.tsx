@@ -226,30 +226,13 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                               <div className={styles.image}>
                                 <div className={styles.hexMask}>
                                   {viewMode === "about" &&
-                                  card.image &&
                                   card.themeImageDark ? (
-                                    <>
-                                      <img
-                                        src={card.image}
-                                        className={`${styles.imageBase} ${
-                                          theme === "light"
-                                            ? styles.visible
-                                            : styles.hidden
-                                        }`}
-                                        alt="About image light"
-                                        loading="eager"
-                                      />
-                                      <img
-                                        src={card.themeImageDark}
-                                        className={`${styles.imageBase} ${
-                                          theme === "dark"
-                                            ? styles.visible
-                                            : styles.hidden
-                                        }`}
-                                        alt="About image dark"
-                                        loading="eager"
-                                      />
-                                    </>
+                                    <img
+                                      src={card.themeImageDark}
+                                      className={styles.imageBase}
+                                      alt="About image"
+                                      loading="eager"
+                                    />
                                   ) : (
                                     <>
                                       {imageSrc && (
