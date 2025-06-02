@@ -533,6 +533,10 @@
     transform: scale(0.75);
   }
 
+  .hexContainer {
+    transform: translate(0, 120px);
+  }
+
   .hexCardOne {
     --x: 409px;
     --y: 520px;

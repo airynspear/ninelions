@@ -3,6 +3,10 @@
     transform: scale(0.8);
   }
 
+  .hexContainer {
+    transform: translate(0, -120px);
+  }
+
   .hexCard {
     &:hover {
       .cardFlipWrapper {
@@ -237,7 +241,7 @@ html[data-theme="light"] .connect {
 @media (max-width: 674px) {
   :global(.connect) {
     .hexContainer {
-      transform: translate(0, 180px);
+      transform: translate(0, 120px);
     }
   }
 }
