@@ -6,6 +6,7 @@
   --foreground: #ededed;
 
   --accent: #08c6b6;
+  --accent-hover: #61fdf0;
 
   --icon: #08c6b6;
 
@@ -30,6 +31,7 @@
   --foreground: #171717;
 
   --accent: #ca1a2e;
+  --accent-hover: #f3532e;
 
   --icon: #aa0000;
 
@@ -94,6 +96,19 @@ input.MuiInputBase-input:-webkit-autofill:focus {
   box-shadow: 0 0 0 1000px var(--background) inset !important;
   -webkit-text-fill-color: var(--foreground) !important;
   caret-color: var(--foreground) !important;
+}
+
+img,
+svg,
+picture,
+canvas {
+  user-select: none;
+  user-drag: none;
+  -webkit-user-drag: none; /* Safari */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: auto; // allows clicking
 }
 
 .scroll-container {

@@ -2,11 +2,14 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/Theme/ThemeProvider";
+import { Button } from "@mui/material";
 import styles from "./HexView.module.scss";
 import homeStyles from "@/views/Home/HomeView.module.scss";
 import aboutStyles from "@/views/About/AboutView.module.scss";
 import portfolioStyles from "@/views/Portfolio/PortfolioView.module.scss";
 import connectStyles from "@/views/Connect/ConnectView.module.scss";
+import Modal from "@/components/Modal";
+import ConnectForm from "@/views/Connect/ConnectForm";
 import { RiTriangleLine, RiTriangleFill } from "react-icons/ri";
 
 export interface HexCard {
@@ -56,6 +59,12 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
   const viewStyles = viewStylesMap[viewMode] || {};
   const scrollAnimationFrame = useRef<number | null>(null);
   const lastScrollTop = useRef<number | null>(null);
+
+  const [modalType, setModalType] = useState<
+    "linkedin" | "instagram" | "form" | null
+  >(null);
+  const handleHexClick = (type: typeof modalType) => setModalType(type);
+  const closeModal = () => setModalType(null);
 
   const smoothScrollBy = (
     element: HTMLElement,
@@ -215,175 +224,114 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                         cardRefs.current[i] = el;
                       }}
                       className={classNames.join(" ")}
-                      onClick={() => handleCardClick(i)}
+                      role={
+                        viewMode === "connect" && [0, 4, 8].includes(i)
+                          ? "button"
+                          : undefined
+                      }
+                      tabIndex={
+                        viewMode === "connect" && [0, 4, 8].includes(i)
+                          ? 0
+                          : undefined
+                      }
+                      onClick={(e) => {
+                        if (viewMode === "connect" && [0, 4, 8].includes(i)) {
+                          e.stopPropagation();
+                          if (i === 0) handleHexClick("linkedin");
+                          else if (i === 4) handleHexClick("form");
+                          else handleHexClick("instagram");
+                        } else {
+                          handleCardClick(i);
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "Enter" &&
+                          viewMode === "connect" &&
+                          [0, 4, 8].includes(i)
+                        ) {
+                          if (i === 0) handleHexClick("linkedin");
+                          else if (i === 4) handleHexClick("form");
+                          else handleHexClick("instagram");
+                        }
+                      }}
                     >
-                      {viewMode === "connect" && [0, 4, 8].includes(i) ? (
-                        <a
-                          href={
-                            i === 0
-                              ? "https://www.linkedin.com/in/airynspear/"
-                              : i === 4
-                              ? "mailto:airynspear@gmail.com"
-                              : "https://www.instagram.com/airynspear/"
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.linkWrapper}
-                        >
-                          <div className={`${styles.cardInner} cardInner`}>
-                            <div className={styles.cardFlipWrapper}>
-                              <div className={styles.front}>
-                                {(card.image ||
-                                  card.themeImageDark ||
-                                  imageSrc) && (
-                                  <div className={styles.image}>
-                                    <div className={styles.hexMask}>
-                                      {card.image && card.themeImageDark ? (
-                                        <>
-                                          <img
-                                            src={card.image}
-                                            className={`${styles.imageBase} ${
-                                              theme === "light"
-                                                ? styles.visible
-                                                : styles.hidden
-                                            }`}
-                                            alt="Light mode image"
-                                            loading="eager"
-                                          />
-                                          <img
-                                            src={card.themeImageDark}
-                                            className={`${styles.imageBase} ${
-                                              theme === "dark"
-                                                ? styles.visible
-                                                : styles.hidden
-                                            }`}
-                                            alt="Dark mode image"
-                                            loading="eager"
-                                          />
-                                        </>
-                                      ) : (
-                                        <>
-                                          {imageSrc && (
-                                            <img
-                                              className="default"
-                                              src={imageSrc}
-                                              alt="Project Thumbnail"
-                                              loading="eager"
-                                            />
-                                          )}
-                                          {borderSrc && (
-                                            <img
-                                              className="border"
-                                              src={borderSrc}
-                                              alt="Selected Overlay"
-                                              loading="eager"
-                                            />
-                                          )}
-                                        </>
+                      <div className={`${styles.cardInner} cardInner`}>
+                        <div className={styles.cardFlipWrapper}>
+                          <div className={styles.front}>
+                            {(card.image ||
+                              card.themeImageDark ||
+                              imageSrc) && (
+                              <div className={styles.image}>
+                                <div className={styles.hexMask}>
+                                  {viewMode !== "portfolio" &&
+                                  card.image &&
+                                  card.themeImageDark ? (
+                                    <>
+                                      <img
+                                        src={card.image}
+                                        className={`${styles.imageBase} ${
+                                          theme === "light"
+                                            ? styles.visible
+                                            : styles.hidden
+                                        }`}
+                                        alt="Light mode image"
+                                        loading="eager"
+                                      />
+                                      <img
+                                        src={card.themeImageDark}
+                                        className={`${styles.imageBase} ${
+                                          theme === "dark"
+                                            ? styles.visible
+                                            : styles.hidden
+                                        }`}
+                                        alt="Dark mode image"
+                                        loading="eager"
+                                      />
+                                    </>
+                                  ) : (
+                                    <>
+                                      {imageSrc && (
+                                        <img
+                                          className="default"
+                                          src={imageSrc}
+                                          alt="Project Thumbnail"
+                                          loading="eager"
+                                        />
                                       )}
-                                    </div>
-                                  </div>
-                                )}
-
-                                {card.icon && (
-                                  <div className={styles.icon}>{card.icon}</div>
-                                )}
-
-                                {card.keyword && (
-                                  <span className={styles.keyword}>
-                                    {card.keyword}
-                                  </span>
-                                )}
-                              </div>
-
-                              <div className={styles.back}>
-                                {card.icon && (
-                                  <div className={styles.icon}>{card.icon}</div>
-                                )}
-                                {card.description}
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      ) : (
-                        <div className={`${styles.cardInner} cardInner`}>
-                          <div className={styles.cardFlipWrapper}>
-                            <div className={styles.front}>
-                              {(card.image ||
-                                card.themeImageDark ||
-                                imageSrc) && (
-                                <div className={styles.image}>
-                                  <div className={styles.hexMask}>
-                                    {(viewMode === "about" ||
-                                      viewMode === "connect") &&
-                                    card.image &&
-                                    card.themeImageDark ? (
-                                      <>
+                                      {borderSrc && (
                                         <img
-                                          src={card.image}
-                                          className={`${styles.imageBase} ${
-                                            theme === "light"
-                                              ? styles.visible
-                                              : styles.hidden
-                                          }`}
-                                          alt={`${viewMode} image light`}
+                                          className="border"
+                                          src={borderSrc}
+                                          alt="Selected Overlay"
                                           loading="eager"
                                         />
-                                        <img
-                                          src={card.themeImageDark}
-                                          className={`${styles.imageBase} ${
-                                            theme === "dark"
-                                              ? styles.visible
-                                              : styles.hidden
-                                          }`}
-                                          alt={`${viewMode} image dark`}
-                                          loading="eager"
-                                        />
-                                      </>
-                                    ) : (
-                                      <>
-                                        {imageSrc && (
-                                          <img
-                                            className="default"
-                                            src={imageSrc}
-                                            alt="Project Thumbnail"
-                                            loading="eager"
-                                          />
-                                        )}
-                                        {borderSrc && (
-                                          <img
-                                            className="border"
-                                            src={borderSrc}
-                                            alt="Selected Overlay"
-                                            loading="eager"
-                                          />
-                                        )}
-                                      </>
-                                    )}
-                                  </div>
+                                      )}
+                                    </>
+                                  )}
                                 </div>
-                              )}
+                              </div>
+                            )}
 
-                              {card.icon && (
-                                <div className={styles.icon}>{card.icon}</div>
-                              )}
+                            {card.icon && (
+                              <div className={styles.icon}>{card.icon}</div>
+                            )}
 
-                              {card.keyword && (
-                                <span className={styles.keyword}>
-                                  {card.keyword}
-                                </span>
-                              )}
-                            </div>
+                            {card.keyword && (
+                              <span className={styles.keyword}>
+                                {card.keyword}
+                              </span>
+                            )}
+                          </div>
 
-                            <div className={styles.back}>
-                              {card.icon && (
-                                <div className={styles.icon}>{card.icon}</div>
-                              )}
-                              {card.description}
-                            </div>
+                          <div className={styles.back}>
+                            {card.icon && (
+                              <div className={styles.icon}>{card.icon}</div>
+                            )}
+                            {card.description}
                           </div>
                         </div>
-                      )}
+                      </div>
                     </div>
                   );
                 })}
@@ -470,6 +418,95 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
           </div>
         </div>
       )}
+      <Modal isOpen={modalType !== null} onClose={closeModal}>
+        {modalType === "linkedin" && (
+          <>
+            <p style={{ margin: 0 }}>
+              You’re about to leave this site. Continue to LinkedIn?
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                variant="outlined"
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "var(--accent)",
+                  borderColor: "var(--accent)",
+                  fontWeight: 600,
+                  padding: "0.4rem 1.5rem",
+                  borderRadius: "4px",
+                  textTransform: "none",
+                  fontSize: "14px",
+                  transition: "color 0.3s ease",
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    color: "var(--accent-hover)",
+                  },
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://linkedin.com/in/airynspear",
+                    "_blank",
+                    "noopener,noreferrer"
+                  )
+                }
+              >
+                Yes, continue
+              </Button>
+            </div>
+          </>
+        )}
+        {modalType === "instagram" && (
+          <>
+            <p style={{ margin: 0 }}>
+              You’re about to leave this site. Continue to Instagram?
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                variant="outlined"
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "var(--accent)",
+                  borderColor: "var(--accent)",
+                  fontWeight: 600,
+                  padding: "0.4rem 1.5rem",
+                  borderRadius: "4px",
+                  textTransform: "none",
+                  transition: "color 0.3s ease",
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    color: "var(--accent-hover)",
+                  },
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://instagram.com/airynspear",
+                    "_blank",
+                    "noopener,noreferrer"
+                  )
+                }
+              >
+                Yes, continue
+              </Button>
+            </div>
+          </>
+        )}
+        {modalType === "form" && (
+          <>
+            <h3>connect & create</h3>
+            <ConnectForm onSubmitSuccess={closeModal} />
+          </>
+        )}
+      </Modal>
     </div>
   );
 }
