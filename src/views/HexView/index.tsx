@@ -288,6 +288,7 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                                         alt="Dark mode image"
                                         loading="eager"
                                       />
+                                      <div className={styles.flame}></div>
                                     </>
                                   ) : (
                                     <>
