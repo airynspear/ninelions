@@ -11,13 +11,14 @@ import connectStyles from "@/views/Connect/ConnectView.module.scss";
 import Modal from "@/components/Modal";
 import ConnectForm from "@/views/Connect/ConnectForm";
 import { RiTriangleLine, RiTriangleFill } from "react-icons/ri";
+import { PROJECT_METADATA } from "@/views/Portfolio/cards";
 
 export interface HexCard {
   icon?: React.ReactNode;
   thumbnail?: string;
   image?: string;
   keyword?: string | React.ReactElement;
-  description: string | React.ReactElement;
+  description?: string | React.ReactElement;
   themeImageDark?: string;
   themeThumbnailDark?: string;
 }
@@ -54,11 +55,48 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(
     null
   );
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hexFiveFlipped, setHexFiveFlipped] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(
+    null
+  );
+
+  const handleSelect = (direction: "next" | "prev") => {
+    setSlideDirection(direction === "next" ? "right" : "left");
+
+    setSelectedCardIndex((prev) => {
+      const newIndex =
+        direction === "next"
+          ? Math.min(prev! + 1, PROJECT_METADATA.length - 1)
+          : Math.max(prev! - 1, 0);
+
+      setActiveIndex(newIndex);
+
+      setTimeout(() => {
+        if (scrollRef.current) {
+          smoothScrollBy(
+            scrollRef.current,
+            direction === "next" ? 110 : -110,
+            1000
+          );
+        }
+
+        setSlideDirection(null);
+      }, 150);
+
+      return newIndex;
+    });
+  };
+
+  useEffect(() => {
+    if (viewMode === "portfolio" && selectedCardIndex === null) {
+      setSelectedCardIndex(0);
+    }
+  }, [viewMode, selectedCardIndex]);
 
   const { theme } = useTheme();
   const viewStyles = viewStylesMap[viewMode] || {};
   const scrollAnimationFrame = useRef<number | null>(null);
-  const lastScrollTop = useRef<number | null>(null);
 
   const [modalType, setModalType] = useState<
     "linkedin" | "instagram" | "form" | null
@@ -81,7 +119,7 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     const step = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const ease = 1 - Math.pow(1 - progress, 3);
       element.scrollTop = start + deltaY * ease;
 
       if (progress < 1) {
@@ -94,17 +132,9 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     scrollAnimationFrame.current = requestAnimationFrame(step);
   };
 
-  const handleCardClick = (index: number) => {
-    if (viewMode === "portfolio") {
-      const previousIndex = selectedCardIndex;
-      setSelectedCardIndex(index);
-
-      setTimeout(() => {
-        if (scrollRef.current && previousIndex !== null) {
-          const scrollDirection = index > previousIndex ? 120 : -140;
-          smoothScrollBy(scrollRef.current, scrollDirection, 1000);
-        }
-      }, 80);
+  const handleFallbackClick = () => {
+    if (viewMode === "connect") {
+      // fallback behavior if needed later
     }
   };
 
@@ -116,75 +146,33 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  // Animate background hex rotation every 9s
+  useEffect(() => {
+    const ROTATION_LIMIT = 9; // After 9 steps, reset
+    const interval = setInterval(() => {
+      const step =
+        viewMode === "about" || viewMode === "portfolio" || isMobile ? 60 : 30;
+
+      setRotation((prev) => {
+        const newRotation = prev + step;
+        return newRotation >= step * ROTATION_LIMIT ? 0 : newRotation;
+      });
+    }, 9000);
+
+    return () => clearInterval(interval);
+  }, [isMobile, viewMode]);
+
   // Snap rotation to align hexes based on viewMode and device type
   useEffect(() => {
     const shouldSnap =
       viewMode === "about" || viewMode === "portfolio" || isMobile;
+
     const offset = rotation % 60;
     if (shouldSnap && offset !== 30) {
       const adjustment = (30 - offset + 60) % 60;
       setRotation((prev) => prev + adjustment);
     }
   }, [isMobile, viewMode, rotation]);
-
-  // Animate background hex rotation every 9s
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const step =
-        viewMode === "about" || viewMode === "portfolio" || isMobile ? 60 : 30;
-      setRotation((prev) => prev + step);
-    }, 9000);
-    return () => clearInterval(interval);
-  }, [isMobile, viewMode]);
-
-  // Save scroll position when leaving portfolio view
-  useEffect(() => {
-    const scrollEl = scrollRef.current;
-
-    return () => {
-      if (viewMode === "portfolio" && scrollEl) {
-        lastScrollTop.current = scrollEl.scrollTop;
-      }
-    };
-  }, [viewMode]);
-
-  // Reset selectedCardIndex and scroll to stored position on entering portfolio view
-  useEffect(() => {
-    if (viewMode === "portfolio") {
-      const scrollTo = lastScrollTop.current ?? 0;
-      setSelectedCardIndex(0);
-
-      if (scrollRef.current) {
-        scrollRef.current.scrollTo({
-          top: scrollTo ?? 200,
-          behavior: "instant",
-        });
-      }
-    }
-  }, [viewMode]);
-
-  // Cancel smooth scroll animations on user wheel/touch interactions
-  useEffect(() => {
-    const cancelSmoothScroll = () => {
-      if (scrollAnimationFrame.current) {
-        cancelAnimationFrame(scrollAnimationFrame.current);
-        scrollAnimationFrame.current = null;
-      }
-    };
-
-    const scrollEl = scrollRef.current;
-    if (!scrollEl) return;
-
-    scrollEl.addEventListener("wheel", cancelSmoothScroll, { passive: true });
-    scrollEl.addEventListener("touchmove", cancelSmoothScroll, {
-      passive: true,
-    });
-
-    return () => {
-      scrollEl.removeEventListener("wheel", cancelSmoothScroll);
-      scrollEl.removeEventListener("touchmove", cancelSmoothScroll);
-    };
-  }, []);
 
   return (
     <div
@@ -194,192 +182,264 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
       <section className={styles.hero}>
         <div className={styles.hexGrid}>
           <div className={styles.hexContainer}>
-            <div className={styles.hexScrollWrapper}>
-              <div className={styles.hexScroll} ref={scrollRef}>
-                {cards.map((card, i) => {
-                  const hexClass = HEX_CARD_CLASSES[i];
-                  const classNames = [styles.hexCard];
+            {cards.map((card, i) => {
+              const hexClass = HEX_CARD_CLASSES[i];
+              const classNames = [styles.hexCard];
 
-                  if (styles[hexClass]) classNames.push(styles[hexClass]);
-                  if (viewStyles[hexClass])
-                    classNames.push(viewStyles[hexClass]);
+              if (styles[hexClass]) classNames.push(styles[hexClass]);
+              if (viewStyles[hexClass]) classNames.push(viewStyles[hexClass]);
 
-                  const isSelected =
-                    viewMode === "portfolio" && selectedCardIndex === i;
-                  if (isSelected) classNames.push(styles.selected);
+              const baseLight = card.thumbnail || card.image;
+              const baseDark = card.themeThumbnailDark || card.image;
+              const imageSrc = theme === "dark" ? baseDark : baseLight;
 
-                  const baseLight = card.thumbnail || card.image;
-                  const baseDark = card.themeThumbnailDark || card.image;
-                  const imageSrc = theme === "dark" ? baseDark : baseLight;
-
-                  const borderSrc =
-                    viewMode === "portfolio"
-                      ? `/images/portfolio/border-${theme}.png`
-                      : null;
-
-                  return (
+              return (
+                <div
+                  key={i}
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
+                  className={classNames.join(" ")}
+                  role={
+                    (viewMode === "connect" && [0, 4, 8].includes(i)) ||
+                    (viewMode === "portfolio" && (i === 0 || i === 8))
+                      ? "button"
+                      : undefined
+                  }
+                  tabIndex={
+                    (viewMode === "connect" && [0, 4, 8].includes(i)) ||
+                    (viewMode === "portfolio" && (i === 0 || i === 8))
+                      ? 0
+                      : undefined
+                  }
+                  style={{
+                    pointerEvents:
+                      viewMode === "portfolio" &&
+                      ((i === 0 && selectedCardIndex === 0) ||
+                        (i === 8 &&
+                          selectedCardIndex === PROJECT_METADATA.length - 1))
+                        ? "none"
+                        : undefined,
+                  }}
+                  onClick={(e) => {
+                    if (viewMode === "connect" && [0, 4, 8].includes(i)) {
+                      e.stopPropagation();
+                      if (i === 0) handleHexClick("linkedin");
+                      else if (i === 4) handleHexClick("form");
+                      else handleHexClick("instagram");
+                    } else if (viewMode === "portfolio") {
+                      if (i === 0 && selectedCardIndex! > 0)
+                        handleSelect("prev");
+                      else if (
+                        i === 8 &&
+                        selectedCardIndex! < PROJECT_METADATA.length - 1
+                      )
+                        handleSelect("next");
+                    } else {
+                      handleFallbackClick();
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      if (viewMode === "connect" && [0, 4, 8].includes(i)) {
+                        if (i === 0) handleHexClick("linkedin");
+                        else if (i === 4) handleHexClick("form");
+                        else handleHexClick("instagram");
+                      } else if (viewMode === "portfolio") {
+                        if (i === 0 && selectedCardIndex! > 0)
+                          handleSelect("prev");
+                        else if (
+                          i === 8 &&
+                          selectedCardIndex! < PROJECT_METADATA.length - 1
+                        )
+                          handleSelect("next");
+                      }
+                    }
+                  }}
+                >
+                  {viewMode === "portfolio" && i === 4 && (
                     <div
-                      key={i}
-                      ref={(el) => {
-                        cardRefs.current[i] = el;
+                      className={styles.hexHoverMask}
+                      onMouseEnter={() => setHexFiveFlipped(true)}
+                      onMouseLeave={() => setHexFiveFlipped(false)}
+                      style={{
+                        transform: `rotate(${(rotation - 30) % 360}deg)`,
                       }}
-                      className={classNames.join(" ")}
-                      role={
-                        viewMode === "connect" && [0, 4, 8].includes(i)
-                          ? "button"
-                          : undefined
-                      }
-                      tabIndex={
-                        viewMode === "connect" && [0, 4, 8].includes(i)
-                          ? 0
-                          : undefined
-                      }
-                      onClick={(e) => {
-                        if (viewMode === "connect" && [0, 4, 8].includes(i)) {
-                          e.stopPropagation();
-                          if (i === 0) handleHexClick("linkedin");
-                          else if (i === 4) handleHexClick("form");
-                          else handleHexClick("instagram");
-                        } else {
-                          handleCardClick(i);
-                        }
-                      }}
-                      onKeyDown={(e) => {
-                        if (
-                          e.key === "Enter" &&
-                          viewMode === "connect" &&
-                          [0, 4, 8].includes(i)
-                        ) {
-                          if (i === 0) handleHexClick("linkedin");
-                          else if (i === 4) handleHexClick("form");
-                          else handleHexClick("instagram");
-                        }
+                    />
+                  )}
+                  <div className={`${styles.cardInner} cardInner`}>
+                    <div
+                      className={styles.cardFlipWrapper}
+                      style={{
+                        transform:
+                          viewMode === "portfolio" && i === 4 && hexFiveFlipped
+                            ? "rotateY(180deg)"
+                            : "rotateY(0deg)",
                       }}
                     >
-                      <div className={`${styles.cardInner} cardInner`}>
-                        <div className={styles.cardFlipWrapper}>
-                          <div className={styles.front}>
-                            {(card.image ||
-                              card.themeImageDark ||
-                              imageSrc) && (
-                              <div className={styles.image}>
-                                <div className={styles.hexMask}>
-                                  {viewMode !== "portfolio" &&
-                                  card.image &&
-                                  card.themeImageDark ? (
+                      <div className={styles.front}>
+                        {(i === 4 && viewMode === "portfolio") || imageSrc ? (
+                          <div className={styles.image}>
+                            <div className={styles.hexMask}>
+                              {viewMode === "portfolio" && i === 4 ? (
+                                <div className={styles.imageLayer}>
+                                  {PROJECT_METADATA.map((project, index) => {
+                                    const isActive = index === activeIndex;
+                                    const useDark =
+                                      theme === "dark" && project.themeImageDark
+                                        ? project.themeImageDark
+                                        : null;
+                                    const src = useDark || project.image;
+
+                                    return (
+                                      <div
+                                        key={index}
+                                        className={`${
+                                          styles.imageSlideWrapper
+                                        } ${
+                                          isActive && slideDirection === "left"
+                                            ? styles.slideFromLeft
+                                            : isActive &&
+                                              slideDirection === "right"
+                                            ? styles.slideFromRight
+                                            : ""
+                                        }`}
+                                      >
+                                        <img
+                                          src={src}
+                                          className={`${styles.imageBase} ${
+                                            isActive
+                                              ? styles.visible
+                                              : styles.hidden
+                                          }`}
+                                          alt={`${
+                                            project.keyword || "Project"
+                                          } ${theme} mode`}
+                                          loading="eager"
+                                        />
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ) : card.image && card.themeImageDark ? (
+                                <>
+                                  {theme === "dark" ? (
+                                    <img
+                                      src={card.themeImageDark}
+                                      className={styles.imageBase}
+                                      alt="Dark mode image"
+                                      loading="eager"
+                                    />
+                                  ) : (
                                     <>
                                       <img
                                         src={card.image}
-                                        className={`${styles.imageBase} ${
-                                          theme === "light"
-                                            ? styles.visible
-                                            : styles.hidden
-                                        }`}
+                                        className={styles.imageBase}
                                         alt="Light mode image"
-                                        loading="eager"
-                                      />
-                                      <img
-                                        src={card.themeImageDark}
-                                        className={`${styles.imageBase} ${
-                                          theme === "dark"
-                                            ? styles.visible
-                                            : styles.hidden
-                                        }`}
-                                        alt="Dark mode image"
                                         loading="eager"
                                       />
                                       <div className={styles.flame}></div>
                                     </>
-                                  ) : (
-                                    <>
-                                      {imageSrc && (
-                                        <img
-                                          className="default"
-                                          src={imageSrc}
-                                          alt="Project Thumbnail"
-                                          loading="eager"
-                                        />
-                                      )}
-                                      {borderSrc && (
-                                        <img
-                                          className="border"
-                                          src={borderSrc}
-                                          alt="Selected Overlay"
-                                          loading="eager"
-                                        />
-                                      )}
-                                    </>
                                   )}
+                                </>
+                              ) : (
+                                imageSrc && (
+                                  <img
+                                    className="default"
+                                    src={imageSrc}
+                                    alt="Default Image"
+                                    loading="eager"
+                                  />
+                                )
+                              )}
+                            </div>
+                          </div>
+                        ) : null}
+
+                        {card.icon && (
+                          <div className={styles.icon}>{card.icon}</div>
+                        )}
+
+                        {card.keyword && (
+                          <span className={styles.keyword}>{card.keyword}</span>
+                        )}
+                      </div>
+
+                      <div className={styles.back}>
+                        {card.icon && (
+                          <div className={styles.icon}>{card.icon}</div>
+                        )}
+                        {card.description}
+                        {selectedCardIndex !== null &&
+                          viewMode === "portfolio" && (
+                            <div className={styles.projectWrapper}>
+                              <div
+                                key={`project-${selectedCardIndex}`}
+                                className={styles.projectDetails}
+                              >
+                                <div className={styles.projectThumb}>
+                                  <img
+                                    src={
+                                      theme === "dark" &&
+                                      PROJECT_METADATA[selectedCardIndex]
+                                        .themeThumbnailDark
+                                        ? PROJECT_METADATA[selectedCardIndex]
+                                            .themeThumbnailDark
+                                        : PROJECT_METADATA[selectedCardIndex]
+                                            .thumbnail
+                                    }
+                                    alt={`${
+                                      PROJECT_METADATA[selectedCardIndex]
+                                        .keyword || "Project"
+                                    } thumbnail`}
+                                    loading="lazy"
+                                  />
+                                </div>
+                                <div className={styles.projectContent}>
+                                  <h3 className={styles.projectTitle}>
+                                    {
+                                      PROJECT_METADATA[selectedCardIndex]
+                                        .keyword
+                                    }
+                                  </h3>
+
+                                  <div className={styles.projectDescription}>
+                                    {
+                                      PROJECT_METADATA[selectedCardIndex]
+                                        .description
+                                    }
+                                  </div>
                                 </div>
                               </div>
-                            )}
-
-                            {card.icon && (
-                              <div className={styles.icon}>{card.icon}</div>
-                            )}
-
-                            {card.keyword && (
-                              <span className={styles.keyword}>
-                                {card.keyword}
-                              </span>
-                            )}
-                          </div>
-
-                          <div className={styles.back}>
-                            {card.icon && (
-                              <div className={styles.icon}>{card.icon}</div>
-                            )}
-                            {card.description}
-                          </div>
-                        </div>
+                            </div>
+                          )}
                       </div>
                     </div>
-                  );
-                })}
-                <div className={styles.hexScrollSpace} />
-              </div>
-            </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div className={styles.hexScrollSpace} />
           </div>
         </div>
       </section>
       {selectedCardIndex !== null && viewMode === "portfolio" && (
-        <div className={styles.projectWrapper}>
+        <div className={styles.thumbNav}>
           <div className={styles.chevronNav}>
             <button
               className={styles.chevronButton}
-              onClick={() => {
-                if (selectedCardIndex > 0) {
-                  setSelectedCardIndex((prev) =>
-                    prev !== null ? prev - 1 : 0
-                  );
-                  setTimeout(() => {
-                    if (scrollRef.current) {
-                      smoothScrollBy(scrollRef.current, -110, 1000);
-                    }
-                  }, 80);
-                }
-              }}
-              disabled={selectedCardIndex === 0}
+              onClick={() => handleSelect("next")}
+              disabled={selectedCardIndex === PROJECT_METADATA.length - 1}
               aria-label="Previous project"
             >
               <RiTriangleLine />
               <RiTriangleFill className={styles.innerTriangle} />
             </button>
+
             <button
               className={`${styles.chevronButton} ${styles.downTriangle}`}
-              onClick={() => {
-                if (selectedCardIndex < cards.length - 1) {
-                  setSelectedCardIndex((prev) =>
-                    prev !== null ? prev + 1 : cards.length - 1
-                  );
-                  setTimeout(() => {
-                    if (scrollRef.current) {
-                      smoothScrollBy(scrollRef.current, 110, 1000);
-                    }
-                  }, 80);
-                }
-              }}
-              disabled={selectedCardIndex === cards.length - 1}
+              onClick={() => handleSelect("prev")}
+              disabled={selectedCardIndex === 0}
               aria-label="Next project"
             >
               <RiTriangleLine />
@@ -391,34 +451,40 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
             key={`project-${selectedCardIndex}`}
             className={styles.projectDetails}
           >
-            {(cards[selectedCardIndex].image ||
-              cards[selectedCardIndex].themeImageDark) && (
-              <div className={styles.projectImage}>
-                <img
-                  src={
-                    theme === "dark" && cards[selectedCardIndex].themeImageDark
-                      ? cards[selectedCardIndex].themeImageDark
-                      : cards[selectedCardIndex].image
-                  }
-                  alt={`${
-                    cards[selectedCardIndex].keyword || "Project"
-                  } full image`}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                />
-              </div>
-            )}
-
             <h3 className={styles.projectTitle}>
-              {cards[selectedCardIndex].keyword}
+              {PROJECT_METADATA[selectedCardIndex].keyword}
             </h3>
-            <div className={styles.projectDescription}>
-              {cards[selectedCardIndex].description}
+
+            <div className={styles.projectThumb}>
+              <div className={styles.thumbMask}>
+                <div
+                  className={`${styles.thumbImageWrapper} ${
+                    slideDirection === "left"
+                      ? styles.slideFromLeft
+                      : slideDirection === "right"
+                      ? styles.slideFromRight
+                      : ""
+                  }`}
+                >
+                  <img
+                    src={
+                      theme === "dark" &&
+                      PROJECT_METADATA[selectedCardIndex].themeThumbnailDark
+                        ? PROJECT_METADATA[selectedCardIndex].themeThumbnailDark
+                        : PROJECT_METADATA[selectedCardIndex].thumbnail
+                    }
+                    alt={`${
+                      PROJECT_METADATA[selectedCardIndex].keyword || "Project"
+                    } thumbnail`}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       )}
+
       <Modal isOpen={modalType !== null} onClose={closeModal}>
         {modalType === "linkedin" && (
           <>

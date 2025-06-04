@@ -2,79 +2,63 @@
   display: none;
 }
 
-@keyframes fadeInContent {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.content {
-  max-width: 440px;
-}
-
 :global(.portfolio) {
   .hexCardOne {
-    --x: 357px;
-    --y: 46px;
+    --x: 274px;
+    --y: 156px;
+    z-index: 4 !important;
   }
 
   .hexCardTwo {
-    --x: 430px;
-    --y: 180px;
+    --x: 346px;
+    --y: 142px;
   }
 
   .hexCardThree {
-    --x: 357px;
-    --y: 314px;
     z-index: 2;
+    --x: 300px;
+    --y: 142px;
+    transform: translate3d(var(--x), var(--y), 0) scale(0.8);
   }
 
   .hexCardFour {
-    --x: 430px;
-    --y: 448px;
+    transform: translate3d(var(--x), var(--y), 0) scale(0.5);
+    --x: 268px;
+    --y: 175px;
   }
 
   .hexCardFive {
-    --x: 357px;
-    --y: 582px;
+    transform: translate3d(var(--x), var(--y), 0);
   }
 
   .hexCardSix {
-    --x: 430px;
-    --y: 716px;
+    --x: 594px;
+    --y: 175px;
+    transform: translate3d(var(--x), var(--y), 0) scale(0.5);
   }
 
   .hexCardSeven {
-    --x: 357px;
-    --y: 850px;
     z-index: 3;
+    --x: 444px;
+    --y: 142px;
   }
 
   .hexCardEight {
-    --x: 430px;
-    --y: 984px;
-    z-index: 3;
+    z-index: 2;
+    --x: 492px;
+    --y: 142px;
+    transform: translate3d(var(--x), var(--y), 0) scale(0.8);
   }
 
   .hexCardNine {
-    --x: 357px;
-    --y: 1118px;
+    --x: 548px;
+    --y: 156px;
+    z-index: 2;
   }
 
   .hexCardOne,
-  .hexCardTwo,
-  .hexCardThree,
-  .hexCardFive,
-  .hexCardSeven,
-  .hexCardEight,
   .hexCardNine {
-    min-width: 180px;
-    height: 166px;
+    transform: translate3d(var(--x), var(--y), 0) scale(0.6);
   }
 }
 

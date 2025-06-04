@@ -52,14 +52,6 @@
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
   }
-
-  &:hover {
-    z-index: 11;
-
-    .cardFlipWrapper {
-      transform: rotateY(180deg);
-    }
-  }
   img {
     display: block;
     width: 100%;
@@ -165,10 +157,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      img {
-        //pointer-events: none;
-        user-select: none;
-      }
 
       .visible {
         opacity: 1;
@@ -178,7 +166,6 @@
       .hidden {
         opacity: 0;
         z-index: 1;
-        //ointer-events: none;
       }
     }
 
@@ -216,36 +203,19 @@
   }
 }
 
+:global(.home) {
+  .hexCard {
+    &:hover {
+      z-index: 11;
+
+      .cardFlipWrapper {
+        transform: rotateY(180deg);
+      }
+    }
+  }
+}
+
 // === Hex Styles ===
-
-.hexagonWrapper {
-  position: relative;
-  width: 272px;
-  height: 272px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hexagonBorder {
-  width: 272px;
-  height: 272px;
-  background: var(--accent);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.hexagon {
-  width: 270px;
-  height: 270px;
-  background: var(--background);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  position: relative;
-  z-index: 1;
-}
 
 .background::after,
 .heroBackground::after {
