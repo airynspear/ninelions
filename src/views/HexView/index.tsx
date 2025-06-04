@@ -270,12 +270,15 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                   <div className={`${styles.cardInner} cardInner`}>
                     <div
                       className={styles.cardFlipWrapper}
-                      style={{
-                        transform:
-                          viewMode === "portfolio" && i === 4 && hexFiveFlipped
-                            ? "rotateY(180deg)"
-                            : "rotateY(0deg)",
-                      }}
+                      style={
+                        viewMode === "portfolio" && i === 4
+                          ? {
+                              transform: hexFiveFlipped
+                                ? "rotateY(180deg)"
+                                : "rotateY(0deg)",
+                            }
+                          : undefined
+                      }
                     >
                       <div className={styles.front}>
                         {(i === 4 && viewMode === "portfolio") || imageSrc ? (
