@@ -16,28 +16,6 @@
 
       .hexMask {
         position: relative;
-
-        :global(.default) {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          z-index: 1;
-        }
-
-        :global(.border) {
-          position: absolute;
-          left: 1px !important;
-          inset: 0;
-          width: 99%;
-          height: 99%;
-          object-fit: cover;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.4s ease-in-out;
-          z-index: 2;
-        }
       }
     }
   }
@@ -199,7 +177,7 @@
     transition: top 0.6s ease-in-out;
 
     .projectTitle {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       margin-bottom: 0.25rem;
     }
     .projectThumb {
@@ -333,18 +311,22 @@
     .hexGrid {
       transform: scale(1);
     }
+    .hexContainer {
+      transform: translate(0, -174px);
+      width: 100%;
+    }
     .thumbNav {
-      top: 480px;
+      top: 440px;
+      transform: scale(0.85);
     }
   }
 }
 
-html[data-theme="light"] .portfolio {
+.portfolio {
   .hexCardFour,
   .hexCardSix {
     .front::before {
-      animation: fadeInHex 0.8s ease forwards;
-      background-image: url("/images/hex-light-fill.svg");
+      background-image: none;
     }
   }
 }
@@ -421,3 +403,29 @@ html[data-theme="dark"] .portfolio {
     }
   }
 }
+
+// @media (max-width: 674px) {
+//   .front::before,
+//   .back::before {
+//     :global(.portfolio) & {
+//       transform: rotate(var(--hex-rotation, 0deg));
+//     }
+//   }
+
+//   .front,
+//   .back {
+//     .image {
+//       .hexMask {
+//         :global(.portfolio) & {
+//           transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+//         }
+//       }
+
+//       img {
+//         :global(.portfolio) & {
+//           transform: rotate(calc(-1 * (30deg + var(--hex-rotation, 0deg))));
+//         }
+//       }
+//     }
+//   }
+// }
