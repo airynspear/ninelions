@@ -403,165 +403,178 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                 </div>
               );
             })}
-            <div className={styles.hexScrollSpace} />
-          </div>
-        </div>
-      </section>
-      {selectedCardIndex !== null && viewMode === "portfolio" && (
-        <div className={styles.thumbNav}>
-          <div className={styles.navThumbs}>
-            {/* Prev Thumbnail */}
-            <div className={styles.prevThumbContainer}>
-              {selectedCardIndex > 0 && (
-                <button
-                  className={`${styles.navButton} ${styles.prevThumb}`}
-                  onClick={() => handleSelect("prev")}
-                  aria-label="Previous project"
-                >
-                  <div className={styles.thumbMask}>
-                    <div
-                      className={`${styles.thumbImageWrapper} ${
-                        slideDirection === "next"
-                          ? styles.slideFromRight
-                          : slideDirection === "prev"
-                          ? styles.slideOutRight
-                          : ""
-                      }`}
-                    >
-                      <img
-                        src={
-                          theme === "dark" &&
-                          PROJECT_METADATA[selectedCardIndex - 1]
-                            ?.themeThumbnailDark
-                            ? PROJECT_METADATA[selectedCardIndex - 1]
-                                .themeThumbnailDark
-                            : PROJECT_METADATA[selectedCardIndex - 1]?.thumbnail
-                        }
-                        alt="Previous Project"
-                      />
-                    </div>
+            {selectedCardIndex !== null && viewMode === "portfolio" && (
+              <div className={styles.thumbNav}>
+                <div className={styles.navThumbs}>
+                  {/* Prev Thumbnail */}
+                  <div className={styles.prevThumbContainer}>
+                    {selectedCardIndex > 0 && (
+                      <button
+                        className={`${styles.navButton} ${styles.prevThumb}`}
+                        onClick={() => handleSelect("prev")}
+                        aria-label="Previous project"
+                      >
+                        <div className={styles.thumbMask}>
+                          <div
+                            className={`${styles.thumbImageWrapper} ${
+                              slideDirection === "next"
+                                ? styles.slideFromRight
+                                : slideDirection === "prev"
+                                ? styles.slideOutRight
+                                : ""
+                            }`}
+                          >
+                            <img
+                              src={
+                                theme === "dark" &&
+                                PROJECT_METADATA[selectedCardIndex - 1]
+                                  ?.themeThumbnailDark
+                                  ? PROJECT_METADATA[selectedCardIndex - 1]
+                                      .themeThumbnailDark
+                                  : PROJECT_METADATA[selectedCardIndex - 1]
+                                      ?.thumbnail
+                              }
+                              alt="Previous Project"
+                            />
+                          </div>
 
-                    {/* 👇 GHOST THUMB overlaid during prev */}
-                    {slideDirection === "prev" &&
-                      lastIndex !== null &&
-                      lastIndex > 1 && (
+                          {/* 👇 GHOST THUMB overlaid during prev */}
+                          {slideDirection === "prev" &&
+                            lastIndex !== null &&
+                            lastIndex > 1 && (
+                              <div
+                                className={`${styles.thumbImageWrapper} ${styles.slideFromLeft}`}
+                                style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: 0,
+                                }}
+                              >
+                                <img
+                                  src={
+                                    theme === "dark" &&
+                                    PROJECT_METADATA[lastIndex - 2]
+                                      ?.themeThumbnailDark
+                                      ? PROJECT_METADATA[lastIndex - 2]
+                                          .themeThumbnailDark
+                                      : PROJECT_METADATA[lastIndex - 2]
+                                          ?.thumbnail
+                                  }
+                                  alt="Incoming Previous Project"
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Current Project */}
+                  <div
+                    key={`project-${selectedCardIndex}`}
+                    className={styles.projectDetails}
+                  >
+                    <h3 className={styles.projectTitle}>
+                      {PROJECT_METADATA[selectedCardIndex].keyword}
+                    </h3>
+                    <div className={styles.projectThumb}>
+                      <div className={styles.thumbMask}>
                         <div
-                          className={`${styles.thumbImageWrapper} ${styles.slideFromLeft}`}
-                          style={{ position: "absolute", top: 0, left: 0 }}
+                          className={`${styles.thumbImageWrapper} ${
+                            slideDirection === "prev"
+                              ? styles.slideFromLeft
+                              : slideDirection === "next"
+                              ? styles.slideFromRight
+                              : ""
+                          }`}
                         >
                           <img
                             src={
                               theme === "dark" &&
-                              PROJECT_METADATA[lastIndex - 2]
-                                ?.themeThumbnailDark
-                                ? PROJECT_METADATA[lastIndex - 2]
+                              PROJECT_METADATA[selectedCardIndex]
+                                .themeThumbnailDark
+                                ? PROJECT_METADATA[selectedCardIndex]
                                     .themeThumbnailDark
-                                : PROJECT_METADATA[lastIndex - 2]?.thumbnail
+                                : PROJECT_METADATA[selectedCardIndex].thumbnail
                             }
-                            alt="Incoming Previous Project"
+                            alt={`${
+                              PROJECT_METADATA[selectedCardIndex].keyword ||
+                              "Project"
+                            } thumbnail`}
+                            loading="lazy"
                           />
                         </div>
-                      )}
+                      </div>
+                    </div>
                   </div>
-                </button>
-              )}
-            </div>
 
-            {/* Current Project */}
-            <div
-              key={`project-${selectedCardIndex}`}
-              className={styles.projectDetails}
-            >
-              <h3 className={styles.projectTitle}>
-                {PROJECT_METADATA[selectedCardIndex].keyword}
-              </h3>
-              <div className={styles.projectThumb}>
-                <div className={styles.thumbMask}>
-                  <div
-                    className={`${styles.thumbImageWrapper} ${
-                      slideDirection === "prev"
-                        ? styles.slideFromLeft
-                        : slideDirection === "next"
-                        ? styles.slideFromRight
-                        : ""
-                    }`}
-                  >
-                    <img
-                      src={
-                        theme === "dark" &&
-                        PROJECT_METADATA[selectedCardIndex].themeThumbnailDark
-                          ? PROJECT_METADATA[selectedCardIndex]
-                              .themeThumbnailDark
-                          : PROJECT_METADATA[selectedCardIndex].thumbnail
-                      }
-                      alt={`${
-                        PROJECT_METADATA[selectedCardIndex].keyword || "Project"
-                      } thumbnail`}
-                      loading="lazy"
-                    />
+                  {/* Next Thumbnail */}
+                  <div className={styles.nextThumbContainer}>
+                    {selectedCardIndex < PROJECT_METADATA.length - 1 && (
+                      <button
+                        className={`${styles.navButton} ${styles.nextThumb}`}
+                        onClick={() => handleSelect("next")}
+                        aria-label="Next project"
+                      >
+                        <div className={styles.thumbMask}>
+                          <div
+                            className={`${styles.thumbImageWrapper} ${
+                              slideDirection === "prev"
+                                ? styles.slideFromLeft // when going to prev, next slides in from left
+                                : slideDirection === "next"
+                                ? styles.slideOutLeft // when going to next, next slides out left
+                                : ""
+                            }`}
+                          >
+                            <img
+                              src={
+                                theme === "dark" &&
+                                PROJECT_METADATA[selectedCardIndex + 1]
+                                  .themeThumbnailDark
+                                  ? PROJECT_METADATA[selectedCardIndex + 1]
+                                      .themeThumbnailDark
+                                  : PROJECT_METADATA[selectedCardIndex + 1]
+                                      .thumbnail
+                              }
+                              alt="Next Project"
+                            />
+                          </div>
+                          {/* 👇 GHOST THUMB overlaid during next */}
+                          {slideDirection === "next" &&
+                            lastIndex !== null &&
+                            lastIndex < PROJECT_METADATA.length - 2 && (
+                              <div
+                                className={`${styles.thumbImageWrapper} ${styles.slideFromRight}`}
+                                style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: 0,
+                                }}
+                              >
+                                <img
+                                  src={
+                                    theme === "dark" &&
+                                    PROJECT_METADATA[lastIndex + 2]
+                                      ?.themeThumbnailDark
+                                      ? PROJECT_METADATA[lastIndex + 2]
+                                          .themeThumbnailDark
+                                      : PROJECT_METADATA[lastIndex + 2]
+                                          ?.thumbnail
+                                  }
+                                  alt="Incoming Next Project"
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Next Thumbnail */}
-            <div className={styles.nextThumbContainer}>
-              {selectedCardIndex < PROJECT_METADATA.length - 1 && (
-                <button
-                  className={`${styles.navButton} ${styles.nextThumb}`}
-                  onClick={() => handleSelect("next")}
-                  aria-label="Next project"
-                >
-                  <div className={styles.thumbMask}>
-                    <div
-                      className={`${styles.thumbImageWrapper} ${
-                        slideDirection === "prev"
-                          ? styles.slideFromLeft // when going to prev, next slides in from left
-                          : slideDirection === "next"
-                          ? styles.slideOutLeft // when going to next, next slides out left
-                          : ""
-                      }`}
-                    >
-                      <img
-                        src={
-                          theme === "dark" &&
-                          PROJECT_METADATA[selectedCardIndex + 1]
-                            .themeThumbnailDark
-                            ? PROJECT_METADATA[selectedCardIndex + 1]
-                                .themeThumbnailDark
-                            : PROJECT_METADATA[selectedCardIndex + 1].thumbnail
-                        }
-                        alt="Next Project"
-                      />
-                    </div>
-                    {/* 👇 GHOST THUMB overlaid during next */}
-                    {slideDirection === "next" &&
-                      lastIndex !== null &&
-                      lastIndex < PROJECT_METADATA.length - 2 && (
-                        <div
-                          className={`${styles.thumbImageWrapper} ${styles.slideFromRight}`}
-                          style={{ position: "absolute", top: 0, left: 0 }}
-                        >
-                          <img
-                            src={
-                              theme === "dark" &&
-                              PROJECT_METADATA[lastIndex + 2]
-                                ?.themeThumbnailDark
-                                ? PROJECT_METADATA[lastIndex + 2]
-                                    .themeThumbnailDark
-                                : PROJECT_METADATA[lastIndex + 2]?.thumbnail
-                            }
-                            alt="Incoming Next Project"
-                          />
-                        </div>
-                      )}
-                  </div>
-                </button>
-              )}
-            </div>
+            )}
           </div>
         </div>
-      )}
+      </section>
 
       <Modal isOpen={modalType !== null} onClose={closeModal}>
         {modalType === "linkedin" && (

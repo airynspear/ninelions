@@ -20,23 +20,6 @@
     }
   }
 
-  // .hexCardOne,
-  // .hexCardNine {
-  //   cursor: pointer;
-  // }
-
-  // .hexCardOne {
-  //   &:hover {
-  //     transform: translate3d(calc(274px - 7px), 156px, 0) scale(0.6);
-  //   }
-  // }
-
-  // .hexCardNine {
-  //   &:hover {
-  //     transform: translate3d(calc(548px + 7px), 156px, 0) scale(0.6);
-  //   }
-  // }
-
   .hexCardFive {
     pointer-events: none;
     .hexHoverMask {
@@ -173,9 +156,9 @@
   .thumbNav {
     width: 300px;
     position: absolute;
-    top: 580px;
     left: calc(50% - 150px);
-    transition: top 0.6s ease-in-out;
+    transform: translate(0, 420px) scale(1);
+    transition: transform 0.5s ease;
 
     .projectTitle {
       font-size: 1.6rem;
@@ -424,7 +407,7 @@
     }
 
     .thumbNav {
-      top: 540px;
+      transform: translate(0, 515px) scale(1.3);
     }
   }
 
@@ -444,7 +427,7 @@
       }
     }
     .thumbNav {
-      top: 580px;
+      transform: translate(0, 575px) scale(1.3);
     }
   }
 
@@ -472,12 +455,30 @@
     }
 
     .thumbNav {
-      top: 582px;
       z-index: 90;
-      transform: scale(1.15);
+      transform: translate(-2px, 510px) scale(1.75);
       .projectTitle {
         top: 190px;
       }
+      .projectThumb {
+        background-image: none !important;
+      }
+      .projectDetails {
+        width: 140px;
+      }
+      .thumbMask {
+        width: 100px;
+        height: 100px;
+        // .thumbImageWrapper {
+        //   top: -5%;
+        //   left: -5%;
+        //   width: 110%;
+        //   height: 110%;
+        // }
+      }
+    }
+    .navThumbs {
+      gap: 0;
     }
   }
 }
