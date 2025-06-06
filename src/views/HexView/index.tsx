@@ -153,7 +153,8 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
   // Animate background hex rotation every 9s
   useEffect(() => {
     const interval = setInterval(() => {
-      const step = viewMode === "about" || "portfolio" || isMobile ? 60 : 30;
+      const step =
+        viewMode === "about" || viewMode === "portfolio" || isMobile ? 60 : 30;
       setRotation((prev) => prev + step);
     }, 9000);
     return () => clearInterval(interval);
@@ -161,7 +162,8 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
 
   // Snap rotation to align hexes based on viewMode and device type
   useEffect(() => {
-    const shouldSnap = viewMode === "about" || "portfolio" || isMobile;
+    const shouldSnap =
+      viewMode === "about" || viewMode === "portfolio" || isMobile;
     const offset = rotation % 60;
     if (shouldSnap && offset !== 30) {
       const adjustment = (30 - offset + 60) % 60;
