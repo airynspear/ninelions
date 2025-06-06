@@ -166,6 +166,7 @@
       position: absolute;
       top: 0;
       min-width: 400px;
+      color: var(--accent);
     }
 
     .projectDetails {
@@ -458,7 +459,9 @@
       z-index: 90;
       transform: translate(-2px, 510px) scale(1.75);
       .projectTitle {
-        top: 190px;
+        top: 163px;
+        font-size: 1.1rem;
+        color: var(--accent);
       }
       .projectThumb {
         background-image: none !important;
@@ -469,12 +472,6 @@
       .thumbMask {
         width: 100px;
         height: 100px;
-        // .thumbImageWrapper {
-        //   top: -5%;
-        //   left: -5%;
-        //   width: 110%;
-        //   height: 110%;
-        // }
       }
     }
     .navThumbs {
