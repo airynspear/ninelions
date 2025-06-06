@@ -407,17 +407,77 @@
 
   // === Responsive ===
 
-  @media (max-width: 674px) {
+  @media (max-width: 1080px) {
     .hexGrid {
-      transform: scale(1);
+      transform: scale(0.8);
     }
     .hexContainer {
-      transform: translate(0, -174px);
+      transform: translate(0, -80px);
       width: 100%;
     }
+
+    .hexCard {
+      transform: translate3d(var(--x), var(--y), 0) scale(1);
+      &.hexCardFive {
+        transform: translate3d(var(--x), var(--y), 0) scale(1.5);
+      }
+    }
+
     .thumbNav {
-      top: 440px;
-      transform: scale(0.85);
+      top: 540px;
+    }
+  }
+
+  @media (max-width: 945px) {
+    .hexCard {
+      transform: translate3d(var(--x), var(--y), 0) scale(0.9);
+      &.hexCardFive {
+        transform: translate3d(var(--x), var(--y), 0) scale(1.5);
+      }
+      &.hexCardOne,
+      &.hexCardNine {
+        transform: translate3d(var(--x), var(--y), 0) scale(1);
+        z-index: 4;
+      }
+      &.hexCardTwo {
+        z-index: 3;
+      }
+    }
+    .thumbNav {
+      top: 580px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hexGrid {
+      transform: scale(0.9);
+    }
+    .hexContainer {
+      transform: translate(0, -80px);
+      width: 100%;
+    }
+
+    .hexCard {
+      transform: translate3d(var(--x), var(--y), 0) scale(0.8);
+      &.hexCardFive {
+        transform: translate3d(var(--x), var(--y), 0) scale(1.5);
+      }
+      &.hexCardTwo,
+      &.hexCardSeven {
+        opacity: 0.7;
+      }
+      &.hexCardNine {
+        opacity: 0.4;
+      }
+    }
+
+    .thumbNav {
+      top: 582px;
+      z-index: 90;
+      transform: scale(1.15);
+      .projectTitle {
+        top: 190px;
+      }
     }
   }
 }
@@ -460,23 +520,6 @@ html[data-theme="dark"] .portfolio {
       background-image: url("/images/hex-dark-fill.svg");
       opacity: 0;
     }
-
-    // &:hover {
-    //   transform: translate3d(calc(274px - 7px), 156px, 0) scale(0.6);
-
-    //   .front::before {
-    //     opacity: 0;
-    //   }
-
-    //   .front::after {
-    //     opacity: 1;
-    //   }
-    // }
-  }
-  .hexCardNine {
-    // &:hover {
-    //   transform: translate3d(calc(548px + 7px), 156px, 0) scale(0.6);
-    // }
   }
 }
 
@@ -504,28 +547,28 @@ html[data-theme="dark"] .portfolio {
   }
 }
 
-// @media (max-width: 674px) {
-//   .front::before,
-//   .back::before {
-//     :global(.portfolio) & {
-//       transform: rotate(var(--hex-rotation, 0deg));
-//     }
-//   }
+@media (max-width: 600px) {
+  .front::before,
+  .back::before {
+    :global(.portfolio) & {
+      transform: rotate(var(--hex-rotation, 0deg));
+    }
+  }
 
-//   .front,
-//   .back {
-//     .image {
-//       .hexMask {
-//         :global(.portfolio) & {
-//           transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
-//         }
-//       }
+  .front,
+  .back {
+    .image {
+      .hexMask {
+        :global(.portfolio) & {
+          transform: rotate(calc(30deg + var(--hex-rotation, 0deg)));
+        }
+      }
 
-//       img {
-//         :global(.portfolio) & {
-//           transform: rotate(calc(-1 * (30deg + var(--hex-rotation, 0deg))));
-//         }
-//       }
-//     }
-//   }
-// }
+      img {
+        :global(.portfolio) & {
+          transform: rotate(calc(-1 * (30deg + var(--hex-rotation, 0deg))));
+        }
+      }
+    }
+  }
+}
