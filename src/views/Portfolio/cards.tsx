@@ -29,20 +29,20 @@ export const PROJECT_METADATA = [
     image: "/images/portfolio/spesland-light.png",
     themeImageDark: "/images/portfolio/spesland-dark.png",
   },
-  {
-    keyword: "Nine Lions",
-    description: (
-      <>
-        A bold personal portfolio for Nine Lions, highlighting frontend mastery,
-        immersive UI/UX, and project storytelling through custom geometry, theme
-        toggling, and dynamic animations.
-      </>
-    ),
-    thumbnail: "/images/portfolio/ninelions-thumb-light.png",
-    themeThumbnailDark: "/images/portfolio/ninelions-thumb-dark.png",
-    image: "/images/portfolio/ninelions-light.png",
-    themeImageDark: "/images/portfolio/ninelions-dark.png",
-  },
+  // {
+  //   keyword: "Nine Lions",
+  //   description: (
+  //     <>
+  //       A bold personal portfolio for Nine Lions, highlighting frontend mastery,
+  //       immersive UI/UX, and project storytelling through custom geometry, theme
+  //       toggling, and dynamic animations.
+  //     </>
+  //   ),
+  //   thumbnail: "/images/portfolio/ninelions-thumb-light.png",
+  //   themeThumbnailDark: "/images/portfolio/ninelions-thumb-dark.png",
+  //   image: "/images/portfolio/ninelions-light.png",
+  //   themeImageDark: "/images/portfolio/ninelions-dark.png",
+  // },
   {
     keyword: "PeakMetrics",
     description: (
@@ -81,19 +81,6 @@ export const PROJECT_METADATA = [
     thumbnail: "/images/portfolio/spotx-thumb-light.png",
     themeThumbnailDark: "/images/portfolio/spotx-thumb-dark.png",
     image: "/images/portfolio/spotx.png",
-  },
-  {
-    keyword: "Heal with Daphne",
-    description: (
-      <>
-        A calming and intuitive website for Heal with Daphne, showcasing
-        therapeutic services, video content, and affiliate offerings through a
-        soft, healing visual language.
-      </>
-    ),
-    thumbnail: "/images/portfolio/hwd-thumb-light.png",
-    themeThumbnailDark: "/images/portfolio/hwd-thumb-dark.png",
-    image: "/images/portfolio/hwd-dark.png",
   },
   {
     keyword: "Bacardi",

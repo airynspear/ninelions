@@ -3,66 +3,72 @@
 }
 
 :global(.portfolio) {
-  .hexCardOne {
-    --x: 274px;
-    --y: 156px;
-    z-index: 4 !important;
-  }
-
-  .hexCardTwo {
-    --x: 346px;
-    --y: 142px;
-  }
-
-  .hexCardThree {
-    z-index: 2;
-    --x: 300px;
-    --y: 142px;
-    transform: translate3d(var(--x), var(--y), 0) scale(0.8);
-  }
-
-  .hexCardFour {
-    transform: translate3d(var(--x), var(--y), 0) scale(0.5);
-    --x: 268px;
-    --y: 175px;
-    z-index: 2;
-  }
-
   .hexCardFive {
-    transform: translate3d(var(--x), var(--y), 0);
-  }
-
-  .hexCardSix {
-    z-index: 2;
-    --x: 594px;
-    --y: 175px;
-    transform: translate3d(var(--x), var(--y), 0) scale(0.5);
-  }
-
-  .hexCardSeven {
-    z-index: 3;
-    --x: 444px;
-    --y: 142px;
-  }
-
-  .hexCardEight {
-    z-index: 2;
-    --x: 492px;
-    --y: 142px;
-    transform: translate3d(var(--x), var(--y), 0) scale(0.8);
-  }
-
-  .hexCardNine {
-    --x: 548px;
-    --y: 156px;
-    z-index: 2;
-  }
-
-  .hexCardOne,
-  .hexCardNine {
-    transform: translate3d(var(--x), var(--y), 0) scale(0.6);
+    transform: translate3d(var(--x), var(--y), 0) scale(1);
   }
 }
+
+// :global(.portfolio) {
+//   .hexCardOne {
+//     --x: 274px;
+//     --y: 156px;
+//     z-index: 4 !important;
+//   }
+
+//   .hexCardTwo {
+//     --x: 346px;
+//     --y: 142px;
+//   }
+
+//   .hexCardThree {
+//     z-index: 2;
+//     --x: 300px;
+//     --y: 142px;
+//     transform: translate3d(var(--x), var(--y), 0) scale(0.8);
+//   }
+
+//   .hexCardFour {
+//     transform: translate3d(var(--x), var(--y), 0) scale(0.5);
+//     --x: 268px;
+//     --y: 175px;
+//     z-index: 2;
+//   }
+
+//   .hexCardFive {
+//     transform: translate3d(var(--x), var(--y), 0);
+//   }
+
+//   .hexCardSix {
+//     z-index: 2;
+//     --x: 594px;
+//     --y: 175px;
+//     transform: translate3d(var(--x), var(--y), 0) scale(0.5);
+//   }
+
+//   .hexCardSeven {
+//     z-index: 3;
+//     --x: 444px;
+//     --y: 142px;
+//   }
+
+//   .hexCardEight {
+//     z-index: 2;
+//     --x: 492px;
+//     --y: 142px;
+//     transform: translate3d(var(--x), var(--y), 0) scale(0.8);
+//   }
+
+//   .hexCardNine {
+//     --x: 548px;
+//     --y: 156px;
+//     z-index: 2;
+//   }
+
+//   .hexCardOne,
+//   .hexCardNine {
+//     transform: translate3d(var(--x), var(--y), 0) scale(0.6);
+//   }
+// }
 
 @media (max-width: 674px) {
   // :global(.portfolio) {

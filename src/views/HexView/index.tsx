@@ -222,14 +222,6 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                       if (i === 0) handleHexClick("linkedin");
                       else if (i === 4) handleHexClick("form");
                       else handleHexClick("instagram");
-                    } else if (viewMode === "portfolio") {
-                      if (i === 0 && selectedCardIndex! > 0)
-                        handleSelect("prev");
-                      else if (
-                        i === 8 &&
-                        selectedCardIndex! < PROJECT_METADATA.length - 1
-                      )
-                        handleSelect("next");
                     } else {
                       handleFallbackClick();
                     }
@@ -240,14 +232,8 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                         if (i === 0) handleHexClick("linkedin");
                         else if (i === 4) handleHexClick("form");
                         else handleHexClick("instagram");
-                      } else if (viewMode === "portfolio") {
-                        if (i === 0 && selectedCardIndex! > 0)
-                          handleSelect("prev");
-                        else if (
-                          i === 8 &&
-                          selectedCardIndex! < PROJECT_METADATA.length - 1
-                        )
-                          handleSelect("next");
+                      } else {
+                        handleFallbackClick();
                       }
                     }
                   }}

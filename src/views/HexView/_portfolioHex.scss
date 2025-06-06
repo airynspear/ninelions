@@ -1,9 +1,9 @@
 :global(.portfolio) {
   .hexGrid {
-    transform: scale(1.6);
+    transform: scale(1.2);
   }
   .hexContainer {
-    transform: translate(0, -150px);
+    transform: translate(0, -120px);
     width: 100%;
   }
 
@@ -20,22 +20,22 @@
     }
   }
 
-  .hexCardOne,
-  .hexCardNine {
-    cursor: pointer;
-  }
+  // .hexCardOne,
+  // .hexCardNine {
+  //   cursor: pointer;
+  // }
 
-  .hexCardOne {
-    &:hover {
-      transform: translate3d(calc(274px - 7px), 156px, 0) scale(0.6);
-    }
-  }
+  // .hexCardOne {
+  //   &:hover {
+  //     transform: translate3d(calc(274px - 7px), 156px, 0) scale(0.6);
+  //   }
+  // }
 
-  .hexCardNine {
-    &:hover {
-      transform: translate3d(calc(548px + 7px), 156px, 0) scale(0.6);
-    }
-  }
+  // .hexCardNine {
+  //   &:hover {
+  //     transform: translate3d(calc(548px + 7px), 156px, 0) scale(0.6);
+  //   }
+  // }
 
   .hexCardFive {
     pointer-events: none;
@@ -74,6 +74,7 @@
   .hexCard {
     -webkit-tap-highlight-color: transparent;
     tap-highlight-color: transparent;
+    transform: translate3d(var(--x), var(--y), 0) scale(0.8);
 
     outline: none;
 
@@ -172,7 +173,7 @@
   .thumbNav {
     width: 300px;
     position: absolute;
-    top: 630px;
+    top: 580px;
     left: calc(50% - 150px);
     transition: top 0.6s ease-in-out;
 
@@ -293,37 +294,43 @@
       border: none;
       padding: 0;
       cursor: pointer;
-
-      img {
-        width: 64px;
-        height: 64px;
-        object-fit: cover;
-        filter: grayscale(100%);
-        transition: filter 0.3s ease, transform 0.3s ease;
-
-        &:hover {
-          filter: grayscale(0%);
-          transform: scale(1.05);
-        }
-      }
     }
 
     .prevThumbContainer,
     .nextThumbContainer {
-      min-width: 64px;
+      min-width: 72px;
 
       .thumbMask {
-        width: 64px;
-        height: 64px;
+        width: 72px;
+        height: 72px;
         margin-top: 40px;
-      }
-    }
+        position: relative;
+        overflow: hidden;
 
-    .prevThumb,
-    .nextThumb {
-      img {
-        border-radius: 6px;
-        opacity: 0.6;
+        // ✅ Only apply hover to parent
+        &:hover .thumbImageWrapper img {
+          filter: grayscale(0%);
+          transform: scale(1.05);
+        }
+      }
+
+      .thumbImageWrapper {
+        width: 72px;
+        height: 72px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform 0.3s ease;
+
+        img {
+          width: 72px;
+          height: 72px;
+          object-fit: cover;
+          border-radius: 6px;
+          filter: grayscale(100%);
+          opacity: 0.6;
+          transition: filter 0.3s ease, transform 0.3s ease;
+        }
       }
     }
   }
@@ -454,22 +461,22 @@ html[data-theme="dark"] .portfolio {
       opacity: 0;
     }
 
-    &:hover {
-      transform: translate3d(calc(274px - 7px), 156px, 0) scale(0.6);
+    // &:hover {
+    //   transform: translate3d(calc(274px - 7px), 156px, 0) scale(0.6);
 
-      .front::before {
-        opacity: 0;
-      }
+    //   .front::before {
+    //     opacity: 0;
+    //   }
 
-      .front::after {
-        opacity: 1;
-      }
-    }
+    //   .front::after {
+    //     opacity: 1;
+    //   }
+    // }
   }
   .hexCardNine {
-    &:hover {
-      transform: translate3d(calc(548px + 7px), 156px, 0) scale(0.6);
-    }
+    // &:hover {
+    //   transform: translate3d(calc(548px + 7px), 156px, 0) scale(0.6);
+    // }
   }
 }
 
