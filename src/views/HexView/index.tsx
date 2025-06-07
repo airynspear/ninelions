@@ -21,6 +21,14 @@ export interface HexCard {
   description?: string | React.ReactElement;
   themeImageDark?: string;
   themeThumbnailDark?: string;
+  secondaryImageTwo?: string;
+  secondaryImageThree?: string;
+  secondaryImageSeven?: string;
+  secondaryImageEight?: string;
+  secondaryImageTwoLight?: string;
+  secondaryImageThreeLight?: string;
+  secondaryImageSevenLight?: string; // ✅ fixed
+  secondaryImageEightLight?: string;
 }
 
 interface HexViewProps {
@@ -56,11 +64,18 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     null
   );
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hexFiveFlipped, setHexFiveFlipped] = useState(false);
   const [slideDirection, setSlideDirection] = useState<"next" | "prev" | null>(
     null
   );
   const [lastIndex, setLastIndex] = useState<number | null>(null);
+  const [activeGridClass, setActiveGridClass] = useState<string | null>(null);
+
+  const handleHexToggle = (hexIndex: number) => {
+    const base = HEX_CARD_CLASSES[hexIndex];
+
+    const gridClass = base.replace("hexCard", "hexGrid");
+    setActiveGridClass((prev) => (prev === gridClass ? null : gridClass));
+  };
 
   const handleSelect = (direction: "next" | "prev") => {
     setSlideDirection(direction === "next" ? "next" : "prev");
@@ -177,7 +192,13 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
       style={{ "--hex-rotation": `${rotation}deg` } as React.CSSProperties}
     >
       <section className={styles.hero}>
-        <div className={styles.hexGrid}>
+        <div
+          className={`${styles.hexGrid} ${
+            activeGridClass && styles[activeGridClass]
+              ? styles[activeGridClass]
+              : ""
+          }`}
+        >
           <div className={styles.hexContainer}>
             {cards.map((card, i) => {
               const hexClass = HEX_CARD_CLASSES[i];
@@ -224,6 +245,11 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                       if (i === 0) handleHexClick("linkedin");
                       else if (i === 4) handleHexClick("form");
                       else handleHexClick("instagram");
+                    } else if (
+                      viewMode === "portfolio" &&
+                      [1, 2, 4, 6, 7].includes(i) // only those cards toggle the grid class
+                    ) {
+                      handleHexToggle(i);
                     } else {
                       handleFallbackClick();
                     }
@@ -234,6 +260,11 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                         if (i === 0) handleHexClick("linkedin");
                         else if (i === 4) handleHexClick("form");
                         else handleHexClick("instagram");
+                      } else if (
+                        viewMode === "portfolio" &&
+                        [1, 2, 4, 6, 7].includes(i) // only those cards toggle the grid class
+                      ) {
+                        handleHexToggle(i);
                       } else {
                         handleFallbackClick();
                       }
@@ -242,32 +273,25 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                 >
                   {viewMode === "portfolio" && i === 4 && (
                     <div
-                      className={styles.hexHoverMask}
-                      onMouseEnter={() => setHexFiveFlipped(true)}
-                      onMouseLeave={() => setHexFiveFlipped(false)}
                       style={{
                         transform: `rotate(${(rotation - 30) % 360}deg)`,
                       }}
                     />
                   )}
                   <div className={`${styles.cardInner} cardInner`}>
-                    <div
-                      className={styles.cardFlipWrapper}
-                      style={
-                        viewMode === "portfolio" && i === 4
-                          ? {
-                              transform: hexFiveFlipped
-                                ? "rotateY(180deg)"
-                                : "rotateY(0deg)",
-                            }
-                          : undefined
-                      }
-                    >
+                    <div className={styles.cardFlipWrapper}>
                       <div className={styles.front}>
-                        {(i === 4 && viewMode === "portfolio") || imageSrc ? (
+                        {((i === 4 ||
+                          i === 1 ||
+                          i === 2 ||
+                          i === 6 ||
+                          i === 7) &&
+                          viewMode === "portfolio") ||
+                        imageSrc ? (
                           <div className={styles.image}>
                             <div className={styles.hexMask}>
                               {viewMode === "portfolio" && i === 4 ? (
+                                // === Main hexFive image with transition logic ===
                                 <div className={styles.imageLayer}>
                                   {PROJECT_METADATA.map((project, index) => {
                                     const isActive = index === activeIndex;
@@ -301,6 +325,182 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                                           alt={`${
                                             project.keyword || "Project"
                                           } ${theme} mode`}
+                                          loading="eager"
+                                        />
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ) : viewMode === "portfolio" && i === 1 ? (
+                                <div className={styles.imageLayer}>
+                                  {PROJECT_METADATA.map((project, index) => {
+                                    const isActive = index === activeIndex;
+
+                                    const useLight =
+                                      theme === "light" &&
+                                      project.secondaryImageTwoLight
+                                        ? project.secondaryImageTwoLight
+                                        : null;
+                                    const src =
+                                      useLight || project.secondaryImageTwo;
+                                    if (!src) return null;
+
+                                    return (
+                                      <div
+                                        key={`hex1-img-${index}`}
+                                        className={`${
+                                          styles.imageSlideWrapper
+                                        } ${
+                                          isActive && slideDirection === "prev"
+                                            ? styles.slideFromLeft
+                                            : isActive &&
+                                              slideDirection === "next"
+                                            ? styles.slideFromRight
+                                            : ""
+                                        }`}
+                                      >
+                                        <img
+                                          src={src}
+                                          className={`${styles.imageBase} ${
+                                            isActive
+                                              ? styles.visible
+                                              : styles.hidden
+                                          }`}
+                                          alt={`${
+                                            project.keyword || "Project"
+                                          } hexTwo`}
+                                          loading="eager"
+                                        />
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ) : viewMode === "portfolio" && i === 2 ? (
+                                <div className={styles.imageLayer}>
+                                  {PROJECT_METADATA.map((project, index) => {
+                                    const isActive = index === activeIndex;
+
+                                    const useLight =
+                                      theme === "light" &&
+                                      project.secondaryImageThreeLight
+                                        ? project.secondaryImageThreeLight
+                                        : null;
+                                    const src =
+                                      useLight || project.secondaryImageThree;
+                                    if (!src) return null;
+
+                                    return (
+                                      <div
+                                        key={`hex2-img-${index}`}
+                                        className={`${
+                                          styles.imageSlideWrapper
+                                        } ${
+                                          isActive && slideDirection === "prev"
+                                            ? styles.slideFromLeft
+                                            : isActive &&
+                                              slideDirection === "next"
+                                            ? styles.slideFromRight
+                                            : ""
+                                        }`}
+                                      >
+                                        <img
+                                          src={src}
+                                          className={`${styles.imageBase} ${
+                                            isActive
+                                              ? styles.visible
+                                              : styles.hidden
+                                          }`}
+                                          alt={`${
+                                            project.keyword || "Project"
+                                          } hexThree`}
+                                          loading="eager"
+                                        />
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ) : viewMode === "portfolio" && i === 6 ? (
+                                <div className={styles.imageLayer}>
+                                  {PROJECT_METADATA.map((project, index) => {
+                                    const isActive = index === activeIndex;
+
+                                    const useLight =
+                                      theme === "light" &&
+                                      project.secondaryImageSevenLight
+                                        ? project.secondaryImageSevenLight
+                                        : null;
+                                    const src =
+                                      useLight || project.secondaryImageSeven;
+                                    if (!src) return null;
+
+                                    return (
+                                      <div
+                                        key={`hex6-img-${index}`}
+                                        className={`${
+                                          styles.imageSlideWrapper
+                                        } ${
+                                          isActive && slideDirection === "prev"
+                                            ? styles.slideFromLeft
+                                            : isActive &&
+                                              slideDirection === "next"
+                                            ? styles.slideFromRight
+                                            : ""
+                                        }`}
+                                      >
+                                        <img
+                                          src={src}
+                                          className={`${styles.imageBase} ${
+                                            isActive
+                                              ? styles.visible
+                                              : styles.hidden
+                                          }`}
+                                          alt={`${
+                                            project.keyword || "Project"
+                                          } hexSeven`}
+                                          loading="eager"
+                                        />
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ) : viewMode === "portfolio" && i === 7 ? (
+                                <div className={styles.imageLayer}>
+                                  {PROJECT_METADATA.map((project, index) => {
+                                    const isActive = index === activeIndex;
+
+                                    const useLight =
+                                      theme === "light" &&
+                                      project.secondaryImageEightLight
+                                        ? project.secondaryImageEightLight
+                                        : null;
+                                    const src =
+                                      useLight || project.secondaryImageEight;
+                                    if (!src) return null;
+
+                                    return (
+                                      <div
+                                        key={`hex7-img-${index}`}
+                                        className={`${
+                                          styles.imageSlideWrapper
+                                        } ${
+                                          isActive && slideDirection === "prev"
+                                            ? styles.slideFromLeft
+                                            : isActive &&
+                                              slideDirection === "next"
+                                            ? styles.slideFromRight
+                                            : ""
+                                        }`}
+                                      >
+                                        <img
+                                          src={src}
+                                          className={`${styles.imageBase} ${
+                                            isActive
+                                              ? styles.visible
+                                              : styles.hidden
+                                          }`}
+                                          alt={`${
+                                            project.keyword || "Project"
+                                          } hexEight`}
                                           loading="eager"
                                         />
                                       </div>
@@ -345,7 +545,6 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                         {card.icon && (
                           <div className={styles.icon}>{card.icon}</div>
                         )}
-
                         {card.keyword && (
                           <span className={styles.keyword}>{card.keyword}</span>
                         )}

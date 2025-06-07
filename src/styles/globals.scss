@@ -114,11 +114,17 @@ canvas {
 .scroll-container {
   height: calc(100vh - 79px);
   margin-top: 79px;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   scroll-behavior: smooth;
   padding-bottom: 3rem;
 }
+
+// @media (max-width: 600px) {
+//   .scroll-container {
+//     overflow-y: auto;
+//   }
+// }
 
 * {
   cursor: inherit;
