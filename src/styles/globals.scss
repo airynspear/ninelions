@@ -120,11 +120,11 @@ canvas {
   padding-bottom: 3rem;
 }
 
-// @media (max-width: 600px) {
-//   .scroll-container {
-//     overflow-y: auto;
-//   }
-// }
+@media (max-width: 600px) {
+  .scroll-container {
+    overflow-y: auto;
+  }
+}
 
 * {
   cursor: inherit;
