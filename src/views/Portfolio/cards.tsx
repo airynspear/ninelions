@@ -37,6 +37,29 @@ export const PROJECT_METADATA = [
     secondaryImageSevenLight: "/images/portfolio/spesland-seven-light.jpg",
     secondaryImageEightLight: "/images/portfolio/spesland-eight-light.jpg",
   },
+  {
+    keyword: "United Airlines",
+    description: (
+      <>
+        Design system and enterprise tools for United Airlines, including a
+        reusable component library and a full-featured crew scheduling app.
+        Focused on consistency, performance, and accessibility.
+      </>
+    ),
+    thumbnail: "/images/portfolio/united-thumb-light.png",
+    themeThumbnailDark: "/images/portfolio/united-thumb-dark.png",
+    image: "/images/portfolio/united-light.png",
+    themeImageDark: "/images/portfolio/united-dark.png",
+    secondaryImageTwo: "/images/portfolio/united-two.jpg",
+    secondaryImageTwoLight: "/images/portfolio/united-two-light.jpg",
+    secondaryImageThree: "/images/portfolio/united-three.jpg",
+    secondaryImageThreeLight: "/images/portfolio/united-three-light.jpg",
+    secondaryImageSeven: "/images/portfolio/united-seven.jpg",
+    secondaryImageSevenLight: "/images/portfolio/united-seven-light.jpg",
+    secondaryImageEight: "/images/portfolio/united-eight.jpg",
+    secondaryImageEightLight: "/images/portfolio/united-eight-light.jpg",
+  },
+
   // {
   //   keyword: "Nine Lions",
   //   description: (
@@ -101,8 +124,8 @@ export const PROJECT_METADATA = [
     themeThumbnailDark: "/images/portfolio/spotx-thumb-dark.png",
     image: "/images/portfolio/spotx.png",
     secondaryImageTwo: "/images/portfolio/spotx-two.jpg",
-    //secondaryImageThree: "/images/portfolio/spotx-three.jpg",
-    //secondaryImageSeven: "/images/portfolio/spotx-seven.jpg",
+    secondaryImageThree: "/images/portfolio/spotx-three.jpg",
+    secondaryImageSeven: "/images/portfolio/spotx-seven.jpg",
     secondaryImageEight: "/images/portfolio/spotx-eight.jpg",
   },
   {
@@ -117,6 +140,8 @@ export const PROJECT_METADATA = [
     themeThumbnailDark: "/images/portfolio/bacardi-thumb-dark.png",
     image: "/images/portfolio/bacardi-light.png",
     secondaryImageTwo: "/images/portfolio/bacardi-two.png",
+    secondaryImageThree: "/images/portfolio/bacardi-three.jpg",
+    secondaryImageSeven: "/images/portfolio/bacardi-seven.png",
     secondaryImageEight: "/images/portfolio/bacardi-eight.png",
   },
   {
@@ -132,8 +157,8 @@ export const PROJECT_METADATA = [
     image: "/images/portfolio/leaderbikes.png",
     secondaryImageTwo: "/images/portfolio/leaderbikes-two.jpg",
     secondaryImageTwoLight: "/images/portfolio/leaderbikes-two-light.jpg",
-    //secondaryImageThree: "/images/portfolio/leaderbikes-three.jpg",
-    //secondaryImageSeven: "/images/portfolio/leaderbikes-seven.jpg",
+    secondaryImageThree: "/images/portfolio/leaderbikes-three.jpg",
+    secondaryImageSeven: "/images/portfolio/leaderbikes-seven.jpg",
     secondaryImageEight: "/images/portfolio/leaderbikes-eight.jpg",
   },
   {

@@ -70,68 +70,16 @@
 //   }
 // }
 
-@media (max-width: 674px) {
-  // :global(.portfolio) {
-  //   .hexCardOne {
-  //     --x: 410px;
-  //     --y: 8px;
-  //     z-index: 4 !important;
-  //   }
+// @media (max-width: 674px) {
+//   :global(.portfolio) {
+//     .hexCardTwo {
+//       --x: 293px;
+//       --y: 354px;
+//     }
 
-  //   .hexCardTwo {
-  //     --x: 395px;
-  //     --y: 102px;
-  //     transform: translate3d(var(--x), var(--y), 0) scale(1.2);
-  //   }
-
-  //   .hexCardThree {
-  //     z-index: 2;
-  //     --x: 395px;
-  //     --y: 40px;
-  //     transform: translate3d(var(--x), var(--y), 0) scale(0.8);
-  //   }
-
-  //   .hexCardFour {
-  //     transform: translate3d(var(--x), var(--y), 0) scale(0.5);
-  //     --x: 430px;
-  //     --y: 2px;
-  //     z-index: 2;
-  //   }
-
-  //   .hexCardFive {
-  //     transform: translate3d(var(--x), var(--y), 0) scale(1.1);
-  //   }
-
-  //   .hexCardSix {
-  //     --x: 430px;
-  //     --y: 354px;
-  //     z-index: 2;
-  //     transform: translate3d(var(--x), var(--y), 0) scale(0.5);
-  //   }
-
-  //   .hexCardSeven {
-  //     z-index: 3;
-  //     --x: 395px;
-  //     --y: 192px;
-  //     transform: translate3d(var(--x), var(--y), 0) scale(1.2);
-  //   }
-
-  //   .hexCardEight {
-  //     z-index: 2;
-  //     --x: 395px;
-  //     --y: 248px;
-  //     transform: translate3d(var(--x), var(--y), 0) scale(0.8);
-  //   }
-
-  //   .hexCardNine {
-  //     --x: 410px;
-  //     --y: 310px;
-  //     z-index: 2;
-  //   }
-
-  //   .hexCardOne,
-  //   .hexCardNine {
-  //     transform: translate3d(var(--x), var(--y), 0) scale(0.6);
-  //   }
-  // }
-}
+//     .hexCardThree {
+//       --x: 293px;
+//       --y: -70px;
+//     }
+//   }
+// }
