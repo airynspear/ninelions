@@ -215,6 +215,13 @@
   }
 }
 
+.front::before,
+.back::before {
+  :global(.home) & {
+    transform: rotate(calc(30deg + var(--hex-rotation, 30deg)));
+  }
+}
+
 // === Hex Styles ===
 
 .background::after,
@@ -441,6 +448,12 @@
   .back {
     &::before {
       transform: rotate(var(--hex-rotation, 30deg));
+    }
+  }
+  .front::before,
+  .back::before {
+    :global(.home) & {
+      transform: rotate(calc(0deg + var(--hex-rotation, 30deg)));
     }
   }
   .hexCardOne {
