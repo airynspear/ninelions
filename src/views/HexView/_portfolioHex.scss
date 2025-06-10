@@ -396,75 +396,80 @@
     }
   }
 
-  // .chevronNav {
-  //   display: flex;
-  //   flex-direction: column;
-  //   gap: 160px;
-  //   position: absolute;
-  //   left: 131px;
-  //   top: -30px;
-  //   transform: rotate(90deg);
-  //   transition: right 0.6s ease-in-out, top 0.6s ease-in-out;
+  .chevronNav {
+    display: none;
+    flex-direction: row;
+    gap: 260px;
+    position: absolute;
+    left: 300px;
+    top: 208px;
+    z-index: 1560;
+    width: 438px;
+    height: 90px;
+    transition: right 0.6s ease-in-out, top 0.6s ease-in-out;
 
-  //   .chevronButton {
-  //     display: flex;
-  //     justify-content: center;
-  //     width: 36px;
-  //     height: 36px;
-  //     padding: 3px 0;
-  //     position: relative;
-  //     z-index: 200;
-  //     background: none;
-  //     border: none;
-  //     font-size: 1.8rem;
-  //     color: var(--accent);
-  //     cursor: pointer;
-  //     transition: font-size 0.6s ease;
+    .chevronButton {
+      display: flex;
+      justify-content: center;
+      width: 90px;
+      height: 90px;
+      padding: 3px 0;
+      position: relative;
+      z-index: 200;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--accent);
+      cursor: pointer;
+      transition: font-size 0.6s ease;
 
-  //     svg {
-  //       width: 30px;
-  //       height: 30px;
-  //       transition: transform 0.9s ease;
-  //     }
+      .triangleMask {
+        width: 42px;
+        height: 50px;
+        position: absolute;
+        top: 20px;
+        transform: rotate(180deg);
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+        overflow: hidden;
+      }
 
-  //     .innerTriangle {
-  //       width: 14px;
-  //       height: 14px;
-  //       position: absolute;
-  //       left: 11px;
-  //       bottom: 2px;
-  //       opacity: 0;
-  //       transition: top 0.6s ease, bottom 0.6s ease, opacity 0.6s ease;
-  //     }
+      .customTriangle {
+        color: var(--accent);
+        transform: rotate(180deg);
+        transition: transform 0.9s ease;
+      }
 
-  //     &.downTriangle {
-  //       transform: rotate(180deg);
-  //       .innerTriange {
-  //         bottom: -1px;
-  //       }
-  //     }
+      .innerTriangle {
+        position: absolute;
+        right: 19px;
+        bottom: 4px;
+        opacity: 0;
+        width: 42px;
+        height: 42px;
+        transform: rotate(90deg);
+        transition: right 0.6s ease, opacity 0.6s ease;
+      }
 
-  //     &:hover {
-  //       .innerTriangle {
-  //         opacity: 1;
-  //         bottom: 9px;
-  //       }
-  //       .downTriangle {
-  //         .innerTriangle {
-  //           bottom: 6.5px;
-  //         }
-  //       }
-  //     }
+      &.downTriangle {
+        transform: rotate(180deg);
+      }
 
-  //     &:disabled {
-  //       opacity: 0.3;
-  //       cursor: default;
-  //       .innerTriangle {
-  //         opacity: 0;
-  //       }
-  //     }
-  //   }
-  // }
+      &:hover {
+        .innerTriangle {
+          opacity: 1;
+          right: 1px;
+        }
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: default;
+        .innerTriangle {
+          opacity: 0;
+        }
+      }
+    }
+  }
 
   // === Responsive ===
 
@@ -541,6 +546,10 @@
       &.hexCardNine {
         opacity: 0.3;
       }
+    }
+
+    .chevronNav {
+      display: flex;
     }
 
     .thumbNav {

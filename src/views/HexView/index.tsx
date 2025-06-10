@@ -10,7 +10,8 @@ import portfolioStyles from "@/views/Portfolio/PortfolioView.module.scss";
 import connectStyles from "@/views/Connect/ConnectView.module.scss";
 import Modal from "@/components/Modal";
 import ConnectForm from "@/views/Connect/ConnectForm";
-//import { RiTriangleLine, RiTriangleFill } from "react-icons/ri";
+import { IoTriangleSharp } from "react-icons/io5";
+import TriangleIcon from "@/assets/icons/triangle.svg";
 import { PROJECT_METADATA } from "@/views/Portfolio/cards";
 
 export interface HexCard {
@@ -612,6 +613,32 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                 </div>
               );
             })}
+            {selectedCardIndex !== null && viewMode === "portfolio" && (
+              <div className={styles.chevronNav}>
+                <button
+                  className={styles.chevronButton}
+                  onClick={() => handleSelect("prev")}
+                  disabled={selectedCardIndex === 0}
+                  aria-label="Previous project"
+                >
+                  <TriangleIcon className={styles.customTriangle} />
+                  <div className={styles.triangleMask}>
+                    <IoTriangleSharp className={styles.innerTriangle} />
+                  </div>
+                </button>
+                <button
+                  className={`${styles.chevronButton} ${styles.downTriangle}`}
+                  onClick={() => handleSelect("next")}
+                  disabled={selectedCardIndex === cards.length - 1}
+                  aria-label="Next project"
+                >
+                  <TriangleIcon className={styles.customTriangle} />
+                  <div className={styles.triangleMask}>
+                    <IoTriangleSharp className={styles.innerTriangle} />
+                  </div>
+                </button>
+              </div>
+            )}
             {selectedCardIndex !== null && viewMode === "portfolio" && (
               <div className={styles.thumbNav}>
                 <div className={styles.navThumbs}>
