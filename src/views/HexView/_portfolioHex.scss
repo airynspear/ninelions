@@ -405,7 +405,7 @@
     top: 208px;
     width: 438px;
     height: 90px;
-    transition: right 0.6s ease-in-out, top 0.6s ease-in-out;
+    transition: left 0.6s ease-in-out, gap 0.6s ease-in-out;
   }
 
   .chevronButton {
@@ -524,7 +524,13 @@
         .hexCardOne {
           opacity: 1;
         }
-
+        .hexContainer {
+          transform: translate(0, -40px);
+        }
+        .chevronNav {
+          gap: 250px;
+          left: 304px;
+        }
         .thumbNav {
           transform: translate(-2px, 518px) scale(1.4);
         }
