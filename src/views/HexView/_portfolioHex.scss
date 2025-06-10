@@ -403,7 +403,6 @@
     position: absolute;
     left: 300px;
     top: 208px;
-    z-index: 1560;
     width: 438px;
     height: 90px;
     transition: right 0.6s ease-in-out, top 0.6s ease-in-out;
@@ -519,7 +518,7 @@
 
   @media (max-width: 600px) {
     .hexGrid {
-      transform: scale(1);
+      transform: scale(0.85);
       &.hexGridFive {
         transform: scale(1.05);
         .hexCardOne {
@@ -532,7 +531,7 @@
       }
     }
     .hexContainer {
-      transform: translate(0, -40px);
+      transform: translate(0, -60px);
       width: 100%;
     }
 
