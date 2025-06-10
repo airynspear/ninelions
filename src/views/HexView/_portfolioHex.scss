@@ -407,68 +407,68 @@
     width: 438px;
     height: 90px;
     transition: right 0.6s ease-in-out, top 0.6s ease-in-out;
+  }
 
-    .chevronButton {
-      display: flex;
-      justify-content: center;
-      width: 90px;
-      height: 90px;
-      padding: 3px 0;
-      position: relative;
-      z-index: 200;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      color: var(--accent);
-      cursor: pointer;
-      transition: font-size 0.6s ease;
+  .chevronButton {
+    display: flex;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    padding: 3px 0;
+    position: relative;
+    z-index: 200;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--accent);
+    cursor: pointer;
+    transition: font-size 0.6s ease;
+  }
 
-      .triangleMask {
-        width: 42px;
-        height: 50px;
-        position: absolute;
-        top: 20px;
-        transform: rotate(180deg);
-        clip-path: polygon(0 0, 100% 50%, 0 100%);
-        overflow: hidden;
-      }
+  .chevronButton .triangleMask {
+    width: 42px;
+    height: 50px;
+    position: absolute;
+    top: 20px;
+    transform: rotate(180deg);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    overflow: hidden;
+  }
 
-      .customTriangle {
-        color: var(--accent);
-        transform: rotate(180deg);
-        transition: transform 0.9s ease;
-      }
+  .customTriangle {
+    display: block;
+    color: var(--accent);
+    transform: rotate(180deg);
+    transition: transform 0.9s ease;
+  }
 
-      .innerTriangle {
-        position: absolute;
-        right: 19px;
-        bottom: 4px;
-        opacity: 0;
-        width: 42px;
-        height: 42px;
-        transform: rotate(90deg);
-        transition: right 0.6s ease, opacity 0.6s ease;
-      }
+  .innerTriangle {
+    position: absolute;
+    right: 19px;
+    bottom: 4px;
+    opacity: 0;
+    width: 42px;
+    height: 42px;
+    transform: rotate(90deg);
+    transition: right 0.6s ease, opacity 0.6s ease;
+  }
 
-      &.downTriangle {
-        transform: rotate(180deg);
-      }
+  .chevronButton.downTriangle {
+    transform: rotate(180deg);
+  }
 
-      &:hover {
-        .innerTriangle {
-          opacity: 1;
-          right: 1px;
-        }
-      }
+  .chevronButton:hover .innerTriangle {
+    opacity: 1;
+    right: 1px;
+  }
 
-      &:disabled {
-        opacity: 0.3;
-        cursor: default;
-        .innerTriangle {
-          opacity: 0;
-        }
-      }
-    }
+  .chevronButton:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .chevronButton:disabled .innerTriangle {
+    opacity: 0;
   }
 
   // === Responsive ===

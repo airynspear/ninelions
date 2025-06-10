@@ -195,6 +195,8 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
     }
   }, [isMobile, viewMode, rotation]);
 
+  console.log(selectedCardIndex);
+
   return (
     <div
       className={`${styles.background} ${styles[viewMode] ?? ""} ${viewMode}`}
@@ -629,7 +631,7 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                 <button
                   className={`${styles.chevronButton} ${styles.downTriangle}`}
                   onClick={() => handleSelect("next")}
-                  disabled={selectedCardIndex === cards.length - 1}
+                  disabled={selectedCardIndex === PROJECT_METADATA.length - 1}
                   aria-label="Next project"
                 >
                   <TriangleIcon className={styles.customTriangle} />
