@@ -618,7 +618,12 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
             {selectedCardIndex !== null && viewMode === "portfolio" && (
               <div className={styles.chevronNav}>
                 <button
-                  className={styles.chevronButton}
+                  className={`${styles.chevronButton} ${
+                    selectedCardIndex === PROJECT_METADATA.length - 1 &&
+                    selectedCardIndex > 0
+                      ? styles.showInnerPrev
+                      : ""
+                  }`}
                   onClick={() => handleSelect("prev")}
                   disabled={selectedCardIndex === 0}
                   aria-label="Previous project"
@@ -628,8 +633,14 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                     <IoTriangleSharp className={styles.innerTriangle} />
                   </div>
                 </button>
+
                 <button
-                  className={`${styles.chevronButton} ${styles.downTriangle}`}
+                  className={`${styles.chevronButton} ${styles.rightTriangle} ${
+                    selectedCardIndex > 0 &&
+                    selectedCardIndex < PROJECT_METADATA.length - 1
+                      ? ""
+                      : styles.showInnerNext
+                  }`}
                   onClick={() => handleSelect("next")}
                   disabled={selectedCardIndex === PROJECT_METADATA.length - 1}
                   aria-label="Next project"
