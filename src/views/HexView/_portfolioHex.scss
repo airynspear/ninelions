@@ -396,6 +396,57 @@
     }
   }
 
+  .hexProjectNav {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.25;
+    transition: opacity 0.2s ease;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: -24px;
+    }
+
+    &:disabled {
+      opacity: 0;
+      cursor: default;
+    }
+  }
+
+  .hexChevron {
+    position: absolute;
+    top: 25%;
+    right: 10.5%;
+    width: 22%;
+    height: 50%;
+    background: currentColor;
+    opacity: 0.7;
+    // Flat ends and 60-degree arms follow the hexagon's edges.
+    clip-path: polygon(0 0, 40% 0, 100% 50%, 40% 100%, 0 100%, 60% 50%);
+    pointer-events: none;
+  }
+
+  .hexCardOne .hexChevron {
+    right: auto;
+    left: 10.5%;
+    transform: scaleX(-1);
+  }
+
   .chevronNav {
     display: none;
     flex-direction: row;
@@ -517,6 +568,10 @@
   }
 
   @media (max-width: 600px) {
+    .hexProjectNav {
+      display: none;
+    }
+
     .hexGrid {
       transform: scale(0.85);
       &.hexGridFive {
@@ -683,4 +738,53 @@ html[data-theme="dark"] .portfolio {
       }
     }
   }
+}
+
+.portfolioHero {
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s, top 0.4s ease-in-out;
+}
+
+.heroOffscreen {
+  transform: translateY(-150vh);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s 0.85s;
+}
+
+:global(.portfolio) .thumbNav {
+  .hasCaseStudy { padding-top: 4rem; }
+
+  .caseStudyLink {
+    position: absolute;
+    top: 34px;
+    border: 0;
+    padding: 4px 8px;
+    background: transparent;
+    color: var(--accent);
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    &:hover { color: var(--accent-hover); }
+    &:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  }
+
+  @media (max-width: 600px) {
+    .hasCaseStudy .projectTitle {
+      display: block;
+      top: -8px;
+      min-width: 0;
+      font-size: 20px;
+    }
+    .caseStudyLink { top: 18px; white-space: nowrap; }
+    .hasCaseStudy { padding-top: 3.5rem; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolioHero, .heroOffscreen { transition: none; }
 }

@@ -12,6 +12,7 @@ import Modal from "@/components/Modal";
 import ConnectForm from "@/views/Connect/ConnectForm";
 import { IoTriangleSharp } from "react-icons/io5";
 import TriangleIcon from "@/assets/icons/triangle.svg";
+import JamloopCaseStudy from "@/views/Portfolio/JamloopCaseStudy";
 import { PROJECT_METADATA } from "@/views/Portfolio/cards";
 
 export interface HexCard {
@@ -57,6 +58,19 @@ const viewStylesMap: Record<string, Record<string, string>> = {
 };
 
 export default function HexView({ cards, viewMode }: HexViewProps) {
+  const [caseStudyOpen, setCaseStudyOpen] = useState(false);
+  const caseStudyLinkRef = useRef<HTMLButtonElement>(null);
+  const showCaseStudy = viewMode === "portfolio" && caseStudyOpen;
+
+  useEffect(() => {
+    if (viewMode !== "portfolio") setCaseStudyOpen(false);
+  }, [viewMode]);
+
+  const closeCaseStudy = () => {
+    setCaseStudyOpen(false);
+    requestAnimationFrame(() => caseStudyLinkRef.current?.focus({ preventScroll: true }));
+  };
+
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null); // NEW
   const [rotation, setRotation] = useState(0);
@@ -79,7 +93,13 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
   };
 
   const handleSelect = (direction: "next" | "prev") => {
-    setSlideDirection(direction === "next" ? "next" : "prev");
+    if (
+      selectedCardIndex === null ||
+      (direction === "prev" && selectedCardIndex === 0) ||
+      (direction === "next" && selectedCardIndex === PROJECT_METADATA.length - 1)
+    ) return;
+
+    setSlideDirection(direction);
 
     setLastIndex(selectedCardIndex); // Track current index before it changes
 
@@ -202,7 +222,11 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
       className={`${styles.background} ${styles[viewMode] ?? ""} ${viewMode}`}
       style={{ "--hex-rotation": `${rotation}deg` } as React.CSSProperties}
     >
-      <section className={styles.hero}>
+      <section
+        className={`${styles.hero} ${viewMode === "portfolio" ? styles.portfolioHero : ""} ${showCaseStudy ? styles.heroOffscreen : ""}`}
+        inert={showCaseStudy}
+        aria-hidden={showCaseStudy}
+      >
         <div
           className={`${styles.hexGrid} ${
             activeGridClass && styles[activeGridClass]
@@ -230,26 +254,15 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                   }}
                   className={classNames.join(" ")}
                   role={
-                    (viewMode === "connect" && [0, 4, 8].includes(i)) ||
-                    (viewMode === "portfolio" && (i === 0 || i === 8))
+                    viewMode === "connect" && [0, 4, 8].includes(i)
                       ? "button"
                       : undefined
                   }
                   tabIndex={
-                    (viewMode === "connect" && [0, 4, 8].includes(i)) ||
-                    (viewMode === "portfolio" && (i === 0 || i === 8))
+                    viewMode === "connect" && [0, 4, 8].includes(i)
                       ? 0
                       : undefined
                   }
-                  style={{
-                    pointerEvents:
-                      viewMode === "portfolio" &&
-                      ((i === 0 && selectedCardIndex === 0) ||
-                        (i === 8 &&
-                          selectedCardIndex === PROJECT_METADATA.length - 1))
-                        ? "none"
-                        : undefined,
-                  }}
                   onClick={(e) => {
                     if (viewMode === "connect" && [0, 4, 8].includes(i)) {
                       e.stopPropagation();
@@ -292,6 +305,25 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                   <div className={`${styles.cardInner} cardInner`}>
                     <div className={styles.cardFlipWrapper}>
                       <div className={styles.front}>
+                        {viewMode === "portfolio" && (i === 0 || i === 8) && (
+                          <button
+                            type="button"
+                            className={styles.hexProjectNav}
+                            aria-label={i === 0 ? "Previous project" : "Next project"}
+                            disabled={
+                              selectedCardIndex === null ||
+                              (i === 0
+                                ? selectedCardIndex === 0
+                                : selectedCardIndex === PROJECT_METADATA.length - 1)
+                            }
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleSelect(i === 0 ? "prev" : "next");
+                            }}
+                          >
+                            <span className={styles.hexChevron} aria-hidden="true" />
+                          </button>
+                        )}
                         {((i === 4 ||
                           i === 1 ||
                           i === 2 ||
@@ -721,11 +753,23 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                   {/* Current Project */}
                   <div
                     key={`project-${selectedCardIndex}`}
-                    className={styles.projectDetails}
+                    className={`${styles.projectDetails} ${PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" ? styles.hasCaseStudy : ""}`}
                   >
                     <h3 className={styles.projectTitle}>
                       {PROJECT_METADATA[selectedCardIndex].keyword}
                     </h3>
+                    {PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" && (
+                      <button
+                        ref={caseStudyLinkRef}
+                        type="button"
+                        className={styles.caseStudyLink}
+                        aria-controls="jamloop-case-study"
+                        aria-expanded={showCaseStudy}
+                        onClick={() => setCaseStudyOpen(true)}
+                      >
+                        case study <span aria-hidden="true">↓</span>
+                      </button>
+                    )}
                     <div className={styles.projectThumb}>
                       <div className={styles.thumbMask}>
                         <div
@@ -824,6 +868,10 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
           </div>
         </div>
       </section>
+
+      {viewMode === "portfolio" && (
+        <JamloopCaseStudy open={showCaseStudy} onClose={closeCaseStudy} />
+      )}
 
       <Modal isOpen={modalType !== null} onClose={closeModal}>
         {modalType === "linkedin" && (

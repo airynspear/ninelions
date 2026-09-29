@@ -16,6 +16,45 @@ export const PORTFOLIO_CARDS: HexCard[] = [
 // Full project metadata (used for switching content in Hex 5)
 export const PROJECT_METADATA = [
   {
+    keyword: "Jamloop",
+    description: (
+      <>
+        Product design and platform experiences for JamLoop, including
+        AI-powered optimization, campaign management, analytics, and a scalable
+        design system.
+      </>
+    ),
+    thumbnail: "/images/portfolio/jl-thumb-light.png",
+    themeThumbnailDark: "/images/portfolio/jl-thumb-dark.png",
+    image: "/images/portfolio/jl-light.png",
+    secondaryImageTwo: "/images/portfolio/jl-two.jpg",
+    secondaryImageThree: "/images/portfolio/jl-three.jpg",
+    secondaryImageSeven: "/images/portfolio/jl-seven.jpg",
+    secondaryImageEight: "/images/portfolio/jl-eight.jpg",
+  },
+  {
+    keyword: "United Airlines",
+    description: (
+      <>
+        Design system and enterprise tools for United Airlines, including a
+        reusable component library and a full-featured crew scheduling app.
+        Focused on consistency, performance, and accessibility.
+      </>
+    ),
+    thumbnail: "/images/portfolio/united-thumb-light.png",
+    themeThumbnailDark: "/images/portfolio/united-thumb-dark.png",
+    image: "/images/portfolio/united.png",
+    themeImageDark: "/images/portfolio/united.png",
+    secondaryImageTwo: "/images/portfolio/united-two.jpg",
+    secondaryImageTwoLight: "/images/portfolio/united-two-light.jpg",
+    secondaryImageThree: "/images/portfolio/united-three.jpg",
+    secondaryImageThreeLight: "/images/portfolio/united-three-light.jpg",
+    secondaryImageSeven: "/images/portfolio/united-seven.jpg",
+    secondaryImageSevenLight: "/images/portfolio/united-seven-light.jpg",
+    secondaryImageEight: "/images/portfolio/united-eight.jpg",
+    secondaryImageEightLight: "/images/portfolio/united-eight-light.jpg",
+  },
+  {
     keyword: "Spesland",
     description: (
       <>
@@ -37,29 +76,6 @@ export const PROJECT_METADATA = [
     secondaryImageSevenLight: "/images/portfolio/spesland-seven-light.jpg",
     secondaryImageEightLight: "/images/portfolio/spesland-eight-light.jpg",
   },
-  {
-    keyword: "United Airlines",
-    description: (
-      <>
-        Design system and enterprise tools for United Airlines, including a
-        reusable component library and a full-featured crew scheduling app.
-        Focused on consistency, performance, and accessibility.
-      </>
-    ),
-    thumbnail: "/images/portfolio/united-thumb-light.png",
-    themeThumbnailDark: "/images/portfolio/united-thumb-dark.png",
-    image: "/images/portfolio/united-light.png",
-    themeImageDark: "/images/portfolio/united-dark.png",
-    secondaryImageTwo: "/images/portfolio/united-two.jpg",
-    secondaryImageTwoLight: "/images/portfolio/united-two-light.jpg",
-    secondaryImageThree: "/images/portfolio/united-three.jpg",
-    secondaryImageThreeLight: "/images/portfolio/united-three-light.jpg",
-    secondaryImageSeven: "/images/portfolio/united-seven.jpg",
-    secondaryImageSevenLight: "/images/portfolio/united-seven-light.jpg",
-    secondaryImageEight: "/images/portfolio/united-eight.jpg",
-    secondaryImageEightLight: "/images/portfolio/united-eight-light.jpg",
-  },
-
   // {
   //   keyword: "Nine Lions",
   //   description: (
