@@ -753,12 +753,12 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                   {/* Current Project */}
                   <div
                     key={`project-${selectedCardIndex}`}
-                    className={`${styles.projectDetails} ${PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" ? styles.hasCaseStudy : ""}`}
+                    className={`${styles.projectDetails} ${styles.hasProjectLink}`}
                   >
                     <h3 className={styles.projectTitle}>
                       {PROJECT_METADATA[selectedCardIndex].keyword}
                     </h3>
-                    {PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" && (
+                    {PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" ? (
                       <button
                         ref={caseStudyLinkRef}
                         type="button"
@@ -768,6 +768,15 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                         onClick={() => setCaseStudyOpen(true)}
                       >
                         case study <span aria-hidden="true">↓</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className={styles.caseStudyLink}
+                        aria-expanded={activeGridClass === "hexGridFive"}
+                        onClick={() => handleHexToggle(4)}
+                      >
+                        more info
                       </button>
                     )}
                     <div className={styles.projectThumb}>

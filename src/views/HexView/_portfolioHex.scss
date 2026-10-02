@@ -346,11 +346,12 @@
 
   .navThumbs {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     gap: 1.5rem;
 
     .navButton {
+      display: flex;
       background: none;
       border: none;
       padding: 0;
@@ -360,11 +361,14 @@
     .prevThumbContainer,
     .nextThumbContainer {
       min-width: 72px;
+      height: 120px;
+      display: flex;
+      align-items: center;
 
       .thumbMask {
         width: 72px;
         height: 72px;
-        margin-top: 40px;
+        margin-top: 0;
         position: relative;
         overflow: hidden;
 
@@ -587,7 +591,7 @@
           left: 304px;
         }
         .thumbNav {
-          transform: translate(-2px, 518px) scale(1.4);
+          transform: translate(-1px, 537.5px) scale(1.4);
         }
       }
     }
@@ -617,7 +621,10 @@
 
     .thumbNav {
       z-index: 90;
-      transform: translate(-2px, 518px) scale(1.4);
+      // Anchor scaling above the thumbnail so title wrapping cannot move it.
+      // Hex center: 520 + 203 / 2; thumbnail center: 120 * 1.4 / 2.
+      transform-origin: top center;
+      transform: translate(-1px, 537.5px) scale(1.4);
       .projectTitle {
         display: none;
       }
@@ -637,11 +644,14 @@
       .nextThumbContainer,
       .prevThumbContainer {
         .thumbImageWrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           img {
             width: 63px;
             height: 63px;
             position: relative;
-            top: 10px;
+            top: 0;
           }
         }
       }
@@ -754,7 +764,7 @@ html[data-theme="dark"] .portfolio {
 }
 
 :global(.portfolio) .thumbNav {
-  .hasCaseStudy { padding-top: 4rem; }
+  .hasProjectLink { padding-top: 4rem; }
 
   .caseStudyLink {
     position: absolute;
@@ -774,14 +784,30 @@ html[data-theme="dark"] .portfolio {
   }
 
   @media (max-width: 600px) {
-    .hasCaseStudy .projectTitle {
-      display: block;
-      top: -8px;
-      min-width: 0;
-      font-size: 20px;
+    .navThumbs { align-items: flex-start; }
+
+    .hasProjectLink {
+      padding-top: 0;
+
+      .projectThumb { order: 0; flex-shrink: 0; }
     }
-    .caseStudyLink { top: 18px; white-space: nowrap; }
-    .hasCaseStudy { padding-top: 3.5rem; }
+
+    .hasProjectLink .projectTitle {
+      display: block;
+      position: static;
+      order: 1;
+      width: 240px;
+      min-width: 0;
+      margin: 0.5rem 0 0;
+      font-size: 20px;
+      text-wrap: balance;
+    }
+    .caseStudyLink {
+      position: static;
+      order: 2;
+      margin-top: 0.25rem;
+      white-space: nowrap;
+    }
   }
 }
 
