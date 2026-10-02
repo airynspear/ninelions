@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 837 600">
+  <defs>
+    <filter id="drop-shadow-1" x="14.5" y="13" width="805" height="574" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="9"/>
+      <feFlood flood-color="#000" flood-opacity=".45"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="New_Gradient_Swatch_1" data-name="New Gradient Swatch 1" x1="417.197" y1="40.23" x2="417.197" y2="559.845" gradientUnits="userSpaceOnUse">
+      <stop offset=".014" stop-color="#fba01d"/>
+      <stop offset=".791" stop-color="#ed2437"/>
+    </linearGradient>
+  </defs>
+  <g id="Layer_3" data-name="Layer 3">
+    <polygon points="192.064 559.615 642.064 559.615 792.064 299.808 642.064 40 192.064 40 42.064 299.808 192.064 559.615" fill="#fff" filter="url(#drop-shadow-1)"/>
+  </g>
+  <g id="Layer_1_copy_2" data-name="Layer 1 copy 2">
+    <g>
+      <polygon points="192.197 559.845 642.197 559.845 792.197 300.037 642.197 40.23 192.197 40.23 42.197 300.037 192.197 559.845" fill="#fff" opacity=".54"/>
+      <path d="M639.888,44.23l147.691,255.808-147.691,255.808H194.507L46.816,300.037,194.507,44.23h445.381M642.197,40.23H192.197L42.197,300.037l150,259.808h450l150-259.808L642.197,40.23h0Z" fill="url(#New_Gradient_Swatch_1)"/>
+    </g>
+  </g>
+</svg>

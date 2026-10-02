@@ -1,8 +1,61 @@
 import { HexCard } from "@/views/HexView";
 
+// Hex layout: only Hex 5 (index 4) gets image content
 export const PORTFOLIO_CARDS: HexCard[] = [
+  {}, // 0
+  {}, // 1
+  {}, // 2
+  {}, // 3
+  {}, // 4
+  {}, // 5
+  {}, // 6
+  {}, // 7
+  {}, // 8
+];
+
+// Full project metadata (used for switching content in Hex 5)
+export const PROJECT_METADATA = [
   {
-    keyword: "",
+    keyword: "Jamloop",
+    description: (
+      <>
+        Product design and platform experiences for JamLoop, including
+        AI-powered optimization, campaign management, analytics, and a scalable
+        design system.
+      </>
+    ),
+    thumbnail: "/images/portfolio/jl-thumb-light.png",
+    themeThumbnailDark: "/images/portfolio/jl-thumb-dark.png",
+    image: "/images/portfolio/jl-light.png",
+    secondaryImageTwo: "/images/portfolio/jl-two.jpg",
+    secondaryImageThree: "/images/portfolio/jl-three.jpg",
+    secondaryImageSeven: "/images/portfolio/jl-seven.jpg",
+    secondaryImageEight: "/images/portfolio/jl-eight.jpg",
+  },
+  {
+    keyword: "United Airlines",
+    description: (
+      <>
+        Design system and enterprise tools for United Airlines, including a
+        reusable component library and a full-featured crew scheduling app.
+        Focused on consistency, performance, and accessibility.
+      </>
+    ),
+    thumbnail: "/images/portfolio/united-thumb-light.png",
+    themeThumbnailDark: "/images/portfolio/united-thumb-dark.png",
+    image: "/images/portfolio/united.png",
+    themeImageDark: "/images/portfolio/united.png",
+    secondaryImageTwo: "/images/portfolio/united-two.jpg",
+    secondaryImageTwoLight: "/images/portfolio/united-two-light.jpg",
+    secondaryImageThree: "/images/portfolio/united-three.jpg",
+    secondaryImageThreeLight: "/images/portfolio/united-three-light.jpg",
+    secondaryImageSeven: "/images/portfolio/united-seven.jpg",
+    secondaryImageSevenLight: "/images/portfolio/united-seven-light.jpg",
+    secondaryImageEight: "/images/portfolio/united-eight.jpg",
+    secondaryImageEightLight: "/images/portfolio/united-eight-light.jpg",
+  },
+  {
+    keyword: "Spesland",
     description: (
       <>
         The flagship web experience for Spesland, blending cutting-edge AI chat,
@@ -11,28 +64,34 @@ export const PORTFOLIO_CARDS: HexCard[] = [
       </>
     ),
     thumbnail: "/images/portfolio/spesland-thumb-light.png",
-    image: "/images/portfolio/spesland-light.png",
-    // @ts-ignore – we'll support themeThumbnailDark and themeImageDark in the component
     themeThumbnailDark: "/images/portfolio/spesland-thumb-dark.png",
+    image: "/images/portfolio/spesland-light.png",
     themeImageDark: "/images/portfolio/spesland-dark.png",
+    secondaryImageTwo: "/images/portfolio/spesland-two.jpg",
+    secondaryImageThree: "/images/portfolio/spesland-three.jpg",
+    secondaryImageSeven: "/images/portfolio/spesland-seven.jpg",
+    secondaryImageEight: "/images/portfolio/spesland-eight.jpg",
+    secondaryImageTwoLight: "/images/portfolio/spesland-two-light.jpg",
+    secondaryImageThreeLight: "/images/portfolio/spesland-three-light.jpg",
+    secondaryImageSevenLight: "/images/portfolio/spesland-seven-light.jpg",
+    secondaryImageEightLight: "/images/portfolio/spesland-eight-light.jpg",
   },
+  // {
+  //   keyword: "Nine Lions",
+  //   description: (
+  //     <>
+  //       A bold personal portfolio for Nine Lions, highlighting frontend mastery,
+  //       immersive UI/UX, and project storytelling through custom geometry, theme
+  //       toggling, and dynamic animations.
+  //     </>
+  //   ),
+  //   thumbnail: "/images/portfolio/ninelions-thumb-light.png",
+  //   themeThumbnailDark: "/images/portfolio/ninelions-thumb-dark.png",
+  //   image: "/images/portfolio/ninelions-light.png",
+  //   themeImageDark: "/images/portfolio/ninelions-dark.png",
+  // },
   {
-    keyword: "",
-    description: (
-      <>
-        A bold personal portfolio for Nine Lions, highlighting frontend mastery,
-        immersive UI/UX, and project storytelling through custom geometry, theme
-        toggling, and dynamic animations.
-      </>
-    ),
-    thumbnail: "/images/portfolio/ninelions-thumb-light.png",
-    image: "/images/portfolio/ninelions-light.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
-    themeThumbnailDark: "/images/portfolio/ninelions-thumb-dark.png",
-    themeImageDark: "/images/portfolio/ninelions-dark.png",
-  },
-  {
-    keyword: "",
+    keyword: "PeakMetrics",
     description: (
       <>
         A full-featured frontend for PeakMetrics' media intelligence platform,
@@ -41,12 +100,18 @@ export const PORTFOLIO_CARDS: HexCard[] = [
       </>
     ),
     thumbnail: "/images/portfolio/peakmetrics-thumb-light.png",
-    image: "/images/portfolio/peakmetrics.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
     themeThumbnailDark: "/images/portfolio/peakmetrics-thumb-dark.png",
+    image: "/images/portfolio/peakmetrics.png",
+    secondaryImageTwo: "/images/portfolio/peakmetrics-two.jpg",
+    secondaryImageThree: "/images/portfolio/peakmetrics-three.jpg",
+    secondaryImageSeven: "/images/portfolio/peakmetrics-seven.jpg",
+    secondaryImageEight: "/images/portfolio/peakmetrics-eight.jpg",
+    secondaryImageTwoLight: "/images/portfolio/peakmetrics-two-light.jpg",
+    secondaryImageThreeLight: "/images/portfolio/peakmetrics-three-light.jpg",
+    secondaryImageEightLight: "/images/portfolio/peakmetrics-eight-light.jpg",
   },
   {
-    keyword: "",
+    keyword: "EpicMix",
     description: (
       <>
         A dynamic reimagining of Vail Resorts&apos;s EpicMix app, focusing on
@@ -55,12 +120,15 @@ export const PORTFOLIO_CARDS: HexCard[] = [
       </>
     ),
     thumbnail: "/images/portfolio/epicmix-thumb-light.png",
-    image: "/images/portfolio/epicmix.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
     themeThumbnailDark: "/images/portfolio/epicmix-thumb-dark.png",
+    image: "/images/portfolio/epicmix.png",
+    secondaryImageTwo: "/images/portfolio/epicmix-two.jpg",
+    secondaryImageThree: "/images/portfolio/epicmix-three.jpg",
+    secondaryImageSeven: "/images/portfolio/epicmix-seven.jpg",
+    secondaryImageEight: "/images/portfolio/epicmix-eight.jpg",
   },
   {
-    keyword: "",
+    keyword: "SPOTX",
     description: (
       <>
         A sleek enterprise dashboard design for SpotX, enabling ad operations
@@ -69,26 +137,15 @@ export const PORTFOLIO_CARDS: HexCard[] = [
       </>
     ),
     thumbnail: "/images/portfolio/spotx-thumb-light.png",
-    image: "/images/portfolio/spotx.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
     themeThumbnailDark: "/images/portfolio/spotx-thumb-dark.png",
+    image: "/images/portfolio/spotx.png",
+    secondaryImageTwo: "/images/portfolio/spotx-two.jpg",
+    secondaryImageThree: "/images/portfolio/spotx-three.jpg",
+    secondaryImageSeven: "/images/portfolio/spotx-seven.jpg",
+    secondaryImageEight: "/images/portfolio/spotx-eight.jpg",
   },
   {
-    keyword: "",
-    description: (
-      <>
-        A calming and intuitive website for Heal with Daphne, showcasing
-        therapeutic services, video content, and affiliate offerings through a
-        soft, healing visual language.
-      </>
-    ),
-    thumbnail: "/images/portfolio/hwd-thumb-light.png",
-    image: "/images/portfolio/hwd-dark.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
-    themeThumbnailDark: "/images/portfolio/hwd-thumb-dark.png",
-  },
-  {
-    keyword: "",
+    keyword: "Bacardi",
     description: (
       <>
         A vibrant microsite concept for Bacardi spotlighting heritage cocktails,
@@ -96,12 +153,15 @@ export const PORTFOLIO_CARDS: HexCard[] = [
       </>
     ),
     thumbnail: "/images/portfolio/bacardi-thumb-light.png",
-    image: "/images/portfolio/bacardi.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
     themeThumbnailDark: "/images/portfolio/bacardi-thumb-dark.png",
+    image: "/images/portfolio/bacardi-light.png",
+    secondaryImageTwo: "/images/portfolio/bacardi-two.png",
+    secondaryImageThree: "/images/portfolio/bacardi-three.jpg",
+    secondaryImageSeven: "/images/portfolio/bacardi-seven.png",
+    secondaryImageEight: "/images/portfolio/bacardi-eight.png",
   },
   {
-    keyword: "",
+    keyword: "Leader Bikes",
     description: (
       <>
         A modern rebranding and eCommerce refresh for Leader Bikes, focused on
@@ -109,12 +169,16 @@ export const PORTFOLIO_CARDS: HexCard[] = [
       </>
     ),
     thumbnail: "/images/portfolio/leaderbikes-thumb-light.png",
-    image: "/images/portfolio/leaderbikes.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
     themeThumbnailDark: "/images/portfolio/leaderbikes-thumb-dark.png",
+    image: "/images/portfolio/leaderbikes.png",
+    secondaryImageTwo: "/images/portfolio/leaderbikes-two.jpg",
+    secondaryImageTwoLight: "/images/portfolio/leaderbikes-two-light.jpg",
+    secondaryImageThree: "/images/portfolio/leaderbikes-three.jpg",
+    secondaryImageSeven: "/images/portfolio/leaderbikes-seven.jpg",
+    secondaryImageEight: "/images/portfolio/leaderbikes-eight.jpg",
   },
   {
-    keyword: "",
+    keyword: "Cancer Research Institute",
     description: (
       <>
         A bold and accessible redesign for the Cancer Research Institute,
@@ -123,8 +187,7 @@ export const PORTFOLIO_CARDS: HexCard[] = [
       </>
     ),
     thumbnail: "/images/portfolio/cri-thumb-light.png",
-    image: "/images/portfolio/cri.png",
-    // @ts-ignore – we'll support themeThumbnailDark in the component
     themeThumbnailDark: "/images/portfolio/cri-thumb-dark.png",
+    image: "/images/portfolio/cri.png",
   },
 ];

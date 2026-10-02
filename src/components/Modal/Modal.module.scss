@@ -1,0 +1,92 @@
+// Modal.module.scss
+
+$cut: 12px;
+$border-color: var(--accent);
+$background: var(--background);
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 180px;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+
+.modalWrapper {
+  background: $border-color;
+  padding: 1px;
+  clip-path: polygon(
+    0 0,
+    calc(100% - #{$cut}) 0,
+    100% #{$cut},
+    100% 100%,
+    #{$cut} 100%,
+    0 calc(100% - #{$cut})
+  );
+
+  animation: modalFlipZoomIn 0.5s ease-out;
+  transform-origin: top center;
+}
+
+.modal {
+  background: $background;
+  padding: 2rem;
+  width: 420px;
+  max-width: 90vw;
+  clip-path: polygon(
+    0 0,
+    calc(100% - #{$cut}) 0,
+    100% #{$cut},
+    100% 100%,
+    #{$cut} 100%,
+    0 calc(100% - #{$cut})
+  );
+  position: relative;
+  box-sizing: border-box;
+  h3 {
+    text-align: center;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.75rem;
+  background: none;
+  color: var(--foreground);
+  font-size: 2rem;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-20px) scaleY(0.05);
+  }
+  to {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalFlipZoomIn {
+  from {
+    transform: perspective(600px) rotateX(-45deg) scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: perspective(600px) rotateX(0) scale(1);
+    opacity: 1;
+  }
+}

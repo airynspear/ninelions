@@ -1,18 +1,10 @@
 :global(.connect) {
-  .hero {
-    top: 20px;
-  }
-
   .hexGrid {
     transform: scale(0.8);
   }
 
-  .hexCard {
-    &:hover {
-      .cardFlipWrapper {
-        transform: none;
-      }
-    }
+  .hexContainer {
+    transform: translate(0, -120px);
   }
 
   .hexCardOne,
@@ -151,14 +143,6 @@ html[data-theme="light"] .connect {
   .hexCardOne,
   .hexCardFive,
   .hexCardNine {
-    &:hover {
-      .front .image::before {
-        opacity: 1;
-      }
-      .hexMask img {
-        filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.2));
-      }
-    }
     .front {
       &::before {
         background-image: none;
@@ -171,32 +155,57 @@ html[data-theme="light"] .connect {
             transform: scale(0.85) !important;
             filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
           }
+          .flame {
+            &::before {
+              content: "";
+              opacity: 0;
+              width: 118px;
+              height: 100%;
+              position: absolute;
+              top: 20px;
+              left: 90px;
+              background-image: url(/images/connect/flame.png);
+              background-repeat: no-repeat;
+              background-size: contain;
+              background-position: center;
+              z-index: -1;
+              transition: top 0.4s ease-in-out, opacity 0.9s ease-in-out;
+            }
+          }
         }
-        &::before {
-          content: "";
-          opacity: 0;
-          width: 118px;
-          height: 100%;
-          position: absolute;
-          top: 20px;
-          left: 37px;
-          background-image: url(/images/connect/flame.png);
-          background-repeat: no-repeat;
-          background-size: contain;
-          background-position: center;
-          z-index: 0;
-          transition: top 0.4s ease-in-out, opacity 0.9s ease-in-out;
+      }
+      &:hover {
+        .hexMask .flame::before {
+          opacity: 1;
         }
       }
     }
   }
   .hexCardFive .front {
     .image {
-      &::before {
-        content: "";
-        width: 163px;
-        top: 8px;
-        left: 63px;
+      .hexMask {
+        .flame {
+          &::before {
+            content: "";
+            width: 163px;
+            top: 8px;
+            left: 60px;
+          }
+        }
+      }
+    }
+  }
+  .hexCardOne .front,
+  .hexCardNine .front {
+    .image {
+      .hexMask {
+        .flame {
+          &::before {
+            content: "";
+            top: 16px;
+            left: 40px;
+          }
+        }
       }
     }
   }
@@ -241,7 +250,7 @@ html[data-theme="light"] .connect {
 @media (max-width: 674px) {
   :global(.connect) {
     .hexContainer {
-      transform: translate(0, 180px);
+      transform: translate(0, 90px);
     }
   }
 }

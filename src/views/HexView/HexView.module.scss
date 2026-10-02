@@ -52,14 +52,6 @@
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
   }
-
-  &:hover {
-    z-index: 11;
-
-    .cardFlipWrapper {
-      transform: rotateY(180deg);
-    }
-  }
   img {
     display: block;
     width: 100%;
@@ -108,7 +100,7 @@
     background-size: contain;
     background-position: center;
     z-index: -1;
-    transform: rotate(var(--hex-rotation, 0deg));
+    transform: rotate(var(--hex-rotation, 30deg));
     //transform: rotate(0deg);
     transition: transform 0.5s ease-in-out;
   }
@@ -165,10 +157,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      img {
-        //pointer-events: none;
-        user-select: none;
-      }
 
       .visible {
         opacity: 1;
@@ -178,7 +166,6 @@
       .hidden {
         opacity: 0;
         z-index: 1;
-        //ointer-events: none;
       }
     }
 
@@ -216,36 +203,26 @@
   }
 }
 
+:global(.home) {
+  .hexCard {
+    &:hover {
+      z-index: 11;
+
+      .cardFlipWrapper {
+        transform: rotateY(180deg);
+      }
+    }
+  }
+}
+
+.front::before,
+.back::before {
+  :global(.home) & {
+    transform: rotate(calc(30deg + var(--hex-rotation, 30deg)));
+  }
+}
+
 // === Hex Styles ===
-
-.hexagonWrapper {
-  position: relative;
-  width: 272px;
-  height: 272px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hexagonBorder {
-  width: 272px;
-  height: 272px;
-  background: var(--accent);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.hexagon {
-  width: 270px;
-  height: 270px;
-  background: var(--background);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  position: relative;
-  z-index: 1;
-}
 
 .background::after,
 .heroBackground::after {
@@ -473,6 +450,12 @@
       transform: rotate(var(--hex-rotation, 30deg));
     }
   }
+  .front::before,
+  .back::before {
+    :global(.home) & {
+      transform: rotate(calc(0deg + var(--hex-rotation, 30deg)));
+    }
+  }
   .hexCardOne {
     --x: 182px;
     --y: 156px;
@@ -523,25 +506,18 @@
 }
 
 @media (max-width: 670px) {
-  .hero {
-    top: 8rem;
-  }
   .hexGrid {
     transform: scale(0.85);
   }
 }
 
 @media (max-width: 600px) {
-  .hero {
-    top: 13rem;
-  }
-
-  :global(.about) .hero {
-    top: 8rem;
-  }
-
   .hexGrid {
     transform: scale(0.75);
+  }
+
+  .hexContainer {
+    transform: translate(0, 120px);
   }
 
   .hexCardOne {
