@@ -497,12 +497,11 @@
 .productSliderRow {
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr) 44px;
-  align-items: top;
+  align-items: center;
   gap: 0.5rem;
   .sliderButton {
     width: 44px;
     height: 44px;
-    margin-top: 7.5rem;
   }
 }
 .screenshotButton {
@@ -676,10 +675,18 @@
 }
 
 @keyframes scrollFramedImage {
-  0%, 100% { transform: translateY(0); }
-  78%, 88% { transform: translateY(var(--scroll-distance)); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  78%,
+  88% {
+    transform: translateY(var(--scroll-distance));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .framedScroll { animation: none; }
+  .framedScroll {
+    animation: none;
+  }
 }

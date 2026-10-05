@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import ImageViewer from "../JamloopCaseStudy/ImageViewer";
 import ProductSlider from "../JamloopCaseStudy/ProductSlider";
 import styles from "../JamloopCaseStudy/JamloopCaseStudy.module.scss";
 import unitedStyles from "./UnitedCaseStudy.module.scss";
@@ -33,6 +34,7 @@ export default function UnitedCaseStudy({
 }) {
   const panelRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const [enlargedChart, setEnlargedChart] = useState<(typeof unitedImages.charts)[number] | null>(null);
   const hero = unitedHero;
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroScrolling, setHeroScrolling] = useState(false);
@@ -212,7 +214,7 @@ export default function UnitedCaseStudy({
         </section>
 
         <section
-          className={`${styles.productRow} ${styles.productImageLeft} ${unitedStyles.sliderSection}`}
+          className={`${unitedStyles.fullWidthSection} ${unitedStyles.dataVisualizationSection}`}
           aria-labelledby="united-visualization"
         >
           <div className={styles.productCopy}>
@@ -221,18 +223,41 @@ export default function UnitedCaseStudy({
             </h2>
             <h3>Exploring color across charts and themes.</h3>
             <p>
-              My Orion work also included data visualization examples, bringing
-              chart types and palette variations into the component
-              demonstration environment. These examples made it possible to
-              inspect color choices across different charts, series counts, and
-              light and dark themes.
+              I created data visualization examples within Orion’s component
+              demonstration environment to examine color relationships,
+              distinguish multiple data series, and compare palette behavior
+              across light and dark themes.
             </p>
           </div>
-          <ProductSlider
-            name="Orion data visualization"
-            className={unitedStyles.dataVisualizationSlider}
-            slides={unitedImages.charts}
-          />
+          <div className={unitedStyles.dataVisualizationGrid}>
+            {unitedImages.charts.map((chart) => (
+              <figure key={chart.src} className={styles.imageCard}>
+                <button
+                  type="button"
+                  className={styles.screenshotButton}
+                  aria-label={`Enlarge Orion data visualization: ${chart.label}`}
+                  aria-haspopup="dialog"
+                  onClick={() => setEnlargedChart(chart)}
+                >
+                  <img src={chart.src} alt={chart.alt} width={chart.width} height={chart.height} loading="lazy" />
+                </button>
+                <figcaption>
+                  <strong>{chart.label}</strong><br />
+                  {chart.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <p className={`${styles.inspectHint} ${unitedStyles.enlargeHint}`}>Select image to enlarge</p>
+          <ImageViewer
+            open={enlargedChart !== null}
+            onClose={() => setEnlargedChart(null)}
+            title={`Orion data visualization · ${enlargedChart?.label ?? ""}`}
+          >
+            {enlargedChart && (
+              <img className={styles.fittedScreenshot} src={enlargedChart.src} alt={enlargedChart.alt} width={enlargedChart.width} height={enlargedChart.height} />
+            )}
+          </ImageViewer>
         </section>
 
         <section

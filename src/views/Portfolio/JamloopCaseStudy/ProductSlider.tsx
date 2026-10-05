@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import ImageViewer from "./ImageViewer";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import ScrollingMonitor from "./ScrollingMonitor";
 import styles from "./JamloopCaseStudy.module.scss";
@@ -15,6 +15,8 @@ export type Slide = {
   scrollFile?: string;
   frameFile?: string;
   frameSrc?: string;
+  frameWidth?: number;
+  frameHeight?: number;
   frameClip?: string;
   scrollHeight?: number;
   viewportBottom?: number;
@@ -85,7 +87,7 @@ function FramedScreenshot({ slide }: { slide: Slide }) {
           src={imageSource(slide)} alt="" width={slide.width} height={slide.scrollHeight ?? slide.height}
         />
       </span>
-      <img className={styles.heroScreen} src={slide.frameSrc} alt={slide.alt} width={slide.width} height={slide.height} />
+      <img className={styles.heroScreen} src={slide.frameSrc} alt={slide.alt} width={slide.frameWidth ?? slide.width} height={slide.frameHeight ?? slide.height} />
     </span>
   );
 }
@@ -146,7 +148,7 @@ export default function ProductSlider({ name, slides, allowEnlarge = true, class
           type={allowEnlarge ? "button" : undefined}
           id={id}
           className={`${styles.screenshotButton} ${!allowEnlarge ? styles.staticScreenshot : ""}`}
-          style={{ aspectRatio: `${Math.min(...slides.map((item) => (item.width ?? 1280) / item.height))}` }}
+          style={{ aspectRatio: `${Math.min(...slides.map((item) => (item.frameWidth ?? item.width ?? 1280) / (item.frameHeight ?? item.height)))}` }}
           aria-label={allowEnlarge ? `Enlarge ${name}: ${slide.label}` : undefined}
           aria-haspopup={allowEnlarge ? "dialog" : undefined}
           onTouchStart={(event) => {
@@ -175,7 +177,7 @@ export default function ProductSlider({ name, slides, allowEnlarge = true, class
           {slide.frameSrc ? (
             <FramedScreenshot slide={slide} />
           ) : slide.file !== undefined && (slide.scrollFile || slide.frameFile) ? (
-            <ScrollingMonitor screen={slide.frameFile ?? slide.file} scroll={slide.scrollFile ?? slide.file} alt={slide.alt} animated={!slide.frameFile} />
+            <ScrollingMonitor screen={slide.frameFile ?? slide.file} scroll={slide.scrollFile ?? slide.file} alt={slide.alt} animated={!slide.frameFile} frameWidth={slide.frameWidth} frameHeight={slide.frameHeight} />
           ) : (
             <img src={imageSource(slide)} alt={slide.alt} width={slide.width ?? 1280} height={slide.height} loading="lazy" />
           )}
@@ -187,38 +189,29 @@ export default function ProductSlider({ name, slides, allowEnlarge = true, class
       <p className={styles.productSlideLabel} aria-live="polite" aria-atomic="true">{index + 1} / {slides.length} · {slide.label}{slide.caption && <> — {slide.caption}</>}</p>
       {loadError && <p role="status" className={styles.inspectHint}>{loadError}</p>}
       {allowEnlarge && <p className={styles.inspectHint}>Select image to enlarge</p>}
-      <Dialog
+      <ImageViewer
         open={enlarged}
         onClose={() => setEnlarged(false)}
-        maxWidth={false}
-        aria-labelledby={`${id}-title`}
-        transitionDuration={0}
-        PaperProps={{ className: styles.enlargedPaper }}
+        title={`${name} · ${slide.label}`}
         onKeyDown={(event) => {
-          event.stopPropagation();
           if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
             event.preventDefault();
             void move(event.key === "ArrowLeft" ? -1 : 1);
           }
         }}
       >
-        <DialogTitle id={`${id}-title`} className={styles.enlargedTitle}>{name} · {slide.label}</DialogTitle>
-        <button autoFocus type="button" className={styles.enlargedClose} onClick={() => setEnlarged(false)} aria-label="Close enlarged screenshot">
-          <span aria-hidden="true">×</span>
-        </button>
-        <DialogContent className={styles.enlargedContent}>
           <div className={styles.enlargedSliderRow}>
             <button type="button" className={styles.sliderButton} aria-label={`Previous ${name} screenshot`} aria-controls={`${id}-enlarged`} onClick={() => move(-1)}>
               <IoChevronBack aria-hidden="true" />
             </button>
             <div id={`${id}-enlarged`} className={styles.enlargedSlide}>
               {slide.frameSrc ? (
-                <div className={styles.fittedMonitor} style={{ width: `min(100%, calc((100dvh - 230px) * ${slide.width ?? 1280} / ${slide.height}))` }}>
+                <div className={styles.fittedMonitor} style={{ width: `min(100%, calc((100dvh - 230px) * ${slide.frameWidth ?? slide.width ?? 1280} / ${slide.frameHeight ?? slide.height}))` }}>
                   <FramedScreenshot slide={slide} />
                 </div>
               ) : slide.file !== undefined && (slide.scrollFile || slide.frameFile) ? (
-                <div className={styles.fittedMonitor}>
-                  <ScrollingMonitor screen={slide.frameFile ?? slide.file} scroll={slide.scrollFile ?? slide.file} alt={slide.alt} animated={!slide.frameFile} />
+                <div className={styles.fittedMonitor} style={{ width: `min(100%, calc((100dvh - 180px) * ${slide.frameWidth ?? slide.width ?? 1469} / ${slide.frameHeight ?? slide.height}))` }}>
+                  <ScrollingMonitor screen={slide.frameFile ?? slide.file} scroll={slide.scrollFile ?? slide.file} alt={slide.alt} animated={!slide.frameFile} frameWidth={slide.frameWidth} frameHeight={slide.frameHeight} />
                 </div>
               ) : (
                 <img className={styles.fittedScreenshot} src={imageSource(slide)} alt={slide.alt} width={slide.width ?? 1280} height={slide.height} />
@@ -230,8 +223,7 @@ export default function ProductSlider({ name, slides, allowEnlarge = true, class
           </div>
           <p className={styles.productSlideLabel} aria-live="polite" aria-atomic="true">{index + 1} / {slides.length} · {slide.label}{slide.caption && <> — {slide.caption}</>}</p>
           {loadError && <p role="status" className={styles.inspectHint}>{loadError}</p>}
-        </DialogContent>
-      </Dialog>
+      </ImageViewer>
     </div>
   );
 }

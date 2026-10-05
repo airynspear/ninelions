@@ -435,8 +435,8 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
               </ul>
             </div>
             <ProductSlider name="Dashboard" allowEnlarge={false} slides={[
-              { file: "jamloop-hero-screen.png", scrollFile: "jamloop-hero-scroll.png", label: "Light theme", caption: "Summary cards foreground impressions, spend, reach, frequency, and completed views above campaign delivery details and geographic breakdowns.", alt: "Jamloop dashboard in the light theme", width: 1469, height: 1131 },
-              { file: "jamloop-hero-screen-dark.png", scrollFile: "jamloop-hero-scroll-dark.png", label: "Dark theme", caption: "Distinct panels group impressions, advertiser count, spend, VCR, and CPM, with booked-versus-delivered comparisons and a geographic view below.", alt: "Jamloop dashboard in the dark theme", width: 1469, height: 1131 },
+              { file: "jamloop-dashboard-screen-light.png", frameWidth: 1468, frameHeight: 866, scrollFile: "jamloop-hero-scroll.png", label: "Light theme", caption: "Summary cards foreground impressions, spend, reach, frequency, and completed views above campaign delivery details and geographic breakdowns.", alt: "Jamloop dashboard in the light theme", width: 1469, height: 1131 },
+              { file: "jamloop-dashboard-screen-dark.png", frameWidth: 1468, frameHeight: 866, scrollFile: "jamloop-hero-scroll-dark.png", label: "Dark theme", caption: "Distinct panels group impressions, advertiser count, spend, VCR, and CPM, with booked-versus-delivered comparisons and a geographic view below.", alt: "Jamloop dashboard in the dark theme", width: 1469, height: 1131 },
             ]} />
           </div>
 
@@ -461,7 +461,10 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
               { step: "Review", caption: "Editable summary cards bring budget, duration, inventory, and audience selections together beside line estimates." },
             ].map(({ step, caption }, index) => ({
               file: `jamloop-campaign-${index + 1}.png`,
-              frameFile: "jamloop-campaign-screen.png",
+              frameSrc: "/images/portfolio/jamloop/case-study/jamloop-campaign-screen.png",
+              frameWidth: 1468,
+              frameHeight: 866,
+              frameClip: "inset(calc(42 / 866 * 100%) calc(43 / 1468 * 100%) calc(46 / 866 * 100%) calc(42 / 1468 * 100%))",
               label: `Campaign configuration · ${step}`,
               caption,
               alt: `Jamloop guided campaign builder, ${step} step`,
