@@ -59,7 +59,8 @@
   0% {
     transform: translateY(0);
   }
-  78%, 88% {
+  78%,
+  88% {
     transform: translateY(calc(-1239 / 2059 * 100%));
   }
   100% {
@@ -74,7 +75,7 @@
 }
 
 .sliderSection {
-  align-items: start;
+  align-items: center;
   margin-bottom: 4rem;
 }
 
