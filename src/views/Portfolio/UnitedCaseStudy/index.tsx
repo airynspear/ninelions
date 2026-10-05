@@ -187,7 +187,7 @@ export default function UnitedCaseStudy({
             <h2 id="united-components" className={styles.eyebrow}>
               02 — Building the Component Library
             </h2>
-            <h3>Reusable components, with attention to the details.</h3>
+            <h3>Reusable components, attention to detail.</h3>
             <p>
               I developed and maintained reusable web components with
               Stencil.js, TypeScript, and SCSS.
@@ -230,6 +230,7 @@ export default function UnitedCaseStudy({
           </div>
           <ProductSlider
             name="Orion data visualization"
+            className={unitedStyles.dataVisualizationSlider}
             slides={unitedImages.charts}
           />
         </section>

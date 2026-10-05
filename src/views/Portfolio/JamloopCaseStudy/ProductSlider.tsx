@@ -90,7 +90,7 @@ function FramedScreenshot({ slide }: { slide: Slide }) {
   );
 }
 
-export default function ProductSlider({ name, slides, allowEnlarge = true }: { name: string; slides: Slide[]; allowEnlarge?: boolean }) {
+export default function ProductSlider({ name, slides, allowEnlarge = true, className = "" }: { name: string; slides: Slide[]; allowEnlarge?: boolean; className?: string }) {
   const [index, setIndex] = useState(0);
   const [enlarged, setEnlarged] = useState(false);
   const ImageContainer = allowEnlarge ? "button" : "div";
@@ -125,7 +125,7 @@ export default function ProductSlider({ name, slides, allowEnlarge = true }: { n
 
   return (
     <div
-      className={styles.productSlider}
+      className={`${styles.productSlider} ${className}`}
       role="region"
       aria-roledescription="carousel"
       aria-label={`${name} screenshots`}

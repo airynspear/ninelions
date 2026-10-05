@@ -23,8 +23,7 @@ export const unitedImages = {
       frameClip:
         "inset(calc(107 / 1144 * 100%) calc(43 / 1469 * 100%) calc(324 / 1144 * 100%) calc(99 / 1469 * 100%))",
       label: "Category summary",
-      caption:
-        "Summary combining a calendar, schedule rows, and filtering controls.",
+      caption: "Summary combining a calendar, schedule rows, and filtering.",
       alt: "Trade Center Category Summary prototype with a timeline, schedule grid, and filter controls",
       width: 1469,
       height: 1144,
@@ -104,8 +103,7 @@ export const unitedImages = {
       frameClip:
         "inset(calc(130 / 1144 * 100%) calc(39 / 1469 * 100%) calc(324 / 1144 * 100%) calc(47 / 1469 * 100%))",
       label: "Split buttons",
-      caption:
-        "Primary and secondary split buttons, including disabled and icon variants.",
+      caption: "Primary and secondary, including disabled and icon variants.",
       alt: "Orion dark-theme split-button demonstration showing primary, secondary, disabled, icon, and small variants",
       width: 1469,
       height: 1144,
@@ -129,8 +127,7 @@ export const unitedImages = {
       frameClip:
         "inset(calc(178 / 1138 * 100%) calc(43 / 1469 * 100%) calc(318 / 1138 * 100%) calc(43 / 1469 * 100%))",
       label: "Blue palette",
-      caption:
-        "Palette examples followed by grouped bar, pie, donut, and gauge demonstrations.",
+      caption: "Palette examples, bar, pie, donut, and gauge charts.",
       alt: "Orion dark-theme data visualization demonstration with a blue bar and line palette example, grouped bar chart, pie, donut, and gauge",
       width: 1469,
       height: 1138,
@@ -143,8 +140,7 @@ export const unitedImages = {
       frameClip:
         "inset(calc(178 / 1138 * 100%) calc(43 / 1469 * 100%) calc(318 / 1138 * 100%) calc(43 / 1469 * 100%))",
       label: "Red–green palette",
-      caption:
-        "Palette examples followed by grouped bar, pie, donut, and gauge demonstrations.",
+      caption: "Palette examples, bar, pie, donut, and gauge charts.",
       alt: "Orion dark-theme data visualization demonstration with a red–green bar and line palette example, grouped bar chart, pie, donut, and gauge",
       width: 1469,
       height: 1138,
@@ -157,8 +153,7 @@ export const unitedImages = {
       frameClip:
         "inset(calc(178 / 1138 * 100%) calc(43 / 1469 * 100%) calc(318 / 1138 * 100%) calc(43 / 1469 * 100%))",
       label: "Purple palette",
-      caption:
-        "Palette examples followed by grouped bar, pie, donut, and gauge demonstrations.",
+      caption: "Palette examples, bar, pie, donut, and gauge charts.",
       alt: "Orion dark-theme data visualization demonstration with a purple bar and line palette example, grouped bar chart, pie, donut, and gauge",
       width: 1469,
       height: 1138,
