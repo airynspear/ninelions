@@ -34,7 +34,9 @@ export default function UnitedCaseStudy({
 }) {
   const panelRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const [enlargedChart, setEnlargedChart] = useState<(typeof unitedImages.charts)[number] | null>(null);
+  const [enlargedChart, setEnlargedChart] = useState<
+    (typeof unitedImages.charts)[number] | null
+  >(null);
   const hero = unitedHero;
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroScrolling, setHeroScrolling] = useState(false);
@@ -239,23 +241,38 @@ export default function UnitedCaseStudy({
                   aria-haspopup="dialog"
                   onClick={() => setEnlargedChart(chart)}
                 >
-                  <img src={chart.src} alt={chart.alt} width={chart.width} height={chart.height} loading="lazy" />
+                  <img
+                    src={chart.src}
+                    alt={chart.alt}
+                    width={chart.width}
+                    height={chart.height}
+                    loading="lazy"
+                  />
                 </button>
                 <figcaption>
-                  <strong>{chart.label}</strong><br />
+                  <strong>{chart.label}</strong>
+                  <br />
                   {chart.caption}
                 </figcaption>
               </figure>
             ))}
           </div>
-          <p className={`${styles.inspectHint} ${unitedStyles.enlargeHint}`}>Select image to enlarge</p>
+          <p className={`${styles.inspectHint} ${unitedStyles.enlargeHint}`}>
+            Select image to enlarge
+          </p>
           <ImageViewer
             open={enlargedChart !== null}
             onClose={() => setEnlargedChart(null)}
             title={`Orion data visualization · ${enlargedChart?.label ?? ""}`}
           >
             {enlargedChart && (
-              <img className={styles.fittedScreenshot} src={enlargedChart.src} alt={enlargedChart.alt} width={enlargedChart.width} height={enlargedChart.height} />
+              <img
+                className={styles.fittedScreenshot}
+                src={enlargedChart.src}
+                alt={enlargedChart.alt}
+                width={enlargedChart.width}
+                height={enlargedChart.height}
+              />
             )}
           </ImageViewer>
         </section>
@@ -268,13 +285,11 @@ export default function UnitedCaseStudy({
             <h2 id="united-workflow" className={styles.eyebrow}>
               04 — Design-to-Code Workflow
             </h2>
-            <h3>Evaluating new ways to connect design and implementation.</h3>
+            <h3>Exploring AI-assisted development.</h3>
             <p>
-              Alongside component and prototype development, I evaluated Figma
-              MCP and Claude Code as part of an AI-assisted development
-              workflow. This exploration focused on how those tools could
-              support the translation of design context into frontend
-              implementation.
+              I evaluated Figma MCP and Claude Code to explore how design
+              context from Figma could inform frontend implementation within
+              Orion’s existing component system.
             </p>
           </div>
           <ul
@@ -293,10 +308,15 @@ export default function UnitedCaseStudy({
         >
           <h2 id="united-closing">Connecting Design and Implementation</h2>
           <p>
-            My work on Orion connected high-fidelity prototypes with the
-            reusable components and documentation that support them. It brought
-            together the visual detail of interface design and the engineering
-            work needed to make shared patterns consistent and maintainable.
+            Working across prototypes, components, and documentation highlighted
+            how much a shared design system depends on the details: how
+            components behave, how patterns adapt across themes, and how clearly
+            their use is explained.
+          </p>
+          <p>
+            That perspective shaped my approach to UI engineering—considering
+            both the interface people interact with and the shared foundations
+            developers rely on.
           </p>
         </section>
         <footer className={styles.footer}>
