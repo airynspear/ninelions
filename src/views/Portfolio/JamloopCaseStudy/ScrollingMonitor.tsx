@@ -21,9 +21,9 @@ export default function ScrollingMonitor({ screen, scroll, alt, animated = true 
   return (
     <span ref={monitorRef} className={`${styles.heroMonitor} ${styles.sliderMonitor}`}>
       <span className={animated ? styles.heroViewport : styles.campaignViewport} aria-hidden="true">
-        <img className={animated ? styles.heroScroll : undefined} style={animated ? { animationPlayState: inView ? "running" : "paused" } : undefined} src={`/images/portfolio/case-study/${scroll}`} alt="" width={1469} height={animated ? 2896 : 1131} />
+        <img className={animated ? styles.heroScroll : undefined} style={animated ? { animationPlayState: inView ? "running" : "paused" } : undefined} src={`/images/portfolio/jamloop/case-study/${scroll}`} alt="" width={1469} height={animated ? 2896 : 1131} />
       </span>
-      <img className={styles.heroScreen} src={`/images/portfolio/case-study/${screen}`} alt={alt} width={1469} height={1131} />
+      <img className={styles.heroScreen} src={`/images/portfolio/jamloop/case-study/${screen}`} alt={alt} width={1469} height={1131} />
     </span>
   );
 }

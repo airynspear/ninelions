@@ -48,6 +48,28 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
   const [problemSlide, setProblemSlide] = useState(0);
   const panelRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [heroScrolling, setHeroScrolling] = useState(false);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    setHeroScrolling(false);
+    if (!open || !hero) return;
+
+    let startTimer: ReturnType<typeof setTimeout> | undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        observer.disconnect();
+        startTimer = setTimeout(() => setHeroScrolling(true), 1500);
+      }
+    }, { root: panelRef.current, threshold: 0 });
+
+    observer.observe(hero);
+    return () => {
+      clearTimeout(startTimer);
+      observer.disconnect();
+    };
+  }, [open]);
 
   useEffect(() => {
     if (open) {
@@ -111,11 +133,16 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
         </section>
 
         <figure className={`${styles.imageCard} ${styles.heroImage}`}>
-          <div className={styles.heroMonitor}>
+          <div ref={heroRef} className={styles.heroMonitor}>
             <div className={styles.heroViewport} aria-hidden="true">
               <img
                 className={styles.heroScroll}
-                src="/images/portfolio/case-study/jamloop-hero-scroll.png"
+                style={{
+                  animationPlayState: heroScrolling ? "running" : "paused",
+                  // Skip the existing 8% opening hold; the viewport timer supplies it.
+                  animationDelay: "-2.88s",
+                }}
+                src="/images/portfolio/jamloop/case-study/jamloop-hero-scroll.png"
                 alt=""
                 width={1469}
                 height={2896}
@@ -123,7 +150,7 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
             </div>
             <img
               className={styles.heroScreen}
-              src="/images/portfolio/case-study/jamloop-hero-screen.png"
+              src="/images/portfolio/jamloop/case-study/jamloop-hero-screen.png"
               alt="Jamloop campaign analytics dashboard displayed on a desktop monitor"
               width={1469}
               height={1131}
@@ -224,7 +251,7 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
                       aria-hidden={problemSlide !== 0}
                     >
                       <img
-                        src="/images/portfolio/case-study/jamloop-problem-1.png"
+                        src="/images/portfolio/jamloop/case-study/jamloop-problem-1.png"
                         alt="Jamloop dashboard before the redesign, with summary metrics and performance charts"
                         loading="lazy"
                       />
@@ -234,7 +261,7 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
                       aria-hidden={problemSlide !== 1}
                     >
                       <img
-                        src="/images/portfolio/case-study/jamloop-problem-2.png"
+                        src="/images/portfolio/jamloop/case-study/jamloop-problem-2.png"
                         alt="Jamloop Campaign Builder before the redesign, with budget, duration, ad product, and screen settings in a long form"
                         loading="lazy"
                       />
@@ -355,7 +382,7 @@ export default function JamloopCaseStudy({ open, onClose }: Props) {
                       aria-hidden={designSlide !== index}
                     >
                       <img
-                        src={`/images/portfolio/case-study/jl-ds-${slide.image}.png`}
+                        src={`/images/portfolio/jamloop/case-study/jl-ds-${slide.image}.png`}
                         alt={`Jamloop design system: ${slide.title.slice(5)}`}
                         loading="lazy"
                       />

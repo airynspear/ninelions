@@ -1,0 +1,79 @@
+.panel {
+  h3 {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  }
+}
+
+.panel .intro {
+  min-width: min(840px, 100%);
+  max-width: 840px;
+}
+
+.fullWidthSection {
+  margin-bottom: 7rem;
+
+  > div + div {
+    margin-top: 2rem;
+  }
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+
+  li {
+    padding: 0.5rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .fullWidthSection {
+    margin-bottom: 4rem;
+  }
+}
+
+// Screen opening: x=43..1426, y=163..820 on the 1469px canvas.
+.heroViewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(820 / 1146 * 100%);
+  overflow: hidden;
+  clip-path: inset(calc(163 / 820 * 100%) calc(43 / 1469 * 100%) 0);
+}
+
+.heroScroll {
+  animation: scrollOrion 36s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+@keyframes scrollOrion {
+  0% {
+    transform: translateY(0);
+  }
+  78%, 88% {
+    transform: translateY(calc(-1239 / 2059 * 100%));
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroScroll {
+    animation: none;
+  }
+}
+
+.sliderSection {
+  align-items: start;
+  margin-bottom: 4rem;
+}

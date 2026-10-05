@@ -92,28 +92,28 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/portfolio/spesland-light.png"
+          href="/images/portfolio/spesland/spesland-light.png"
         />
         <link
           rel="preload"
           as="image"
-          href="/images/portfolio/ninelions-light.png"
+          href="/images/portfolio/ninelions/ninelions-light.png"
         />
         <link
           rel="preload"
           as="image"
-          href="/images/portfolio/peakmetrics.png"
+          href="/images/portfolio/peakmetrics/peakmetrics.png"
         />
-        <link rel="preload" as="image" href="/images/portfolio/epicmix.png" />
-        <link rel="preload" as="image" href="/images/portfolio/spotx.png" />
-        <link rel="preload" as="image" href="/images/portfolio/hwd-dark.png" />
-        <link rel="preload" as="image" href="/images/portfolio/bacardi.png" />
+        <link rel="preload" as="image" href="/images/portfolio/epicmix/epicmix.png" />
+        <link rel="preload" as="image" href="/images/portfolio/spotx/spotx.png" />
+        <link rel="preload" as="image" href="/images/portfolio/hwd/hwd-dark.png" />
+        <link rel="preload" as="image" href="/images/portfolio/bacardi/bacardi.png" />
         <link
           rel="preload"
           as="image"
-          href="/images/portfolio/leaderbikes.png"
+          href="/images/portfolio/leaderbikes/leaderbikes.png"
         />
-        <link rel="preload" as="image" href="/images/portfolio/cri.png" />
+        <link rel="preload" as="image" href="/images/portfolio/cri/cri.png" />
 
         {/* === Theme script === */}
         <script

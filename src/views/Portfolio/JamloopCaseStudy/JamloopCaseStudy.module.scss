@@ -569,8 +569,13 @@
   line-height: 1;
   cursor: pointer;
 
-  &:hover { color: var(--accent-hover); }
-  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  &:hover {
+    color: var(--accent-hover);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
 }
 .enlargedContent:global(.MuiDialogContent-root) {
   overflow: auto;
@@ -628,7 +633,53 @@
   inset: 0;
   overflow: hidden;
   // Campaign assets use the full screen opening, including the app navigation.
-  clip-path: inset(calc(42 / 1131 * 100%) calc(43 / 1469 * 100%) calc(311 / 1131 * 100%) calc(42 / 1469 * 100%));
+  clip-path: inset(
+    calc(42 / 1131 * 100%) calc(43 / 1469 * 100%) calc(311 / 1131 * 100%)
+      calc(42 / 1469 * 100%)
+  );
 }
 
-.staticScreenshot { cursor: default; }
+.staticScreenshot {
+  cursor: default;
+}
+
+.framedViewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.enlargedSliderRow {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: clamp(0.25rem, 1vw, 1rem);
+}
+
+.enlargedSlide {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .enlargedSliderRow {
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    .sliderButton {
+      width: 36px;
+      height: 44px;
+    }
+  }
+}
+
+.framedScroll {
+  animation: scrollFramedImage 36s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+@keyframes scrollFramedImage {
+  0%, 100% { transform: translateY(0); }
+  78%, 88% { transform: translateY(var(--scroll-distance)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .framedScroll { animation: none; }
+}

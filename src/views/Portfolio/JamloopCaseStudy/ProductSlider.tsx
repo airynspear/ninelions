@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import ScrollingMonitor from "./ScrollingMonitor";
 import styles from "./JamloopCaseStudy.module.scss";
 
-interface Slide {
-  file: string;
+export type Slide = {
   label: string;
   caption?: string;
   alt: string;
@@ -15,29 +14,80 @@ interface Slide {
   width?: number;
   scrollFile?: string;
   frameFile?: string;
-}
+  frameSrc?: string;
+  frameClip?: string;
+  scrollHeight?: number;
+  viewportBottom?: number;
+} & ({ file: string; src?: never } | { src: string; file?: never });
+
+const jamloopSource = (file: string) => `/images/portfolio/jamloop/case-study/${file}`;
+const imageSource = (slide: Slide) => slide.src ?? jamloopSource(slide.file);
 
 // Retain decoded images so the browser can paint the next slide immediately.
 const decodedImages = new Map<string, Promise<HTMLImageElement>>();
 
-function prepareImage(file: string) {
-  let pending = decodedImages.get(file);
+function prepareImage(src: string) {
+  let pending = decodedImages.get(src);
   if (!pending) {
     const image = new Image();
-    image.src = `/images/portfolio/case-study/${file}`;
+    image.src = src;
     pending = image.decode().then(() => image).catch((error) => {
-      decodedImages.delete(file);
+      decodedImages.delete(src);
       throw error;
     });
-    decodedImages.set(file, pending);
+    decodedImages.set(src, pending);
   }
   return pending;
 }
 
 function prepareSlide(slide: Slide) {
-  return Promise.all([slide.file, slide.scrollFile, slide.frameFile]
-    .filter((file): file is string => Boolean(file))
-    .map(prepareImage));
+  return Promise.all([
+    imageSource(slide),
+    ...(slide.frameSrc ? [slide.frameSrc] : []),
+    ...[slide.scrollFile, slide.frameFile]
+      .filter((file): file is string => Boolean(file))
+      .map(jamloopSource),
+  ].map(prepareImage));
+}
+
+// Keep this component mounted across slides so image swaps preserve the scroll timeline.
+function FramedScreenshot({ slide }: { slide: Slide }) {
+  const monitorRef = useRef<HTMLSpanElement>(null);
+  const [scrolling, setScrolling] = useState(false);
+  const animated = Boolean(slide.scrollHeight && slide.viewportBottom);
+
+  useEffect(() => {
+    const monitor = monitorRef.current;
+    if (!animated || !monitor) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        observer.disconnect();
+        timer = setTimeout(() => setScrolling(true), 1500);
+      }
+    });
+    observer.observe(monitor);
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [animated]);
+
+  return (
+    <span ref={monitorRef} className={`${styles.heroMonitor} ${styles.sliderMonitor}`}>
+      <span className={styles.framedViewport} style={{ clipPath: slide.frameClip }} aria-hidden="true">
+        <img
+          className={animated ? styles.framedScroll : undefined}
+          style={animated ? {
+            animationPlayState: scrolling ? "running" : "paused",
+            "--scroll-distance": `${-100 * (slide.scrollHeight! - slide.viewportBottom!) / slide.scrollHeight!}%`,
+          } as CSSProperties : undefined}
+          src={imageSource(slide)} alt="" width={slide.width} height={slide.scrollHeight ?? slide.height}
+        />
+      </span>
+      <img className={styles.heroScreen} src={slide.frameSrc} alt={slide.alt} width={slide.width} height={slide.height} />
+    </span>
+  );
 }
 
 export default function ProductSlider({ name, slides, allowEnlarge = true }: { name: string; slides: Slide[]; allowEnlarge?: boolean }) {
@@ -122,10 +172,12 @@ export default function ProductSlider({ name, slides, allowEnlarge = true }: { n
             if (allowEnlarge) setEnlarged(true);
           }}
         >
-          {slide.scrollFile || slide.frameFile ? (
+          {slide.frameSrc ? (
+            <FramedScreenshot slide={slide} />
+          ) : slide.file !== undefined && (slide.scrollFile || slide.frameFile) ? (
             <ScrollingMonitor screen={slide.frameFile ?? slide.file} scroll={slide.scrollFile ?? slide.file} alt={slide.alt} animated={!slide.frameFile} />
           ) : (
-            <img src={`/images/portfolio/case-study/${slide.file}`} alt={slide.alt} width={slide.width ?? 1280} height={slide.height} loading="lazy" />
+            <img src={imageSource(slide)} alt={slide.alt} width={slide.width ?? 1280} height={slide.height} loading="lazy" />
           )}
         </ImageContainer>
         <button type="button" className={styles.sliderButton} aria-label={`Next ${name} screenshot`} aria-controls={id} onClick={() => move(1)}>
@@ -142,20 +194,42 @@ export default function ProductSlider({ name, slides, allowEnlarge = true }: { n
         aria-labelledby={`${id}-title`}
         transitionDuration={0}
         PaperProps={{ className: styles.enlargedPaper }}
-        onKeyDown={(event) => event.stopPropagation()}
+        onKeyDown={(event) => {
+          event.stopPropagation();
+          if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            event.preventDefault();
+            void move(event.key === "ArrowLeft" ? -1 : 1);
+          }
+        }}
       >
         <DialogTitle id={`${id}-title`} className={styles.enlargedTitle}>{name} · {slide.label}</DialogTitle>
         <button autoFocus type="button" className={styles.enlargedClose} onClick={() => setEnlarged(false)} aria-label="Close enlarged screenshot">
           <span aria-hidden="true">×</span>
         </button>
         <DialogContent className={styles.enlargedContent}>
-          {slide.scrollFile || slide.frameFile ? (
-            <div className={styles.fittedMonitor}>
-              <ScrollingMonitor screen={slide.frameFile ?? slide.file} scroll={slide.scrollFile ?? slide.file} alt={slide.alt} animated={!slide.frameFile} />
+          <div className={styles.enlargedSliderRow}>
+            <button type="button" className={styles.sliderButton} aria-label={`Previous ${name} screenshot`} aria-controls={`${id}-enlarged`} onClick={() => move(-1)}>
+              <IoChevronBack aria-hidden="true" />
+            </button>
+            <div id={`${id}-enlarged`} className={styles.enlargedSlide}>
+              {slide.frameSrc ? (
+                <div className={styles.fittedMonitor} style={{ width: `min(100%, calc((100dvh - 230px) * ${slide.width ?? 1280} / ${slide.height}))` }}>
+                  <FramedScreenshot slide={slide} />
+                </div>
+              ) : slide.file !== undefined && (slide.scrollFile || slide.frameFile) ? (
+                <div className={styles.fittedMonitor}>
+                  <ScrollingMonitor screen={slide.frameFile ?? slide.file} scroll={slide.scrollFile ?? slide.file} alt={slide.alt} animated={!slide.frameFile} />
+                </div>
+              ) : (
+                <img className={styles.fittedScreenshot} src={imageSource(slide)} alt={slide.alt} width={slide.width ?? 1280} height={slide.height} />
+              )}
             </div>
-          ) : (
-            <img className={styles.fittedScreenshot} src={`/images/portfolio/case-study/${slide.file}`} alt={slide.alt} width={slide.width ?? 1280} height={slide.height} />
-          )}
+            <button type="button" className={styles.sliderButton} aria-label={`Next ${name} screenshot`} aria-controls={`${id}-enlarged`} onClick={() => move(1)}>
+              <IoChevronForward aria-hidden="true" />
+            </button>
+          </div>
+          <p className={styles.productSlideLabel} aria-live="polite" aria-atomic="true">{index + 1} / {slides.length} · {slide.label}{slide.caption && <> — {slide.caption}</>}</p>
+          {loadError && <p role="status" className={styles.inspectHint}>{loadError}</p>}
         </DialogContent>
       </Dialog>
     </div>

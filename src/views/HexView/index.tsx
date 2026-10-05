@@ -12,6 +12,7 @@ import Modal from "@/components/Modal";
 import ConnectForm from "@/views/Connect/ConnectForm";
 import { IoTriangleSharp } from "react-icons/io5";
 import TriangleIcon from "@/assets/icons/triangle.svg";
+import UnitedCaseStudy from "@/views/Portfolio/UnitedCaseStudy";
 import JamloopCaseStudy from "@/views/Portfolio/JamloopCaseStudy";
 import { PROJECT_METADATA } from "@/views/Portfolio/cards";
 
@@ -58,16 +59,16 @@ const viewStylesMap: Record<string, Record<string, string>> = {
 };
 
 export default function HexView({ cards, viewMode }: HexViewProps) {
-  const [caseStudyOpen, setCaseStudyOpen] = useState(false);
+  const [caseStudyOpen, setCaseStudyOpen] = useState<"jamloop" | "united" | null>(null);
   const caseStudyLinkRef = useRef<HTMLButtonElement>(null);
-  const showCaseStudy = viewMode === "portfolio" && caseStudyOpen;
+  const showCaseStudy = viewMode === "portfolio" && caseStudyOpen !== null;
 
   useEffect(() => {
-    if (viewMode !== "portfolio") setCaseStudyOpen(false);
+    if (viewMode !== "portfolio") setCaseStudyOpen(null);
   }, [viewMode]);
 
   const closeCaseStudy = () => {
-    setCaseStudyOpen(false);
+    setCaseStudyOpen(null);
     requestAnimationFrame(() => caseStudyLinkRef.current?.focus({ preventScroll: true }));
   };
 
@@ -758,14 +759,14 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
                     <h3 className={styles.projectTitle}>
                       {PROJECT_METADATA[selectedCardIndex].keyword}
                     </h3>
-                    {PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" ? (
+                    {["Jamloop", "United Airlines"].includes(PROJECT_METADATA[selectedCardIndex].keyword) ? (
                       <button
                         ref={caseStudyLinkRef}
                         type="button"
                         className={styles.caseStudyLink}
-                        aria-controls="jamloop-case-study"
+                        aria-controls={PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" ? "jamloop-case-study" : "united-case-study"}
                         aria-expanded={showCaseStudy}
-                        onClick={() => setCaseStudyOpen(true)}
+                        onClick={() => setCaseStudyOpen(PROJECT_METADATA[selectedCardIndex].keyword === "Jamloop" ? "jamloop" : "united")}
                       >
                         case study <span aria-hidden="true">↓</span>
                       </button>
@@ -879,7 +880,10 @@ export default function HexView({ cards, viewMode }: HexViewProps) {
       </section>
 
       {viewMode === "portfolio" && (
-        <JamloopCaseStudy open={showCaseStudy} onClose={closeCaseStudy} />
+        <>
+          <JamloopCaseStudy open={caseStudyOpen === "jamloop"} onClose={closeCaseStudy} />
+          <UnitedCaseStudy open={caseStudyOpen === "united"} onClose={closeCaseStudy} />
+        </>
       )}
 
       <Modal isOpen={modalType !== null} onClose={closeModal}>
