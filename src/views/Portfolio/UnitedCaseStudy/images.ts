@@ -126,7 +126,7 @@ export const unitedImages = {
       frameSrc: dataVisualizationSource("screen.png"),
       frameClip:
         "inset(calc(178 / 1138 * 100%) calc(43 / 1469 * 100%) calc(318 / 1138 * 100%) calc(43 / 1469 * 100%))",
-      label: "Blue palette",
+      label: "Blue",
       caption: "Palette examples, bar, pie, donut, and gauge charts.",
       alt: "Orion dark-theme data visualization demonstration with a blue bar and line palette example, grouped bar chart, pie, donut, and gauge",
       width: 1469,
@@ -139,7 +139,7 @@ export const unitedImages = {
       frameSrc: dataVisualizationSource("screen.png"),
       frameClip:
         "inset(calc(178 / 1138 * 100%) calc(43 / 1469 * 100%) calc(318 / 1138 * 100%) calc(43 / 1469 * 100%))",
-      label: "Red–green palette",
+      label: "Red–green",
       caption: "Palette examples, bar, pie, donut, and gauge charts.",
       alt: "Orion dark-theme data visualization demonstration with a red–green bar and line palette example, grouped bar chart, pie, donut, and gauge",
       width: 1469,
@@ -152,7 +152,7 @@ export const unitedImages = {
       frameSrc: dataVisualizationSource("screen.png"),
       frameClip:
         "inset(calc(178 / 1138 * 100%) calc(43 / 1469 * 100%) calc(318 / 1138 * 100%) calc(43 / 1469 * 100%))",
-      label: "Purple palette",
+      label: "Purple",
       caption: "Palette examples, bar, pie, donut, and gauge charts.",
       alt: "Orion dark-theme data visualization demonstration with a purple bar and line palette example, grouped bar chart, pie, donut, and gauge",
       width: 1469,
