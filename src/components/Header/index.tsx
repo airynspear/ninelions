@@ -134,7 +134,7 @@ export default function Header() {
       <div className={styles.logoWrapper}>
         <Image
           src={coolLogo}
-          alt="Nine Lions Logo Dark"
+          alt="Airyn Spear Logo Dark"
           width={900}
           height={324}
           priority
@@ -144,7 +144,7 @@ export default function Header() {
         />
         <Image
           src="/logos/logo-heat-fill.png"
-          alt="Nine Lions Logo Light"
+          alt="Airyn Spear Logo Light"
           width={900}
           height={324}
           priority

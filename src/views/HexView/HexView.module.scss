@@ -355,9 +355,21 @@
   height: 203px;
   .cardInner {
     .front {
+      .keyword {
+        font-size: 1rem;
+        min-height: 24px;
+      }
       .icon {
         font-size: 1.7rem;
       }
+    }
+  }
+  .back {
+    font-size: 0.8rem;
+    line-height: 1.1rem;
+    .icon {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
     }
   }
 }
@@ -371,7 +383,7 @@
   .cardInner {
     .front {
       .keyword {
-        font-size: 1.15rem;
+        font-size: 1rem;
         min-height: 24px;
       }
     }

@@ -20,24 +20,24 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Nine Lions Design – Airyn Spear",
+  title: "Airyn Spear",
   description:
     "UI Engineer & Designer. Explore a portfolio of advanced web experiences, interactive UIs, and creative frontend engineering.",
   keywords:
     "UI engineer, frontend developer, web design, portfolio, Airyn Spear, React, Next.js, UX design",
-  authors: [{ name: "Airyn Spear", url: "https://ninelionsdesign.com" }],
+  authors: [{ name: "Airyn Spear", url: "https://airynspear.com" }],
   openGraph: {
-    title: "Nine Lions Design – Airyn Spear",
+    title: "Airyn Spear",
     description:
       "Explore Airyn Spear’s portfolio of creative engineering, immersive interfaces, and data-rich design.",
-    url: "https://ninelionsdesign.com",
-    siteName: "Nine Lions Design",
+    url: "https://airynspear.com",
+    siteName: "Airyn Spear",
     images: [
       {
         url: "/preview.png",
         width: 1200,
         height: 630,
-        alt: "Nine Lions Design Portfolio Preview",
+        alt: "Airyn Spear Portfolio Preview",
       },
     ],
     locale: "en_US",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nine Lions Design – Airyn Spear",
+    title: "Airyn Spear",
     description:
       "Frontend Engineer & Designer – Explore immersive UIs and creative frontend projects.",
     images: ["/preview.png"],
@@ -64,8 +64,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <meta name="apple-mobile-web-app-title" content="Nine Lions" />
-        <meta name="application-name" content="Nine Lions" />
+        <meta name="apple-mobile-web-app-title" content="Airyn Spear" />
+        <meta name="application-name" content="Airyn Spear" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="format-detection" content="email=no" />
 
@@ -97,17 +97,28 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/portfolio/ninelions/ninelions-light.png"
+          href="/images/portfolio/peakmetrics/peakmetrics.png"
         />
         <link
           rel="preload"
           as="image"
-          href="/images/portfolio/peakmetrics/peakmetrics.png"
+          href="/images/portfolio/epicmix/epicmix.png"
         />
-        <link rel="preload" as="image" href="/images/portfolio/epicmix/epicmix.png" />
-        <link rel="preload" as="image" href="/images/portfolio/spotx/spotx.png" />
-        <link rel="preload" as="image" href="/images/portfolio/hwd/hwd-dark.png" />
-        <link rel="preload" as="image" href="/images/portfolio/bacardi/bacardi.png" />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/portfolio/spotx/spotx.png"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/portfolio/hwd/hwd-dark.png"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/portfolio/bacardi/bacardi.png"
+        />
         <link
           rel="preload"
           as="image"

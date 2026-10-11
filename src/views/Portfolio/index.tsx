@@ -5,7 +5,7 @@ export default function PortfolioPage() {
     <main className={styles.contentContainer}>
       <div className={styles.content}>
         <h1>Portfolio</h1>
-        <p>This is the Portfolio page for Nine Lions.</p>
+        <p>This is the Portfolio page for Airyn Spear.</p>
       </div>
     </main>
   );
