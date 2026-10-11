@@ -1,15 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import coolLogo from "../../../public/logos/logo-cool.png";
 import { useTheme } from "@/components/Theme/ThemeProvider";
 import { useEffect, useState, useRef } from "react";
-import AndroidSwitch from "@/components/UI/Switch/AndroidSwitch";
+//import AndroidSwitch from "@/components/UI/Switch/AndroidSwitch";
 import { useView } from "@/views/ViewContext";
 import { NAV_LINKS } from "@/views/navLinks";
 import styles from "./Header.module.scss";
 
 export default function Header() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const { view, setView } = useView();
 
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -71,8 +72,9 @@ export default function Header() {
     const nav = navRef.current;
 
     if (target && underline && nav) {
-      const navLeft = nav.getBoundingClientRect().left;
-      underline.style.transform = `translateX(${target.left - navLeft}px)`;
+      const navRect = nav.getBoundingClientRect();
+      underline.style.top = `${target.bottom - navRect.top + 2}px`;
+      underline.style.transform = `translateX(${target.left - navRect.left}px)`;
       underline.style.width = `${target.width}px`;
     }
   }, [hoveredRect, activeRect]);
@@ -131,8 +133,8 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.logoWrapper}>
         <Image
-          src="/logos/logo-cool.png"
-          alt="Nine Lions Logo Dark"
+          src={coolLogo}
+          alt="Airyn Spear Logo Dark"
           width={900}
           height={324}
           priority
@@ -142,7 +144,7 @@ export default function Header() {
         />
         <Image
           src="/logos/logo-heat-fill.png"
-          alt="Nine Lions Logo Light"
+          alt="Airyn Spear Logo Light"
           width={900}
           height={324}
           priority
@@ -205,7 +207,7 @@ export default function Header() {
 
       {isDesktop === false && mobileMenuOpen && (
         <div className={styles.mobileMenu}>
-          <div className={styles.mobileMenuSwitch}>
+          {/* <div className={styles.mobileMenuSwitch}>
             <AndroidSwitch
               checked={theme === "light"}
               onChange={() => {
@@ -213,7 +215,7 @@ export default function Header() {
                 setMobileMenuOpen(false);
               }}
             />
-          </div>
+          </div> */}
           <nav className={styles.mobileNav}>
             {NAV_LINKS.map(({ id, label }) => (
               <button
@@ -233,7 +235,7 @@ export default function Header() {
         </div>
       )}
 
-      {isDesktop === true && (
+      {/* {isDesktop === true && (
         <div className={styles.switch}>
           <AndroidSwitch
             checked={theme === "light"}
@@ -243,7 +245,7 @@ export default function Header() {
             }}
           />
         </div>
-      )}
+      )} */}
     </header>
   );
 }

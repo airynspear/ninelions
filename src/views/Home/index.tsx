@@ -6,7 +6,7 @@ export default function HomeOverlay() {
   return (
     <div className={styles.overlay}>
       {/* <h1>Home</h1>
-      <p>Welcome to the Nine Lions homepage.</p> */}
+      <p>Welcome to the Airyn Spear homepage.</p> */}
     </div>
   );
 }

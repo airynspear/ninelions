@@ -4,7 +4,7 @@ export default function ConnectPage() {
   return (
     <main className={styles.content}>
       <h1>Connect</h1>
-      <p>This is the Connect page for Nine Lions.</p>
+      <p>This is the Connect page for Airyn Spear.</p>
     </main>
   );
 }

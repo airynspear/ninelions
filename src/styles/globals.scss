@@ -1,4 +1,7 @@
 :root {
+  color-scheme: dark;
+  --scrollbar-thumb: #566166;
+  --scrollbar-thumb-hover: #718085;
   --font-body: var(--font-outfit);
   --font-alt: var(--font-syne);
 
@@ -6,6 +9,7 @@
   --foreground: #ededed;
 
   --accent: #08c6b6;
+  --accent-hover: #61fdf0;
 
   --icon: #08c6b6;
 
@@ -26,10 +30,14 @@
 }
 
 [data-theme="light"] {
+  color-scheme: light;
+  --scrollbar-thumb: #a0a7aa;
+  --scrollbar-thumb-hover: #767f83;
   --background: #ffffff;
   --foreground: #171717;
 
   --accent: #ca1a2e;
+  --accent-hover: #f3532e;
 
   --icon: #aa0000;
 
@@ -47,6 +55,33 @@
   --transparent-bg: rgba(255, 255, 255, 0.5);
 
   --underline-gradient: linear-gradient(190deg, #f34424, #fdbe44);
+}
+
+html {
+  scrollbar-color: var(--scrollbar-thumb) var(--background);
+}
+
+// Fallback for browsers using WebKit scrollbar styling.
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border: 3px solid var(--background);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
 }
 
 html,
@@ -96,13 +131,32 @@ input.MuiInputBase-input:-webkit-autofill:focus {
   caret-color: var(--foreground) !important;
 }
 
+img,
+svg,
+picture,
+canvas {
+  user-select: none;
+  user-drag: none;
+  -webkit-user-drag: none; /* Safari */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: auto; // allows clicking
+}
+
 .scroll-container {
   height: calc(100vh - 79px);
   margin-top: 79px;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   scroll-behavior: smooth;
   padding-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+  .scroll-container {
+    overflow-y: auto;
+  }
 }
 
 * {

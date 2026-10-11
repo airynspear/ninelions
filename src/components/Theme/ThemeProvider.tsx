@@ -16,7 +16,7 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function ThemeProvider({
       | "dark"
       | null;
 
-    const preferredTheme = storedTheme || "dark"; // ✅ default is now dark
+    const preferredTheme = storedTheme || "dark";
     setTheme(preferredTheme);
 
     document.documentElement.setAttribute("data-theme", preferredTheme);

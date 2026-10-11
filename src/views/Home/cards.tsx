@@ -6,30 +6,26 @@ import {
   SiGithub,
   SiD3Dotjs,
 } from "react-icons/si";
-import { BsRocket } from "react-icons/bs";
-import { FaRegObjectGroup, FaPeopleArrows } from "react-icons/fa";
+import { FaPeopleArrows } from "react-icons/fa";
 import { HexCard } from "@/views/HexView";
+import { BiLogoAdobe } from "react-icons/bi";
+import Image from "next/image";
 
 export const HOME_CARDS: HexCard[] = [
   {
-    icon: <FaRegObjectGroup />,
+    icon: <BiLogoAdobe />,
     keyword: "UX Design",
-    description: (
-      <>
-        {" "}
-        <span>Crafting intuitive</span> and elegant user experiences{" "}
-      </>
-    ),
+    description: "Designing intuitive UX with Adobe CS and Figma",
   },
   {
     icon: <SiReact />,
     keyword: "Frontend Development",
-    description: "Modern, responsive UI engineering with React & Next.js",
+    description: "Building responsive interfaces with React & Next.js",
   },
   {
     icon: <SiFigma />,
     keyword: "Prototyping",
-    description: "Bringing ideas to life fast with Figma & Storybook",
+    description: "Exploring ideas with Figma Make, v0 & Claude Design",
   },
   {
     icon: <SiOpenai />,
@@ -37,40 +33,33 @@ export const HOME_CARDS: HexCard[] = [
     description: (
       <>
         {" "}
-        <span>Leveraging AI</span> to accelerate development{" "}
+        <span>Codex</span> Claude, vO, Grok{" "}
       </>
     ),
   },
   {
-    icon: <SiMui />,
-    keyword: (
-      <>
-        {" "}
-        <span>Modern</span> Design Systems{" "}
-      </>
+    icon: (
+      <Image
+        src="/logos/design-engineer.png"
+        alt=""
+        width={643}
+        height={750}
+        style={{ width: "1.5em", height: "1.5em", objectFit: "contain" }}
+      />
     ),
-    description: (
-      <>
-        {" "}
-        <span>Creating scalable,</span> consistent UI systems using Stencil,
-        MUI, Tailwind, and custom web components.{" "}
-      </>
-    ),
+    keyword: "Design Engineer",
+    description:
+      "Blending design & code to bring intuitive digital experiences to life.",
   },
   {
     icon: <SiGithub />,
     keyword: "CI/CD",
-    description: "Automating workflows with GitHub Actions & CMS",
+    description: "Automating workflows with GitHub & Vercel",
   },
   {
-    icon: <BsRocket />,
-    keyword: "Performance",
-    description: (
-      <>
-        {" "}
-        <span>Optimizing speed</span> and accessibility across devices{" "}
-      </>
-    ),
+    icon: <SiMui />,
+    keyword: "Modern Design Systems",
+    description: "Creating scalable UI with Tailwind & Storybook.",
   },
   {
     icon: <SiD3Dotjs />,
@@ -85,11 +74,6 @@ export const HOME_CARDS: HexCard[] = [
   {
     icon: <FaPeopleArrows />,
     keyword: "Collaboration",
-    description: (
-      <>
-        {" "}
-        <span>Thriving in agile,</span> cross-functional environments{" "}
-      </>
-    ),
+    description: "Connecting design, engineering & product",
   },
 ];
