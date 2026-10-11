@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 2.2rem;
-  left: 0.5%;
+  left: 0.3%;
 
   .underline {
     position: absolute;
@@ -106,13 +106,13 @@
 .logoWrapper {
   position: absolute;
   top: 0.5rem;
-  left: 50.5%;
+  left: 50.3%;
   transform: translateX(-50%);
   width: 313px;
   height: 97px;
 
   @media (max-width: 754px) {
-    left: 50.5%;
+    left: 50.3%;
     z-index: 11;
   }
 
